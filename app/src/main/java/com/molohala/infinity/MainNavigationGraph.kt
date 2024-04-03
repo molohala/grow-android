@@ -12,10 +12,13 @@ fun MainNavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "community"
+        startDestination = "github_rank"
     ) {
         composable("community") {
             CommunityScreen(navController = navController)
+        }
+        composable("github_rank") {
+            GithubRankScreen(navController = navController)
         }
     }
 }
