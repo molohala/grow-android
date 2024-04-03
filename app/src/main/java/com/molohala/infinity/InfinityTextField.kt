@@ -56,7 +56,7 @@ fun InfinityTextField(
 
     BasicTextField(
         modifier = modifier
-            .height(52.dp)
+            .height(56.dp)
             .fillMaxWidth()
             .background(
                 color = Color.White,
@@ -67,7 +67,7 @@ fun InfinityTextField(
             }
             .border(
                 width = (1.5).dp,
-                color = Color.LightGray,
+                color = Color.LightGray.copy(alpha = 0.5f),
                 shape = shape,
             ),
         value = value,
