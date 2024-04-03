@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,11 +41,11 @@ fun InfinityTextField(
     enabled: Boolean = true,
     shape: Shape = RoundedCornerShape(12.dp),
     placeholder: String = "",colors: TextFieldColors = TextFieldDefaults.colors(
-        focusedTextColor = Color.Black,
+        focusedTextColor = Color.LightGray,
         focusedContainerColor = Color.White,
         focusedIndicatorColor = Color.Transparent,
         unfocusedContainerColor = Color.White,
-        unfocusedTextColor = Color.Black,
+        unfocusedTextColor = Color.LightGray,
         unfocusedIndicatorColor = Color.Transparent,
         disabledIndicatorColor = Color.Transparent,
         disabledTextColor = Color.LightGray,
@@ -72,6 +73,7 @@ fun InfinityTextField(
             ),
         value = value,
         onValueChange = onValueChange,
+        cursorBrush = SolidColor(Color.LightGray),
         decorationBox = @Composable { innerTextField ->
             TextFieldDefaults.DecorationBox(
                 value = value,
