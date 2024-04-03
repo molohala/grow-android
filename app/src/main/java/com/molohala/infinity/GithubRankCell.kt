@@ -79,7 +79,8 @@ fun GithubRankCell(
             Text(
                 text = "nohjason",
                 color = Color.Gray,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.W400
             )
         }
         Spacer(

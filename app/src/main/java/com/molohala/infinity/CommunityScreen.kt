@@ -19,21 +19,20 @@ fun CommunityScreen(
 
     val tempArr = Array(30) { it }
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .background(Color(0xFFF4F5F9))
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Title(
-            modifier = Modifier,
-            text = "커뮤니티"
-        )
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            items(tempArr) {
-                CommunityCell()
-            }
+        item {
+            Title(
+                modifier = Modifier,
+                text = "커뮤니티"
+            )
+        }
+        items(tempArr) {
+            CommunityCell()
         }
     }
 }
