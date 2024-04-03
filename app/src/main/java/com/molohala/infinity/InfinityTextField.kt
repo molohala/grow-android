@@ -79,7 +79,7 @@ fun InfinityTextField(
                 placeholder = {
                     Text(
                         text = placeholder,
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.titleMedium,
                         color = Color.LightGray,
                     )
                 },
