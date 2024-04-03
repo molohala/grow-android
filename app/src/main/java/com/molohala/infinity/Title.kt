@@ -12,9 +12,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Title(
+    modifier: Modifier = Modifier,
     text: String
 ) {
-    Row {
+    Row(
+        modifier = modifier
+    ) {
         Text(
             modifier = Modifier
                 .padding(vertical = 16.dp)
