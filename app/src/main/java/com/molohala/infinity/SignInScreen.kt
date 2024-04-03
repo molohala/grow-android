@@ -30,8 +30,8 @@ fun SignInScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Title(text = "로그인")
-        InfinityTextField(placeholder = "아이디를 입력해 주세요", value = uiState.id, onValueChange = { uiState.id = it })
-        InfinityTextField(placeholder = "비밀번호를 입력해 주세요", value = uiState.pw, onValueChange = { uiState.pw = it })
+        InfinityTextField(placeholder = "아이디를 입력해 주세요", value = uiState.id, onValueChange = viewModel::updateId)
+        InfinityTextField(placeholder = "비밀번호를 입력해 주세요", value = uiState.pw, onValueChange = viewModel::updatePw)
         Spacer(modifier = Modifier.weight(1f))
         InfinityButton(
             modifier = Modifier

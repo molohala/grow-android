@@ -2,6 +2,7 @@ package com.molohala.infinity
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 
 
 class SignInViewModel: ViewModel() {
@@ -14,5 +15,13 @@ class SignInViewModel: ViewModel() {
 
     fun signIn() {
 
+    }
+
+    fun updateId(id: String) {
+        uiState.update { it.copy(id = id) }
+    }
+
+    fun updatePw(pw: String) {
+        uiState.update { it.copy(pw = pw) }
     }
 }
