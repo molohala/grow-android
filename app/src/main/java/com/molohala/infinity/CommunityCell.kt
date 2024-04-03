@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.dp
 fun CommunityCell() {
     Column(
         modifier = Modifier
+            .bounceClick(onClick = {
+
+            })
             .applyCardView(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
