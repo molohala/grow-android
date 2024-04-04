@@ -78,7 +78,7 @@ fun MainScreen(
                             modifier = Modifier,
                             text = view.name,
                             style = MaterialTheme.typography.bodySmall,
-                            color = Color.Gray
+                            color = if (viewType == view) Color(0xFF2279FF) else Color.Gray
                         )
                     }
                 }
