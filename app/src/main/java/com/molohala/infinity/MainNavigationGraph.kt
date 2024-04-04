@@ -20,7 +20,7 @@ fun MainNavigationGraph(
             MainScreen(navController = navController)
         }
         composable("profile_detail") {
-            Text(text = "profile detail")
+            ProfileDetailScreen(navController = navController)
         }
     }
 }

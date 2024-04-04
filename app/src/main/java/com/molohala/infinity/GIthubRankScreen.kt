@@ -67,7 +67,7 @@ fun GithubRankScreen(
                         .height(40.dp),
                     text = "설정하기"
                 ) {
-                    // navigate to profile edit view
+                    navController.navigate("profile_detail")
                 }
             }
         }
