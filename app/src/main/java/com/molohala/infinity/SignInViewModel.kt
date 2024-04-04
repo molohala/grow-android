@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.update
 
 class SignInViewModel: ViewModel() {
     data class SignInState(
-        var id: String = "",
-        var pw: String = ""
+        val id: String = "",
+        val pw: String = ""
     )
 
     val uiState = MutableStateFlow(SignInState())

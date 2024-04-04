@@ -47,6 +47,7 @@ fun ProfileScreen(
             text = "프로필"
         )
         Profile {
+            navController.navigate("profile_edit")
         }
         InfinityGithubCell {
 

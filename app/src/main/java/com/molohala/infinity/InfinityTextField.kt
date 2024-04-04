@@ -40,7 +40,8 @@ fun InfinityTextField(
     value: String,
     enabled: Boolean = true,
     shape: Shape = RoundedCornerShape(12.dp),
-    placeholder: String = "",colors: TextFieldColors = TextFieldDefaults.colors(
+    placeholder: String = "",
+    colors: TextFieldColors = TextFieldDefaults.colors(
         focusedTextColor = Color.LightGray,
         focusedContainerColor = Color.White,
         focusedIndicatorColor = Color.Transparent,
@@ -85,7 +86,10 @@ fun InfinityTextField(
                         color = Color.LightGray,
                     )
                 },
-                contentPadding = TextFieldDefaults.contentPaddingWithoutLabel(start = 16.dp, end = 16.dp),
+                contentPadding = TextFieldDefaults.contentPaddingWithoutLabel(
+                    start = 16.dp,
+                    end = 16.dp
+                ),
                 shape = shape,
                 enabled = enabled,
                 colors = colors,
@@ -103,7 +107,12 @@ fun InfinityTextField(
 @Composable
 fun TextFieldPreview() {
     Column {
-        InfinityTextField(modifier = Modifier.padding(bottom = 16.dp), value = "", onValueChange = {}, placeholder = "아이디를 입력")
+        InfinityTextField(
+            modifier = Modifier.padding(bottom = 16.dp),
+            value = "",
+            onValueChange = {},
+            placeholder = "아이디를 입력"
+        )
         InfinityTextField(value = "asdasdasd", onValueChange = {}, placeholder = "아이디를 입력")
     }
 }

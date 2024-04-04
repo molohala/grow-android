@@ -22,5 +22,8 @@ fun MainNavigationGraph(
         composable("profile_detail") {
             ProfileDetailScreen(navController = navController)
         }
+        composable("profile_edit") {
+            ProfileEditScreen(navController = navController)
+        }
     }
 }
