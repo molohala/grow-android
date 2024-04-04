@@ -11,7 +11,7 @@ fun RootNavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "main") {
+        startDestination = "signIn") {
         composable("signIn") {
             SignInScreen()
         }
