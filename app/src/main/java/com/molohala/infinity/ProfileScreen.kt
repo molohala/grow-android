@@ -2,16 +2,21 @@ package com.molohala.infinity
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,22 +32,40 @@ import androidx.navigation.NavController
 fun ProfileScreen(
     navController: NavController
 ) {
+
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .background(Color(0xFFF4F5F9))
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .fillMaxHeight()
+            .verticalScroll(state = scrollState),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Title(
             text = "프로필"
         )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .bounceClick(onClick = {
+        Profile {
+        }
+        InfinityGithubCell {
 
-                })
-                .applyCardView(),
+        }
+    }
+}
+
+@Composable
+fun Profile(
+    onClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .bounceClick(onClick = onClick)
+            .applyCardView(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -60,7 +83,21 @@ fun ProfileScreen(
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.weight(1f))
-            Image(painter = painterResource(id = android.R.drawable.arrow_down_float), contentDescription = null)
+            Icon(
+                modifier = Modifier
+                    .size(18.dp),
+                painter = painterResource(id = R.drawable.ic_expand_right),
+                contentDescription = null,
+                tint = Color.Gray
+            )
         }
+
+        Text(
+            modifier = Modifier
+                .padding(vertical = 24.dp),
+            text = "\"뚝딱뚝딱\"",
+            style = MaterialTheme.typography.titleMedium,
+            color = Color.Gray
+        )
     }
 }

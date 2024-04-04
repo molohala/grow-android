@@ -32,7 +32,7 @@ fun MainScreen(
 ) {
 
     var viewType by remember {
-        mutableStateOf<MainViewType>(MainViewType.Home)
+        mutableStateOf<MainViewType>(MainViewType.Profile)
     }
 
     val mainViews = arrayListOf(
