@@ -51,6 +51,12 @@ fun ProfileScreen(
         InfinityGithubCell {
 
         }
+        InfinityBaekjoonCell {
+
+        }
+        Logout {
+
+        }
     }
 }
 
@@ -98,6 +104,32 @@ fun Profile(
             text = "\"뚝딱뚝딱\"",
             style = MaterialTheme.typography.titleMedium,
             color = Color.Gray
+        )
+    }
+}
+
+@Composable
+fun Logout(
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .bounceClick(onClick = onClick)
+            .applyCardView(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "로그아웃",
+            color = Color.Red,
+            style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Icon(
+            modifier = Modifier
+                .size(18.dp),
+            painter = painterResource(id = R.drawable.ic_logout),
+            contentDescription = null,
+            tint = Color.Red
         )
     }
 }
