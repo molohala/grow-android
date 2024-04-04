@@ -77,7 +77,7 @@ fun GithubRankScreen(
                     .padding(horizontal = 20.dp),
                 rank = it + 1
             ) {
-
+                navController.navigate("profile_detail")
             }
         }
     }

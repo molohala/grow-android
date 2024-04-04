@@ -16,7 +16,7 @@ fun RootNavigationGraph(
             SignInScreen()
         }
         composable("main") {
-            MainScreen()
+            MainNavigationGraph()
         }
     }
 }
