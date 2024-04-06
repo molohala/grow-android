@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-fun Modifier.drawColoredShadow(
+fun Modifier.shadow(
     color: Color,
     alpha: Float = 0.2f,
     blur: Dp = 0.dp,

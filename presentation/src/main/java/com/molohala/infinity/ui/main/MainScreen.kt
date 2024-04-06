@@ -26,7 +26,7 @@ import com.molohala.infinity.ui.main.profile.ProfileScreen
 import com.molohala.infinity.R
 import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.extension.bounceClick
-import com.molohala.infinity.extension.drawColoredShadow
+import com.molohala.infinity.extension.shadow
 import com.molohala.infinity.ui.main.community.CommunityScreen
 import com.molohala.infinity.ui.main.githubrank.GithubRankScreen
 import com.molohala.infinity.ui.main.home.HomeScreen
@@ -53,7 +53,7 @@ fun MainScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .drawColoredShadow(
+                    .shadow(
                         color = Color.Black,
                         alpha = 0.04f,
                         offsetY = 0.dp,
