@@ -23,10 +23,11 @@ import com.molohala.infinity.icon.IconRightArrow
 
 @Composable
 fun InfinityGithubCell(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .bounceClick(onClick = onClick)
             .applyCardView(),
         horizontalAlignment = Alignment.CenterHorizontally

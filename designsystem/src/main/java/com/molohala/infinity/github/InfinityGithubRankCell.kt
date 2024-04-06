@@ -25,7 +25,7 @@ import com.molohala.infinity.R
 import com.molohala.infinity.extension.bounceClick
 
 @Composable
-fun GithubRankCell(
+fun InfinityGithubRankCell(
     modifier: Modifier = Modifier,
     rank: Int,
     onClick: () -> Unit
