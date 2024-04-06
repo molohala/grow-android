@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+presentation/src/main/java/com/molohala/infinity/ui/Secret.kt

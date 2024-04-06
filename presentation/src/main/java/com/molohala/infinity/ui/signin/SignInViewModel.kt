@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.molohala.infinity.DodamSignInRequest
 import com.molohala.infinity.RetrofitClient
+import com.molohala.infinity.ui.Secret
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -29,16 +30,17 @@ class SignInViewModel: ViewModel() {
         println(sb)
 
         viewModelScope.launch {
-
-            val request = DodamSignInRequest(
-                id = uiState.value.id,
-                pw = sb.toString(),
-                clientId = "",
-                redirectUrl = ""
-            )
-            val response = RetrofitClient.dodamApi.signIn(request)
-            println(response)
-
+            try {
+                val request = DodamSignInRequest(
+                    id = uiState.value.id,
+                    pw = sb.toString(),
+                    clientId = Secret.CLIENT_ID,
+                    redirectUrl = Secret.REDIRECT_URL
+                )
+                val response = RetrofitClient.dodamApi.signIn(request)
+            } catch (e: Exception) {
+                println(e)
+            }
         }
     }
 
