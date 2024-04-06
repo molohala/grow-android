@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.molohala.infinity.Title
+import com.molohala.infinity.typo.Title
 
 @Composable
 fun CommunityScreen(
@@ -26,7 +26,7 @@ fun CommunityScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            com.molohala.infinity.Title(
+            Title(
                 modifier = Modifier,
                 text = "커뮤니티"
             )

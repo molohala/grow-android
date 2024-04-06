@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.github
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,10 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.molohala.infinity.applyCardView
+import com.molohala.infinity.extension.applyCardView
+import com.molohala.infinity.R
+import com.molohala.infinity.extension.bounceClick
 
 @Composable
-fun InfinityBaekjoonCell(
+fun InfinityGithubCell(
     onClick: () -> Unit
 ) {
     Column(
@@ -34,9 +36,9 @@ fun InfinityBaekjoonCell(
             Icon(
                 modifier = Modifier
                     .size(20.dp),
-                painter = painterResource(id = R.drawable.ic_baekjoon),
+                painter = painterResource(id = R.drawable.ic_github),
                 contentDescription = "github rank",
-                tint = Color(0xFF0076C0)
+                tint = Color(0xFF24292e)
             )
             Text(
                 text = "nohjason",

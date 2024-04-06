@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.infinity.GithubRankCell
-import com.molohala.infinity.InfinityButton
-import com.molohala.infinity.Title
+import com.molohala.infinity.button.InfinityButton
+import com.molohala.infinity.github.GithubRankCell
+import com.molohala.infinity.typo.Title
 
 @Composable
 fun GithubRankScreen(
@@ -37,7 +37,7 @@ fun GithubRankScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            com.molohala.infinity.Title(
+            Title(
                 modifier = Modifier
                     .padding(horizontal = 16.dp),
                 text = "Github 랭킹"
@@ -75,7 +75,7 @@ fun GithubRankScreen(
             }
         }
         items(tempRankings) {
-            com.molohala.infinity.GithubRankCell(
+            GithubRankCell(
                 modifier = Modifier
                     .padding(horizontal = 20.dp),
                 rank = it + 1

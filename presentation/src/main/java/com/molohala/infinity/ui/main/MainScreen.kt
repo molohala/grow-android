@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.infinity.ui.main.profile.ProfileScreen
 import com.molohala.infinity.R
-import com.molohala.infinity.bounceClick
-import com.molohala.infinity.drawColoredShadow
+import com.molohala.infinity.extension.bounceClick
+import com.molohala.infinity.extension.drawColoredShadow
 import com.molohala.infinity.ui.main.community.CommunityScreen
 import com.molohala.infinity.ui.main.githubrank.GithubRankScreen
 

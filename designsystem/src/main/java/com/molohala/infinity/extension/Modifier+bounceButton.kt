@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.extension
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import com.molohala.infinity.button.ButtonState
 
 fun Modifier.bounceClick(
     onChangeButtonState: (ButtonState) -> Unit = {},
@@ -36,12 +37,12 @@ fun Modifier.bounceClick(
         }
         .pointerInput(buttonState) {
             awaitPointerEventScope {
-                buttonState = if (buttonState == ButtonState.Hold) {
+                buttonState = if (buttonState == ButtonState.Hover) {
                     waitForUpOrCancellation()
                     ButtonState.Idle
                 } else {
                     awaitFirstDown(false)
-                    ButtonState.Hold
+                    ButtonState.Hover
                 }
                 onChangeButtonState(buttonState)
             }

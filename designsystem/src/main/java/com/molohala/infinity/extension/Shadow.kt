@@ -1,6 +1,5 @@
-package com.molohala.infinity
+package com.molohala.infinity.extension
 
-import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
@@ -16,7 +15,7 @@ fun Modifier.drawColoredShadow(
     shadowRadius: Dp = 20.dp,
     offsetY: Dp = 0.dp,
     offsetX: Dp = 0.dp
-) = this.drawBehind {
+) = drawBehind {
     val transparentColor = android.graphics.Color.toArgb(color.copy(alpha = 0.0f).value.toLong())
     val shadowColor = android.graphics.Color.toArgb(color.copy(alpha = alpha).value.toLong())
     this.drawIntoCanvas {

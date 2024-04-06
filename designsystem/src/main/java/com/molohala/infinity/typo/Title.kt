@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.typo
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,6 +17,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.molohala.infinity.R
+import com.molohala.infinity.extension.bounceClick
 
 @Composable
 fun Title(

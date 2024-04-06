@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.molohala.infinity.InfinityBaekjoonCell
-import com.molohala.infinity.InfinityGithubCell
-import com.molohala.infinity.Title
+import com.molohala.infinity.baekjoon.InfinityBaekjoonCell
+import com.molohala.infinity.github.InfinityGithubCell
+import com.molohala.infinity.typo.Title
 
 @Composable
 fun ProfileDetailScreen(

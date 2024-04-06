@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.textfield
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

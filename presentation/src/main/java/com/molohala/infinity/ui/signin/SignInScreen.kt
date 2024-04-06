@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.molohala.infinity.InfinityButton
-import com.molohala.infinity.InfinityTextField
-import com.molohala.infinity.Title
+import com.molohala.infinity.button.InfinityButton
+import com.molohala.infinity.textfield.InfinityTextField
+import com.molohala.infinity.typo.Title
 
 @Composable
 fun SignInScreen(

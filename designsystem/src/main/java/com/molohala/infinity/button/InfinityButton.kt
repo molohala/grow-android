@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.button
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -25,8 +25,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-enum class ButtonState { Idle, Hold }
 
 @Composable
 fun InfinityButton(
@@ -67,12 +65,12 @@ fun InfinityButton(
             }
             .pointerInput(buttonState) {
                 awaitPointerEventScope {
-                    buttonState = if (buttonState == ButtonState.Hold) {
+                    buttonState = if (buttonState == ButtonState.Hover) {
                         waitForUpOrCancellation()
                         ButtonState.Idle
                     } else {
                         awaitFirstDown(false)
-                        ButtonState.Hold
+                        ButtonState.Hover
                     }
                 }
             },
