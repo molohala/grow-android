@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.molohala.infinity.color.InfinityColor
 
 @Composable
 fun InfinityButton(
@@ -46,7 +47,7 @@ fun InfinityButton(
         targetValue = if (buttonState == ButtonState.Idle) 1f else 0.96f,
         label = "",
     )
-    val color = Color(0xFF2279FF)
+    val color = InfinityColor.blue
     val animColor by animateColorAsState(
         targetValue = if (buttonState == ButtonState.Idle) {
             color.copy(alpha = 1f)

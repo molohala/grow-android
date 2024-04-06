@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.infinity.ui.main.profile.ProfileScreen
 import com.molohala.infinity.R
+import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.extension.drawColoredShadow
 import com.molohala.infinity.ui.main.community.CommunityScreen
@@ -75,13 +76,13 @@ fun MainScreen(
                                 .size(28.dp),
                             painter = painterResource(id = view.icon),
                             contentDescription = view.name,
-                            tint = if (viewType == view) Color(0xFF2279FF) else Color.LightGray
+                            tint = if (viewType == view) InfinityColor.blue else Color.LightGray
                         )
                         Text(
                             modifier = Modifier,
                             text = view.name,
                             style = MaterialTheme.typography.bodySmall,
-                            color = if (viewType == view) Color(0xFF2279FF) else Color.Gray
+                            color = if (viewType == view) InfinityColor.blue else Color.Gray
                         )
                     }
                 }
