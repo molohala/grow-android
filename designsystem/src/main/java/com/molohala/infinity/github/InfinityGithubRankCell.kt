@@ -22,18 +22,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.molohala.infinity.R
+import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
 
 @Composable
 fun InfinityGithubRankCell(
     modifier: Modifier = Modifier,
+    isCard: Boolean = false,
     rank: Int,
     onClick: () -> Unit
 ) {
     Row(
         modifier = modifier
             .bounceClick(onClick = onClick)
-            .defaultMinSize(minHeight = 60.dp),
+            .defaultMinSize(minHeight = 60.dp)
+            .then(if (isCard) Modifier.applyCardView() else Modifier),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

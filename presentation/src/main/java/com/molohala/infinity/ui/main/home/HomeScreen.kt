@@ -61,8 +61,7 @@ fun HomeScreen(
                 ) {
                     repeat(3) {
                         InfinityGithubRankCell(
-                            modifier = Modifier
-                                .applyCardView(),
+                            isCard = true,
                             rank = it + 1
                         ) {
 
@@ -85,8 +84,7 @@ fun HomeScreen(
                 ) {
                     repeat(3) {
                         InfinityGithubRankCell(
-                            modifier = Modifier
-                                .applyCardView(),
+                            isCard = true,
                             rank = it + 1
                         ) {
 
