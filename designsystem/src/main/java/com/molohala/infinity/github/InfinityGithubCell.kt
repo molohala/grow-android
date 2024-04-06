@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.R
 import com.molohala.infinity.extension.bounceClick
+import com.molohala.infinity.icon.RightArrow
 
 @Composable
 fun InfinityGithubCell(
@@ -46,6 +47,7 @@ fun InfinityGithubCell(
                 color = Color.Black
             )
             Spacer(modifier = Modifier.weight(1f))
+            RightArrow()
             Icon(
                 modifier = Modifier
                     .size(18.dp),
