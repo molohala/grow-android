@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.molohala.infinity.R
 import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.typo.Title
+import com.molohala.infinity.ui.main.MainViewType
 import com.molohala.infinity.ui.main.profile.setting.component.SettingCell
 
 @Composable
@@ -27,7 +28,11 @@ fun SettingScreen(
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Title(text = "설정")
+        Title(
+            text = "설정"
+        ) {
+            navController.popBackStack()
+        }
         SettingCell(
             modifier = Modifier
                 .padding(top = 16.dp),
@@ -35,7 +40,7 @@ fun SettingScreen(
             iconColor = Color.Gray,
             text = "프로필 설정"
         ) {
-
+            navController.navigate(MainViewType.ProfileEdit.name)
         }
         SettingCell(
             icon = R.drawable.ic_github,
@@ -43,7 +48,7 @@ fun SettingScreen(
             text = "Github 설정",
             description = "bestswlkh0310"
         ) {
-
+            navController.navigate(MainViewType.GithubSetting.name)
         }
         SettingCell(
             icon = R.drawable.ic_baekjoon,
@@ -51,7 +56,7 @@ fun SettingScreen(
             text = "백준 설정",
             description = "hhhello0507"
         ) {
-
+            navController.navigate(MainViewType.BaekjoonSetting.name)
         }
     }
 }

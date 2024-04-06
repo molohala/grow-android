@@ -7,17 +7,8 @@ import kotlinx.coroutines.flow.update
 
 class ProfileEditViewModel: ViewModel() {
     data class State(
-        val githubId: String = "",
-        val baekjoonId: String = ""
+        val jobs: ArrayList<String> = arrayListOf()
     )
 
     var uiState = MutableStateFlow(State())
-
-    fun updateGithubId(id: String) {
-        uiState.update { it.copy(githubId = id) }
-    }
-
-    fun updateBaekjoonId(id: String) {
-        uiState.update { it.copy(baekjoonId = id) }
-    }
 }

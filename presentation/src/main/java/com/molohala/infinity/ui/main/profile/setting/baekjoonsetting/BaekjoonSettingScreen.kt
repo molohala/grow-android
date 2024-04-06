@@ -1,11 +1,10 @@
-package com.molohala.infinity.ui.main.profile.setting.profileedit
+package com.molohala.infinity.ui.main.profile.setting.baekjoonsetting
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,10 +20,11 @@ import com.molohala.infinity.typo.Title
 import com.molohala.infinity.ui.main.profile.setting.githubsetting.GithubSettingViewModel
 
 @Composable
-fun ProfileEditScreen(
+fun BaekjoonSettingScreen(
     navController: NavController,
-    viewModel: ProfileEditViewModel = viewModel()
+    viewModel: BaekjoonSettingViewModel = viewModel()
 ) {
+
     val uiState by viewModel.uiState.collectAsState()
 
     Column(
@@ -34,10 +34,14 @@ fun ProfileEditScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Title(text = "프로필 수정") {
+        Title(text = "백준 설정") {
             navController.popBackStack()
         }
-        Text(text = uiState.jobs.toString())
+        InfinityTextField(
+            placeholder = "백준 Id를 입력해 주세요",
+            value = uiState.baekjoonId,
+            onValueChange = viewModel::updateBaekjoonId
+        )
 
         Spacer(modifier = Modifier.weight(1f))
         InfinityButton(
