@@ -1,4 +1,4 @@
-package com.molohala.infinity.data
+package com.molohala.infinity
 
 import org.json.JSONArray
 import org.json.JSONObject

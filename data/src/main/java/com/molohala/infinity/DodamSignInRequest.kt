@@ -1,4 +1,4 @@
-package com.molohala.infinity.data
+package com.molohala.infinity
 
 data class DodamSignInRequest(
     public val id: String,

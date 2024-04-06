@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.molohala.infinity.InfinityButton
 import com.molohala.infinity.InfinityTextField
-import com.molohala.infinity.designsystem.Title
+import com.molohala.infinity.Title
 
 @Composable
 fun SignInScreen(
@@ -30,8 +30,16 @@ fun SignInScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Title(text = "로그인")
-        InfinityTextField(placeholder = "아이디를 입력해 주세요", value = uiState.id, onValueChange = viewModel::updateId)
-        InfinityTextField(placeholder = "비밀번호를 입력해 주세요", value = uiState.pw, onValueChange = viewModel::updatePw)
+        InfinityTextField(
+            placeholder = "아이디를 입력해 주세요",
+            value = uiState.id,
+            onValueChange = viewModel::updateId
+        )
+        InfinityTextField(
+            placeholder = "비밀번호를 입력해 주세요",
+            value = uiState.pw,
+            onValueChange = viewModel::updatePw
+        )
         Spacer(modifier = Modifier.weight(1f))
         InfinityButton(
             modifier = Modifier

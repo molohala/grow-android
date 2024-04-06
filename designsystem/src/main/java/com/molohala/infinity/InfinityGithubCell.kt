@@ -15,10 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 
 @Composable
-fun InfinityBaekjoonCell(
+fun InfinityGithubCell(
     onClick: () -> Unit
 ) {
     Column(
@@ -34,9 +33,9 @@ fun InfinityBaekjoonCell(
             Icon(
                 modifier = Modifier
                     .size(20.dp),
-                painter = painterResource(id = R.drawable.ic_baekjoon),
+                painter = painterResource(id = R.drawable.ic_github),
                 contentDescription = "github rank",
-                tint = Color(0xFF0076C0)
+                tint = Color(0xFF24292e)
             )
             Text(
                 text = "nohjason",

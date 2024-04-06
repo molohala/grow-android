@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import com.molohala.infinity.applyCardView
 
 @Composable
-fun InfinityGithubCell(
+fun InfinityBaekjoonCell(
     onClick: () -> Unit
 ) {
     Column(
@@ -34,9 +34,9 @@ fun InfinityGithubCell(
             Icon(
                 modifier = Modifier
                     .size(20.dp),
-                painter = painterResource(id = R.drawable.ic_github),
+                painter = painterResource(id = R.drawable.ic_baekjoon),
                 contentDescription = "github rank",
-                tint = Color(0xFF24292e)
+                tint = Color(0xFF0076C0)
             )
             Text(
                 text = "nohjason",

@@ -1,9 +1,8 @@
-package com.molohala.infinity.data
+package com.molohala.infinity
 
-import android.util.Log
 import com.google.gson.GsonBuilder
-import com.molohala.infinity.data.Json.isJsonArray
-import com.molohala.infinity.data.Json.isJsonObject
+import com.molohala.infinity.Json.isJsonArray
+import com.molohala.infinity.Json.isJsonObject
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
@@ -33,20 +32,20 @@ object RetrofitClient {
 
     // loginInterceptor
     private val logInterceptor = HttpLoggingInterceptor { message ->
-        Log.i("로그", "Retrofit-Client : $message")
+        println("Retrofit-Client : $message")
 
         when {
             message.isJsonObject() ->
-                Log.i("로그", JSONObject(message).toString(4))
+                println(JSONObject(message).toString(4))
 
             message.isJsonArray() ->
-                Log.i("로그", JSONObject(message).toString(4))
+                println(JSONObject(message).toString(4))
 
             else -> {
                 try {
-                    Log.i("로그", JSONObject(message).toString(4))
+                    println(JSONObject(message).toString(4))
                 } catch (e: Exception) {
-                    Log.i("로그", message)
+                    println(message)
                 }
             }
         }

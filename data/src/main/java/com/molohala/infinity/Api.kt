@@ -1,4 +1,4 @@
-package com.molohala.infinity.data
+package com.molohala.infinity
 
 import retrofit2.http.Body
 import retrofit2.http.POST
