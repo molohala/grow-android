@@ -34,7 +34,7 @@ fun ProfileEditScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Title(text = "프로필 수정") {
+        Title(text = "프로필 설정") {
             navController.popBackStack()
         }
         Text(text = uiState.jobs.toString())

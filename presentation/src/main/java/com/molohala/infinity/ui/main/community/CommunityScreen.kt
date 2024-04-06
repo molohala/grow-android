@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,6 +48,9 @@ fun CommunityScreen(
             items(tempArr) {
                 InfinityCommunityCell()
             }
+            item {
+                Spacer(modifier = Modifier.height(32.dp))
+            }
         }
         Row(
             modifier = Modifier
@@ -74,25 +78,3 @@ fun CommunityScreen(
         }
     }
 }
-
-/**
- * HStack {
- *                 Spacer()
- *                 VStack {
- *                     Spacer()
- *                     Button {
- *                     } label: {
- *                         Circle()
- *                             .frame(width: 64, height: 64)
- *                             .foregroundStyle(.blue)
- *                             .overlay {
- *                                 Image(systemName: "square.and.pencil")
- *                                     .foregroundStyle(.white)
- *                             }
- *                     }
- *                     .applyAnimation()
- *                     .padding(.trailing, 24)
- *                     .padding(.bottom, 92)
- *                 }
- *             }
- */

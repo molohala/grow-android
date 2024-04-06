@@ -33,7 +33,7 @@ fun InfinityButton(
     text: String,
     enabled: Boolean = true,
     isLoading: Boolean = false,
-    shape: Shape = RoundedCornerShape(12.dp),
+    shape: Shape = RoundedCornerShape(10.dp),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     interactionSource: MutableInteractionSource = remember {
         MutableInteractionSource()
@@ -89,7 +89,7 @@ fun InfinityButton(
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.bodyLarge
         )
     }
 }
