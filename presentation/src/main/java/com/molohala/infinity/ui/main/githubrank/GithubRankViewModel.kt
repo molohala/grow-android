@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.ui.main.githubrank
 
 import androidx.lifecycle.ViewModel
 

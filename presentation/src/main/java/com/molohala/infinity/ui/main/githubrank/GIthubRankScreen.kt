@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.ui.main.githubrank
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,6 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.molohala.infinity.GithubRankCell
+import com.molohala.infinity.InfinityButton
+import com.molohala.infinity.designsystem.Title
 
 @Composable
 fun GithubRankScreen(

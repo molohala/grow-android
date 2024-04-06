@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.ui.main.community
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.molohala.infinity.applyCardView
+import com.molohala.infinity.bounceClick
 
 
 @Composable

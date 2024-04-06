@@ -1,9 +1,7 @@
-package com.molohala.infinity
+package com.molohala.infinity.data
 
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface DodamApi {
     @POST("/api/auth/login/")

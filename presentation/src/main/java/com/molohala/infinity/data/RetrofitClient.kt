@@ -1,9 +1,9 @@
-package com.molohala.infinity
+package com.molohala.infinity.data
 
 import android.util.Log
 import com.google.gson.GsonBuilder
-import com.molohala.infinity.Json.isJsonArray
-import com.molohala.infinity.Json.isJsonObject
+import com.molohala.infinity.data.Json.isJsonArray
+import com.molohala.infinity.data.Json.isJsonObject
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
@@ -92,7 +92,8 @@ object RetrofitClient {
 //        }
 
     val dodamRetrofit = Retrofit.Builder().baseUrl("https://dauth.b1nd.com/").addConverterFactory(GsonConverterFactory.create(
-        gson)).client(okHttpClient).build()
+        gson
+    )).client(okHttpClient).build()
 
     val dodamApi: DodamApi by lazy { dodamRetrofit.create(DodamApi::class.java) }
 }

@@ -1,7 +1,9 @@
-package com.molohala.infinity
+package com.molohala.infinity.ui.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.molohala.infinity.data.DodamSignInRequest
+import com.molohala.infinity.data.RetrofitClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

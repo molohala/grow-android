@@ -14,7 +14,6 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 
-
 fun Modifier.bounceClick(
     onChangeButtonState: (ButtonState) -> Unit = {},
     onClick: () -> Unit

@@ -1,12 +1,12 @@
-package com.molohala.infinity
+package com.molohala.infinity.ui.main
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.molohala.infinity.ProfileDetailScreen
+import com.molohala.infinity.ProfileEditScreen
 
 @Composable
 fun MainNavigationGraph(

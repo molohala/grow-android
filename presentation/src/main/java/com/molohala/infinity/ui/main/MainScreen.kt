@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.ui.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +23,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import com.molohala.infinity.ProfileScreen
+import com.molohala.infinity.R
+import com.molohala.infinity.bounceClick
+import com.molohala.infinity.drawColoredShadow
+import com.molohala.infinity.ui.main.community.CommunityScreen
+import com.molohala.infinity.ui.main.githubrank.GithubRankScreen
 
 @Composable
 fun MainScreen(
