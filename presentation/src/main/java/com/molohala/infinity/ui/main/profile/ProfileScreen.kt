@@ -129,6 +129,8 @@ fun Logout(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
+            modifier = Modifier
+                .padding(4.dp),
             text = "로그아웃",
             color = Color.Red,
             style = MaterialTheme.typography.bodyLarge

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -43,9 +44,11 @@ fun GithubRankScreen(
                 text = "Github 랭킹"
             )
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth()
                     .border(
                         width = 1.5.dp,
                         color = Color.LightGray.copy(alpha = 0.5f),
@@ -67,7 +70,8 @@ fun GithubRankScreen(
                 InfinityButton(
                     modifier = Modifier
                         .width(110.dp)
-                        .height(40.dp),
+                        .height(40.dp)
+                        .padding(top = 4.dp),
                     text = "설정하기"
                 ) {
                     navController.navigate("profile_detail")
