@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
-import com.molohala.infinity.icon.RightArrow
+import com.molohala.infinity.icon.IconRightArrow
 
 @Composable
 fun SettingCell(
@@ -52,7 +52,7 @@ fun SettingCell(
                 color = Color.Gray
             )
         }
-        RightArrow()
+        IconRightArrow()
     }
 }
 //            HStack {

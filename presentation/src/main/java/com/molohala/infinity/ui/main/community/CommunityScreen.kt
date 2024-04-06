@@ -2,14 +2,30 @@ package com.molohala.infinity.ui.main.community
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.molohala.infinity.R
+import com.molohala.infinity.color.InfinityColor
+import com.molohala.infinity.commnuity.CommunityCell
+import com.molohala.infinity.extension.bounceClick
+import com.molohala.infinity.icon.IconAdd
 import com.molohala.infinity.typo.Title
 
 @Composable
@@ -19,20 +35,68 @@ fun CommunityScreen(
 
     val tempArr = Array(30) { it }
 
-    LazyColumn(
-        modifier = Modifier
-            .background(Color(0xFFF4F5F9))
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        item {
-            Title(
-                modifier = Modifier,
-                text = "커뮤니티"
-            )
+    Box {
+        LazyColumn(
+            modifier = Modifier
+                .background(Color(0xFFF4F5F9))
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            item {
+                Title(
+                    modifier = Modifier,
+                    text = "커뮤니티"
+                )
+            }
+            items(tempArr) {
+                CommunityCell()
+            }
         }
-        items(tempArr) {
-            CommunityCell()
+        Row(
+            modifier = Modifier
+                .padding(end = 24.dp)
+                .padding(bottom = 24.dp)
+                .bounceClick(onClick = {
+
+                })
+                .align(Alignment.BottomEnd)
+                .height(48.dp)
+                .clip(CircleShape)
+                .background(InfinityColor.blue)
+                .padding(horizontal = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            IconAdd()
+            Text(
+                modifier = Modifier
+                    .padding(end = 4.dp),
+                text = "글쓰기",
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }
+
+/**
+ * HStack {
+ *                 Spacer()
+ *                 VStack {
+ *                     Spacer()
+ *                     Button {
+ *                     } label: {
+ *                         Circle()
+ *                             .frame(width: 64, height: 64)
+ *                             .foregroundStyle(.blue)
+ *                             .overlay {
+ *                                 Image(systemName: "square.and.pencil")
+ *                                     .foregroundStyle(.white)
+ *                             }
+ *                     }
+ *                     .applyAnimation()
+ *                     .padding(.trailing, 24)
+ *                     .padding(.bottom, 92)
+ *                 }
+ *             }
+ */

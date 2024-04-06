@@ -1,4 +1,4 @@
-package com.molohala.infinity.ui.main.community
+package com.molohala.infinity.commnuity
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
@@ -28,7 +29,7 @@ fun CommunityCell() {
 
             })
             .applyCardView(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -41,9 +42,9 @@ fun CommunityCell() {
             )
             Text(
                 modifier = Modifier
-                    .padding(start = 12.dp),
+                    .padding(start = 8.dp),
                 text = "노영재",
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.titleMedium
             )
             Text(
                 modifier = Modifier

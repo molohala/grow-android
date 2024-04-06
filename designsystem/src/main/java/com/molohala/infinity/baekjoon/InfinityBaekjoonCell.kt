@@ -19,7 +19,7 @@ import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.R
 import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.extension.bounceClick
-import com.molohala.infinity.icon.RightArrow
+import com.molohala.infinity.icon.IconRightArrow
 
 @Composable
 fun InfinityBaekjoonCell(
@@ -48,7 +48,7 @@ fun InfinityBaekjoonCell(
                 color = Color.Black
             )
             Spacer(modifier = Modifier.weight(1f))
-            RightArrow()
+            IconRightArrow()
         }
         Text(
             modifier = Modifier

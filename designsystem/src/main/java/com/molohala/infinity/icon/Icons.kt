@@ -11,12 +11,34 @@ import com.molohala.infinity.R
 
 
 @Composable
-fun RightArrow() {
+fun IconRightArrow() {
     Icon(
         modifier = Modifier
             .size(18.dp),
         painter = painterResource(id = R.drawable.ic_expand_right),
         contentDescription = null,
         tint = Color.Gray
+    )
+}
+
+@Composable
+fun IconLogout() {
+    Icon(
+        modifier = Modifier
+            .size(22.dp),
+        painter = painterResource(id = R.drawable.ic_logout),
+        contentDescription = null,
+        tint = Color.Red
+    )
+}
+
+@Composable
+fun IconAdd() {
+    Icon(
+        modifier = Modifier
+            .size(22.dp),
+        painter = painterResource(id = R.drawable.ic_add),
+        contentDescription = null,
+        tint = Color.White
     )
 }

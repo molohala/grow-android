@@ -33,6 +33,7 @@ import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.typo.Title
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
+import com.molohala.infinity.icon.IconLogout
 import com.molohala.infinity.ui.main.MainViewType
 
 @Composable
@@ -136,12 +137,6 @@ fun Logout(
             style = MaterialTheme.typography.bodyLarge
         )
         Spacer(modifier = Modifier.weight(1f))
-        Icon(
-            modifier = Modifier
-                .size(18.dp),
-            painter = painterResource(id = R.drawable.ic_logout),
-            contentDescription = null,
-            tint = Color.Red
-        )
+        IconLogout()
     }
 }
