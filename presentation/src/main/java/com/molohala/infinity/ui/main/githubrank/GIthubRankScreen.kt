@@ -26,6 +26,7 @@ import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.github.InfinityGithubRankCell
 import com.molohala.infinity.selector.InfinitySelector
 import com.molohala.infinity.typo.Title
+import com.molohala.infinity.ui.main.MainViewType
 
 @Composable
 fun GithubRankScreen(
@@ -83,7 +84,7 @@ fun GithubRankScreen(
                                 .padding(top = 4.dp),
                             text = "설정하기"
                         ) {
-                            navController.navigate("profile_detail")
+                            navController.navigate(MainViewType.GithubSetting.name)
                         }
                     }
                 }
