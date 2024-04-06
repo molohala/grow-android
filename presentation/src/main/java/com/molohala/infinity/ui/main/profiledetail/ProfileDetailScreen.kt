@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.ui.main.profiledetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.molohala.infinity.InfinityBaekjoonCell
+import com.molohala.infinity.InfinityGithubCell
+import com.molohala.infinity.Title
 
 @Composable
 fun ProfileDetailScreen(
@@ -27,12 +30,12 @@ fun ProfileDetailScreen(
             .verticalScroll(state = scrollState),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        com.molohala.infinity.Title(
+        Title(
             text = "노영재님의 프로필"
         ) {
             navController.popBackStack()
         }
-        com.molohala.infinity.InfinityGithubCell {
+        InfinityGithubCell {
 
         }
         InfinityBaekjoonCell {

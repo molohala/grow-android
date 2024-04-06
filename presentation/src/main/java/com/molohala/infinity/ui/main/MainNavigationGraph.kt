@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.molohala.infinity.ProfileDetailScreen
-import com.molohala.infinity.ProfileEditScreen
+import com.molohala.infinity.ui.main.profiledetail.ProfileDetailScreen
+import com.molohala.infinity.ui.main.profile.setting.profileedit.ProfileEditScreen
 
 @Composable
 fun MainNavigationGraph(

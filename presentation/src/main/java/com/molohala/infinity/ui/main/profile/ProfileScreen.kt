@@ -1,4 +1,4 @@
-package com.molohala.infinity
+package com.molohala.infinity.ui.main.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +24,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.molohala.infinity.InfinityBaekjoonCell
+import com.molohala.infinity.InfinityGithubCell
+import com.molohala.infinity.R
+import com.molohala.infinity.Title
+import com.molohala.infinity.applyCardView
+import com.molohala.infinity.bounceClick
 
 @Composable
 fun ProfileScreen(

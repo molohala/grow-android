@@ -1,6 +1,6 @@
-package com.molohala.infinity
+package com.molohala.infinity.dauth.request
 
-data class DodamSignInRequest(
+data class DAuthSignInRequest(
     public val id: String,
     public val pw: String,
     public val clientId: String,

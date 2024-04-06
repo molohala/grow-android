@@ -2,8 +2,8 @@ package com.molohala.infinity.ui.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.molohala.infinity.DodamSignInRequest
-import com.molohala.infinity.RetrofitClient
+import com.molohala.infinity.dauth.request.DAuthSignInRequest
+import com.molohala.infinity.global.RetrofitClient
 import com.molohala.infinity.ui.Secret
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -31,13 +31,13 @@ class SignInViewModel: ViewModel() {
 
         viewModelScope.launch {
             try {
-                val request = DodamSignInRequest(
+                val request = DAuthSignInRequest(
                     id = uiState.value.id,
                     pw = sb.toString(),
                     clientId = Secret.CLIENT_ID,
                     redirectUrl = Secret.REDIRECT_URL
                 )
-                val response = RetrofitClient.dodamApi.signIn(request)
+                val response = RetrofitClient.dauthApi.signIn(request)
             } catch (e: Exception) {
                 println(e)
             }

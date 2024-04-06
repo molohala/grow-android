@@ -1,11 +1,9 @@
 package com.molohala.infinity.ui.main
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.molohala.infinity.ProfileScreen
+import com.molohala.infinity.ui.main.profile.ProfileScreen
 import com.molohala.infinity.R
 import com.molohala.infinity.bounceClick
 import com.molohala.infinity.drawColoredShadow
