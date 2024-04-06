@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,6 +29,7 @@ import androidx.navigation.NavController
 import com.molohala.infinity.baekjoon.InfinityBaekjoonCell
 import com.molohala.infinity.github.InfinityGithubCell
 import com.molohala.infinity.R
+import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.typo.Title
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
@@ -40,7 +43,7 @@ fun ProfileScreen(
 
     Column(
         modifier = Modifier
-            .background(Color(0xFFF4F5F9))
+            .background(InfinityColor.background)
             .padding(horizontal = 16.dp)
             .fillMaxHeight()
             .verticalScroll(state = scrollState),
@@ -71,17 +74,16 @@ fun Profile(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .bounceClick(onClick = onClick)
             .applyCardView(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(0.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(48.dp)
                     .clip(CircleShape)
                     .background(Color.LightGray)
             )
@@ -93,12 +95,15 @@ fun Profile(
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.weight(1f))
-            Icon(
+            Text(
                 modifier = Modifier
-                    .size(18.dp),
-                painter = painterResource(id = R.drawable.ic_expand_right),
-                contentDescription = null,
-                tint = Color.Gray
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(InfinityColor.background)
+                    .padding(vertical = 8.dp, horizontal = 12.dp)
+                    .bounceClick(onClick = onClick),
+                text = "설정",
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.Gray
             )
         }
 
@@ -106,7 +111,7 @@ fun Profile(
             modifier = Modifier
                 .padding(vertical = 24.dp),
             text = "\"뚝딱뚝딱\"",
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.bodyLarge,
             color = Color.Gray
         )
     }
@@ -125,7 +130,7 @@ fun Logout(
         Text(
             text = "로그아웃",
             color = Color.Red,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.bodyLarge
         )
         Spacer(modifier = Modifier.weight(1f))
         Icon(

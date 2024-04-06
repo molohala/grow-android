@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.R
+import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.extension.bounceClick
 
 @Composable
@@ -38,7 +39,7 @@ fun InfinityBaekjoonCell(
                     .size(20.dp),
                 painter = painterResource(id = R.drawable.ic_baekjoon),
                 contentDescription = "github rank",
-                tint = Color(0xFF0076C0)
+                tint = InfinityColor.baekjoon
             )
             Text(
                 text = "nohjason",
