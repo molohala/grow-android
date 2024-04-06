@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -59,13 +60,13 @@ fun MainScreen(
                         shadowRadius = 10.dp
                     )
                     .background(Color.White)
-                    .padding(vertical = 12.dp)
-                    .padding(bottom = 12.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                    .padding(vertical = 12.dp, horizontal = 12.dp)
+                    .padding(bottom = 16.dp)
             ) {
                 mainViews.forEach { view ->
                     Column(
                         modifier = Modifier
+                            .weight(1f)
                             .bounceClick(onClick = {
                                 viewType = view
                             }),
