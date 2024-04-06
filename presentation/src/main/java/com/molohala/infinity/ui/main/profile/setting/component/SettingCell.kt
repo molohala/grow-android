@@ -3,6 +3,7 @@ package com.molohala.infinity.ui.main.profile.setting.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,8 +28,9 @@ fun SettingCell(
 ) {
     Row(
         modifier = modifier
+            .bounceClick(onClick = onClick)
             .applyCardView()
-            .bounceClick(onClick = onClick),
+            .padding(horizontal = 8.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Icon(
