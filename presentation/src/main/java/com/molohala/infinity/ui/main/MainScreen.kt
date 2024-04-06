@@ -36,15 +36,15 @@ fun MainScreen(
 ) {
 
     var viewType by remember {
-        mutableStateOf<MainViewType>(MainViewType.Home)
+        mutableStateOf<BottomNavigationType>(BottomNavigationType.Home)
     }
 
     val mainViews = arrayListOf(
-        MainViewType.Home,
-        MainViewType.Community,
-        MainViewType.GithubRank,
-        MainViewType.Baekjoon,
-        MainViewType.Profile,
+        BottomNavigationType.Home,
+        BottomNavigationType.Community,
+        BottomNavigationType.GithubRank,
+        BottomNavigationType.Baekjoon,
+        BottomNavigationType.Profile,
     )
 
     Scaffold(
@@ -94,23 +94,23 @@ fun MainScreen(
                 .padding(it)
         ) {
             when (viewType) {
-                is MainViewType.Home -> Text(text = "home")
-                is MainViewType.Community -> CommunityScreen(navController = navController)
-                MainViewType.GithubRank -> GithubRankScreen(navController = navController)
-                MainViewType.Baekjoon -> Text(text = "baekjoon")
-                MainViewType.Profile -> ProfileScreen(navController = navController)
+                is BottomNavigationType.Home -> Text(text = "home")
+                is BottomNavigationType.Community -> CommunityScreen(navController = navController)
+                BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController)
+                BottomNavigationType.Baekjoon -> Text(text = "baekjoon")
+                BottomNavigationType.Profile -> ProfileScreen(navController = navController)
             }
         }
     }
 }
 
-sealed class MainViewType(
+sealed class BottomNavigationType(
     val name: String,
     val icon: Int
 ) {
-    data object Home : MainViewType(name = "홈", icon = R.drawable.ic_home)
-    data object Community : MainViewType(name = "커뮤니티", icon = R.drawable.ic_community)
-    data object GithubRank : MainViewType(name = "Github", icon = R.drawable.ic_github)
-    data object Baekjoon : MainViewType(name = "백준", icon = R.drawable.ic_baekjoon)
-    data object Profile : MainViewType(name = "프로필", icon = R.drawable.ic_profile)
+    data object Home : BottomNavigationType(name = "홈", icon = R.drawable.ic_home)
+    data object Community : BottomNavigationType(name = "커뮤니티", icon = R.drawable.ic_community)
+    data object GithubRank : BottomNavigationType(name = "Github", icon = R.drawable.ic_github)
+    data object Baekjoon : BottomNavigationType(name = "백준", icon = R.drawable.ic_baekjoon)
+    data object Profile : BottomNavigationType(name = "프로필", icon = R.drawable.ic_profile)
 }

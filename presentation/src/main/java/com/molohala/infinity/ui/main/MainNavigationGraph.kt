@@ -14,12 +14,12 @@ fun MainNavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "main"
+        startDestination = MainViewType.Main.name
     ) {
-        composable("main") {
+        composable(MainViewType.Main.name) {
             MainScreen(navController = navController)
         }
-        composable("profile_detail") {
+        composable(MainViewType.ProfileDetail.name) {
             ProfileDetailScreen(navController = navController)
         }
         composable("profile_edit") {

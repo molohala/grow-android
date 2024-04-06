@@ -13,11 +13,11 @@ fun RootNavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "signIn") {
-        composable("signIn") {
+        startDestination = RootViewType.Main.name) {
+        composable(RootViewType.SignIn.name) {
             SignInScreen()
         }
-        composable("main") {
+        composable(RootViewType.Main.name) {
             MainNavigationGraph()
         }
     }
