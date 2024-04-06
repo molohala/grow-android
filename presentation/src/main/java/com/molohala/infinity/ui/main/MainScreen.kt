@@ -29,6 +29,7 @@ import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.extension.drawColoredShadow
 import com.molohala.infinity.ui.main.community.CommunityScreen
 import com.molohala.infinity.ui.main.githubrank.GithubRankScreen
+import com.molohala.infinity.ui.main.home.HomeScreen
 
 @Composable
 fun MainScreen(
@@ -94,7 +95,7 @@ fun MainScreen(
                 .padding(it)
         ) {
             when (viewType) {
-                is BottomNavigationType.Home -> Text(text = "home")
+                is BottomNavigationType.Home -> HomeScreen(navController = navController)
                 is BottomNavigationType.Community -> CommunityScreen(navController = navController)
                 BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController)
                 BottomNavigationType.Baekjoon -> Text(text = "baekjoon")
