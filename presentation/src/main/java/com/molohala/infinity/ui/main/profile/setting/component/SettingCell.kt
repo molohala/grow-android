@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.RightArrow
 
@@ -26,6 +27,7 @@ fun SettingCell(
 ) {
     Row(
         modifier = modifier
+            .applyCardView()
             .bounceClick(onClick = onClick),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {

@@ -1,8 +1,10 @@
 package com.molohala.infinity.ui.main.profile.setting
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +23,7 @@ fun SettingScreen(
 ) {
     Column(
         modifier = Modifier
+            .background(Color.White)
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -53,9 +56,3 @@ fun SettingScreen(
     }
 }
 
-
-@Preview
-@Composable
-fun SettingScreenPreview() {
-    SettingScreen(navController = rememberNavController())
-}

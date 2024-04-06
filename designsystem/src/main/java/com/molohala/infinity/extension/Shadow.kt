@@ -1,41 +1,42 @@
 package com.molohala.infinity.extension
 
+import android.graphics.BlurMaskFilter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 fun Modifier.drawColoredShadow(
     color: Color,
     alpha: Float = 0.2f,
-    borderRadius: Dp = 0.dp,
-    shadowRadius: Dp = 20.dp,
-    offsetY: Dp = 0.dp,
-    offsetX: Dp = 0.dp
+    blur: Dp = 0.dp,
+    offsetY: Dp = 0.dp
 ) = drawBehind {
-    val transparentColor = android.graphics.Color.toArgb(color.copy(alpha = 0.0f).value.toLong())
-    val shadowColor = android.graphics.Color.toArgb(color.copy(alpha = alpha).value.toLong())
-    this.drawIntoCanvas {
+    drawIntoCanvas { canvas ->
         val paint = Paint()
         val frameworkPaint = paint.asFrameworkPaint()
-        frameworkPaint.color = transparentColor
-        frameworkPaint.setShadowLayer(
-            shadowRadius.toPx(),
-            offsetX.toPx(),
-            offsetY.toPx(),
-            shadowColor
-        )
-        it.drawRoundRect(
-            0f,
-            0f,
-            this.size.width,
-            this.size.height,
-            borderRadius.toPx(),
-            borderRadius.toPx(),
-            paint
+
+        frameworkPaint.color = color.copy(alpha = alpha).toArgb()
+
+        if (blur != 0.dp) {
+            frameworkPaint.maskFilter = BlurMaskFilter(
+                blur.toPx(),
+                BlurMaskFilter.Blur.NORMAL,
+            )
+        }
+
+        canvas.drawRoundRect(
+            left = 0f,
+            top = offsetY.toPx(),
+            right = size.width,
+            bottom = size.height,
+            radiusX = 0f,
+            radiusY = 0f,
+            paint = paint,
         )
     }
 }

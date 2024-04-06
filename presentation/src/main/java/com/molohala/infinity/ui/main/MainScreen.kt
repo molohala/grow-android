@@ -55,7 +55,7 @@ fun MainScreen(
                         color = Color.Black,
                         alpha = 0.04f,
                         offsetY = 0.dp,
-                        shadowRadius = 10.dp
+                        blur = 10.dp
                     )
                     .background(Color.White)
                     .padding(vertical = 12.dp, horizontal = 12.dp)

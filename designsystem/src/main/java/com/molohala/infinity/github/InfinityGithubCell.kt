@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.R
+import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.RightArrow
 
@@ -39,7 +40,7 @@ fun InfinityGithubCell(
                     .size(20.dp),
                 painter = painterResource(id = R.drawable.ic_github),
                 contentDescription = "github rank",
-                tint = Color(0xFF24292e)
+                tint = InfinityColor.github
             )
             Text(
                 text = "nohjason",
@@ -48,13 +49,6 @@ fun InfinityGithubCell(
             )
             Spacer(modifier = Modifier.weight(1f))
             RightArrow()
-            Icon(
-                modifier = Modifier
-                    .size(18.dp),
-                painter = painterResource(id = R.drawable.ic_expand_right),
-                contentDescription = null,
-                tint = Color.Gray
-            )
         }
         Text(
             modifier = Modifier

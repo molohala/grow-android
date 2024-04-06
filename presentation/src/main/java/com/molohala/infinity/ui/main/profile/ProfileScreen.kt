@@ -33,6 +33,7 @@ import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.typo.Title
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
+import com.molohala.infinity.ui.main.MainViewType
 
 @Composable
 fun ProfileScreen(
@@ -53,7 +54,7 @@ fun ProfileScreen(
             text = "프로필"
         )
         Profile {
-            navController.navigate("profile_edit")
+            navController.navigate(MainViewType.Setting.name)
         }
         InfinityGithubCell {
 

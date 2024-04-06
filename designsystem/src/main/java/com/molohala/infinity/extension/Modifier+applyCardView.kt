@@ -11,13 +11,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 fun Modifier.applyCardView(): Modifier = composed { this
-    .clip(RoundedCornerShape(10.dp))
     .drawColoredShadow(
         color = Color.Black,
         alpha = 0.04f,
         offsetY = 3.dp,
-        borderRadius = 8.dp,
-        shadowRadius = 8.dp
+        blur = 8.dp,
     )
+    .clip(RoundedCornerShape(10.dp))
     .background(Color.White)
     .padding(all = 12.dp) }

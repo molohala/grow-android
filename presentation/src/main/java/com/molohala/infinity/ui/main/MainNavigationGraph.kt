@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.molohala.infinity.ui.main.profile.setting.SettingScreen
 import com.molohala.infinity.ui.main.profiledetail.ProfileDetailScreen
 import com.molohala.infinity.ui.main.profile.setting.profileedit.ProfileEditScreen
 
@@ -22,7 +23,16 @@ fun MainNavigationGraph(
         composable(MainViewType.ProfileDetail.name) {
             ProfileDetailScreen(navController = navController)
         }
-        composable("profile_edit") {
+        composable(MainViewType.ProfileEdit.name) {
+            ProfileEditScreen(navController = navController)
+        }
+        composable(MainViewType.Setting.name) {
+            SettingScreen(navController = navController)
+        }
+        composable(MainViewType.GithubSetting.name) {
+            ProfileEditScreen(navController = navController)
+        }
+        composable(MainViewType.BaekjoonSetting.name) {
             ProfileEditScreen(navController = navController)
         }
     }
