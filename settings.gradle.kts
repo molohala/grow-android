@@ -14,5 +14,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "infinity"
-include(":app")
- 
+include(":presentation")
+include(":designsystem")
+include(":data")

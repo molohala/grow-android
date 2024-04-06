@@ -53,6 +53,9 @@ dependencies {
 
     val nav_version = "2.7.7"
 
+    implementation(project(":designsystem"))
+    implementation(project(":data"))
+
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
