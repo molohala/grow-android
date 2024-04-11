@@ -31,6 +31,8 @@ import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.IconLogout
 import com.molohala.infinity.ui.main.main.MainViewType
+import com.molohala.infinity.ui.main.statcell.InfinityStatCell
+import com.molohala.infinity.ui.main.statcell.InfinityStatType
 
 @Composable
 fun ProfileScreen(
@@ -50,18 +52,35 @@ fun ProfileScreen(
                 .padding(horizontal = 16.dp)
                 .fillMaxHeight()
                 .verticalScroll(state = scrollState),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Profile {
                 navController.navigate(MainViewType.Setting.name)
+            }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                InfinityStatCell(
+                    modifier = Modifier
+                        .weight(1f),
+                    title = "커밋 개수",
+                    type = InfinityStatType.Github(commit = 1204)
+                ) {
+
+                }
+                InfinityStatCell(
+                    modifier = Modifier
+                        .weight(1f),
+                    title = "문제 푼 개수",
+                    type = InfinityStatType.Baekjoon(solved = 385)
+                ) {
+
+                }
             }
             InfinityGithubCell {
 
             }
             InfinityBaekjoonCell {
-
-            }
-            Logout {
 
             }
         }
@@ -120,10 +139,11 @@ fun Profile(
 
 @Composable
 fun Logout(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .bounceClick(onClick = onClick)
             .applyCardView(),
         verticalAlignment = Alignment.CenterVertically

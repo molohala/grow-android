@@ -26,29 +26,33 @@ fun BaekjoonSettingScreen(
 
     val uiState by viewModel.uiState.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .background(Color.White)
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        TopBar(text = "백준 설정") {
+    TopBar(
+        text = "백준 설정",
+        onClickBackButton = {
             navController.popBackStack()
         }
-        InfinityTextField(
-            placeholder = "백준 Id를 입력해 주세요",
-            value = uiState.baekjoonId,
-            onValueChange = viewModel::updateBaekjoonId
-        )
-
-        Spacer(modifier = Modifier.weight(1f))
-        InfinityButton(
+    ) {
+        Column(
             modifier = Modifier
-                .padding(bottom = 32.dp),
-            text = "완료하기",
+                .background(Color.White)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            navController.popBackStack()
+            InfinityTextField(
+                placeholder = "백준 Id를 입력해 주세요",
+                value = uiState.baekjoonId,
+                onValueChange = viewModel::updateBaekjoonId
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+            InfinityButton(
+                modifier = Modifier
+                    .padding(bottom = 32.dp),
+                text = "완료하기",
+            ) {
+                navController.popBackStack()
+            }
         }
     }
 }

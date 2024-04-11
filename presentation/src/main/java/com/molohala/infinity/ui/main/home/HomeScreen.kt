@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.commnuity.InfinityCommunityCell
+import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.github.InfinityGithubRankCell
 import com.molohala.infinity.typo.SubTitle
 import com.molohala.infinity.typo.TopBar
@@ -109,11 +110,12 @@ fun TodayGithub() {
             text = "오늘의 Github Top 3"
         )
         Column(
+            modifier = Modifier
+                .applyCardView(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             repeat(3) {
                 InfinityGithubRankCell(
-                    isCard = true,
                     rank = it + 1
                 ) {
 
@@ -132,11 +134,12 @@ fun TodayBaekjoon() {
             text = "오늘의 백준 Top 3"
         )
         Column(
+            modifier = Modifier
+                .applyCardView(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             repeat(3) {
                 InfinityGithubRankCell(
-                    isCard = true,
                     rank = it + 1
                 ) {
 

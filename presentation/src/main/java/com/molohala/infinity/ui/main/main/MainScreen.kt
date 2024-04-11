@@ -27,6 +27,7 @@ import com.molohala.infinity.R
 import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.extension.shadow
+import com.molohala.infinity.ui.main.baekjoonrank.BaekjoonRankScreen
 import com.molohala.infinity.ui.main.community.CommunityScreen
 import com.molohala.infinity.ui.main.githubrank.GithubRankScreen
 import com.molohala.infinity.ui.main.home.HomeScreen
@@ -98,7 +99,7 @@ fun MainScreen(
                 is BottomNavigationType.Home -> HomeScreen(navController = navController)
                 is BottomNavigationType.Community -> CommunityScreen(navController = navController)
                 BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController)
-                BottomNavigationType.Baekjoon -> Text(text = "baekjoon")
+                BottomNavigationType.Baekjoon -> BaekjoonRankScreen(navController = navController)
                 BottomNavigationType.Profile -> ProfileScreen(navController = navController)
             }
         }

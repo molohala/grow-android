@@ -25,11 +25,11 @@ fun MainNavigationGraph(
         composable(MainViewType.ProfileDetail.name) {
             ProfileDetailScreen(navController = navController)
         }
-        composable(MainViewType.ProfileEdit.name) {
-            ProfileEditScreen(navController = navController)
-        }
         composable(MainViewType.Setting.name) {
             SettingScreen(navController = navController)
+        }
+        composable(MainViewType.ProfileEdit.name) {
+            ProfileEditScreen(navController = navController)
         }
         composable(MainViewType.GithubSetting.name) {
             GithubSettingScreen(navController = navController)
