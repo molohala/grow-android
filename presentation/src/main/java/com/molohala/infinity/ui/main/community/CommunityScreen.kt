@@ -45,7 +45,9 @@ fun CommunityScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(tempArr) {
-                    InfinityCommunityCell()
+                    InfinityCommunityCell {
+
+                    }
                 }
                 item {
                     Spacer(modifier = Modifier.height(32.dp))

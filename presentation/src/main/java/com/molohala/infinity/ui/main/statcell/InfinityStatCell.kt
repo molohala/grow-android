@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
@@ -27,11 +28,11 @@ fun InfinityStatCell(
 ) {
     Column(
         modifier = modifier
-            .padding(4.dp)
+            .bounceClick(onClick = onClick)
             .applyCardView()
-            .bounceClick(onClick = onClick),
+            .padding(4.dp),
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -42,7 +43,8 @@ fun InfinityStatCell(
             }
             Text(
                 text = number.toString(),
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.headlineLarge,
+                fontWeight = FontWeight.ExtraBold
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
@@ -55,7 +57,7 @@ fun InfinityStatCell(
         }
         Text(
             text = title,
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.titleMedium
         )
     }
 }

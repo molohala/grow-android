@@ -42,7 +42,7 @@ fun InfinityGithubRankCell(
     ) {
         Text(
             text = "$rank",
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.titleMedium,
             color = Color.Black
         )
         Box(
@@ -78,7 +78,7 @@ fun InfinityGithubRankCell(
             Text(
                 text = "노영재",
                 color = Color.Black,
-                style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp)
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp)
             )
             Text(
                 text = "nohjason",
@@ -93,6 +93,7 @@ fun InfinityGithubRankCell(
         )
         Text(
             text = "10 커밋",
+            style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
     }
