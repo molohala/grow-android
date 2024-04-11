@@ -2,6 +2,7 @@ package com.molohala.infinity.global
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.molohala.infinity.auth.api.AuthApi
 import com.molohala.infinity.dauth.api.DAuthApi
 import com.molohala.infinity.global.Json.isJsonArray
 import com.molohala.infinity.global.Json.isJsonObject
@@ -90,11 +91,18 @@ object RetrofitClient {
 //            return retrofit.create(Api::class.java)
 //        }
 
-    val dodamRetrofit = Retrofit.Builder().baseUrl("https://dauth.b1nd.com/").addConverterFactory(
-        GsonConverterFactory.create(
-            gson
-        )
-    ).client(okHttpClient).build()
+    private val dodamRetrofit: Retrofit = Retrofit.Builder()
+        .baseUrl("https://dauth.b1nd.com/")
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .client(okHttpClient)
+        .build()
+
+    private val infinityRetrofit: Retrofit = Retrofit.Builder()
+        .baseUrl("${baseUrl}")
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .client(okHttpClient)
+        .build()
 
     val dauthApi: DAuthApi by lazy { dodamRetrofit.create(DAuthApi::class.java) }
+    val authApi: AuthApi by lazy { infinityRetrofit.create(AuthApi::class.java) }
 }
