@@ -23,7 +23,7 @@ import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.commnuity.InfinityCommunityCell
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.IconAdd
-import com.molohala.infinity.typo.Title
+import com.molohala.infinity.typo.TopBar
 
 @Composable
 fun CommunityScreen(
@@ -32,49 +32,50 @@ fun CommunityScreen(
 
     val tempArr = Array(30) { it }
 
-    Box {
-        LazyColumn(
-            modifier = Modifier
-                .background(Color(0xFFF4F5F9))
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            item {
-                Title(
-                    modifier = Modifier,
-                    text = "커뮤니티"
+    TopBar(
+        modifier = Modifier,
+        backgroundColor = InfinityColor.background,
+        text = "포럼"
+    ) {
+        Box {
+            LazyColumn(
+                modifier = Modifier
+                    .background(Color(0xFFF4F5F9))
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(tempArr) {
+                    InfinityCommunityCell()
+                }
+                item {
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .padding(end = 24.dp)
+                    .padding(bottom = 24.dp)
+                    .bounceClick(onClick = {
+
+                    })
+                    .align(Alignment.BottomEnd)
+                    .height(48.dp)
+                    .clip(CircleShape)
+                    .background(InfinityColor.blue)
+                    .padding(horizontal = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                IconAdd()
+                Text(
+                    modifier = Modifier
+                        .padding(end = 4.dp),
+                    text = "글쓰기",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
-            items(tempArr) {
-                InfinityCommunityCell()
-            }
-            item {
-                Spacer(modifier = Modifier.height(32.dp))
-            }
-        }
-        Row(
-            modifier = Modifier
-                .padding(end = 24.dp)
-                .padding(bottom = 24.dp)
-                .bounceClick(onClick = {
-
-                })
-                .align(Alignment.BottomEnd)
-                .height(48.dp)
-                .clip(CircleShape)
-                .background(InfinityColor.blue)
-                .padding(horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            IconAdd()
-            Text(
-                modifier = Modifier
-                    .padding(end = 4.dp),
-                text = "글쓰기",
-                color = Color.White,
-                style = MaterialTheme.typography.bodyLarge
-            )
         }
     }
+
 }

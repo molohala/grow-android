@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.textfield.InfinityTextField
-import com.molohala.infinity.typo.Title
+import com.molohala.infinity.typo.TopBar
 
 @Composable
 fun SignInScreen(
@@ -23,30 +23,33 @@ fun SignInScreen(
 
     val uiState by viewModel.uiState.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .background(Color.White)
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    TopBar(
+        text = "로그인"
     ) {
-        Title(text = "로그인")
-        InfinityTextField(
-            placeholder = "아이디를 입력해 주세요",
-            value = uiState.id,
-            onValueChange = viewModel::updateId
-        )
-        InfinityTextField(
-            placeholder = "비밀번호를 입력해 주세요",
-            value = uiState.pw,
-            onValueChange = viewModel::updatePw
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        InfinityButton(
+        Column(
             modifier = Modifier
-                .padding(bottom = 32.dp),
-            text = "도담도담 로그인"
+                .background(Color.White)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            viewModel.signIn()
+            InfinityTextField(
+                placeholder = "아이디를 입력해 주세요",
+                value = uiState.id,
+                onValueChange = viewModel::updateId
+            )
+            InfinityTextField(
+                placeholder = "비밀번호를 입력해 주세요",
+                value = uiState.pw,
+                onValueChange = viewModel::updatePw
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            InfinityButton(
+                modifier = Modifier
+                    .padding(bottom = 32.dp),
+                text = "도담도담 로그인"
+            ) {
+                viewModel.signIn()
+            }
         }
     }
 }

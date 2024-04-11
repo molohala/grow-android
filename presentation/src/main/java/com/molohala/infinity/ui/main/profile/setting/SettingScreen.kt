@@ -4,18 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.molohala.infinity.R
 import com.molohala.infinity.color.InfinityColor
-import com.molohala.infinity.typo.Title
-import com.molohala.infinity.ui.main.MainViewType
+import com.molohala.infinity.typo.TopBar
+import com.molohala.infinity.ui.main.main.MainViewType
 import com.molohala.infinity.ui.main.profile.setting.component.SettingCell
 
 @Composable
@@ -28,7 +25,7 @@ fun SettingScreen(
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Title(
+        TopBar(
             text = "설정"
         ) {
             navController.popBackStack()

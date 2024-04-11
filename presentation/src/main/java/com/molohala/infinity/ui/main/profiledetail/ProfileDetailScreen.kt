@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.infinity.baekjoon.InfinityBaekjoonCell
 import com.molohala.infinity.github.InfinityGithubCell
-import com.molohala.infinity.typo.Title
+import com.molohala.infinity.typo.TopBar
 
 @Composable
 fun ProfileDetailScreen(
@@ -30,7 +30,7 @@ fun ProfileDetailScreen(
             .verticalScroll(state = scrollState),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Title(
+        TopBar(
             text = "노영재님의 프로필"
         ) {
             navController.popBackStack()

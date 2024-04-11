@@ -1,4 +1,4 @@
-package com.molohala.infinity.ui.main
+package com.molohala.infinity.ui.main.main
 
 sealed class MainViewType(
     val name: String

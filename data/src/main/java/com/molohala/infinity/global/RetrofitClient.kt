@@ -78,19 +78,6 @@ object RetrofitClient {
         okHttpClientBuilder.build()
     }
 
-
-//    val api: Api
-//        get() {
-//            val protocol = if (RTRApp.prefs.isHttp) "http" else "https"
-//            val serverUrl = "$protocol://${RTRApp.prefs.serverUrl}/"
-//            val retrofit = Retrofit.Builder()
-//                .baseUrl(serverUrl)
-//                .addConverterFactory(GsonConverterFactory.create(gson))
-//                .client(okHttpClient)
-//                .build()
-//            return retrofit.create(Api::class.java)
-//        }
-
     private val dodamRetrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://dauth.b1nd.com/")
         .addConverterFactory(GsonConverterFactory.create(gson))

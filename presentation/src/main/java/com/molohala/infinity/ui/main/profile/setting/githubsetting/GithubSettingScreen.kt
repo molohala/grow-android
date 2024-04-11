@@ -16,7 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.textfield.InfinityTextField
-import com.molohala.infinity.typo.Title
+import com.molohala.infinity.typo.TopBar
 
 @Composable
 fun GithubSettingScreen(
@@ -33,7 +33,7 @@ fun GithubSettingScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Title(text = "Github 설정") {
+        TopBar(text = "Github 설정") {
             navController.popBackStack()
         }
         InfinityTextField(

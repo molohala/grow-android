@@ -34,7 +34,8 @@ fun SubTitle(
             text = text,
             style = MaterialTheme.typography.headlineSmall.copy(
                 platformStyle = PlatformTextStyle(includeFontPadding = false)
-            )
+            ),
+            fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.weight(1f))
     }

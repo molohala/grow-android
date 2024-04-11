@@ -14,8 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,18 +21,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.infinity.baekjoon.InfinityBaekjoonCell
 import com.molohala.infinity.github.InfinityGithubCell
-import com.molohala.infinity.R
 import com.molohala.infinity.color.InfinityColor
-import com.molohala.infinity.typo.Title
+import com.molohala.infinity.typo.TopBar
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.IconLogout
-import com.molohala.infinity.ui.main.MainViewType
+import com.molohala.infinity.ui.main.main.MainViewType
 
 @Composable
 fun ProfileScreen(
@@ -43,28 +39,31 @@ fun ProfileScreen(
 
     val scrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier
-            .background(InfinityColor.background)
-            .padding(horizontal = 16.dp)
-            .fillMaxHeight()
-            .verticalScroll(state = scrollState),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+    TopBar(
+        modifier = Modifier,
+        backgroundColor = InfinityColor.background,
+        text = "프로필"
     ) {
-        Title(
-            text = "프로필"
-        )
-        Profile {
-            navController.navigate(MainViewType.Setting.name)
-        }
-        InfinityGithubCell {
+        Column(
+            modifier = Modifier
+                .background(InfinityColor.background)
+                .padding(horizontal = 16.dp)
+                .fillMaxHeight()
+                .verticalScroll(state = scrollState),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Profile {
+                navController.navigate(MainViewType.Setting.name)
+            }
+            InfinityGithubCell {
 
-        }
-        InfinityBaekjoonCell {
+            }
+            InfinityBaekjoonCell {
 
-        }
-        Logout {
+            }
+            Logout {
 
+            }
         }
     }
 }

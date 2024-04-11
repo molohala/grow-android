@@ -25,8 +25,8 @@ import androidx.navigation.NavController
 import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.github.InfinityGithubRankCell
 import com.molohala.infinity.selector.InfinitySelector
-import com.molohala.infinity.typo.Title
-import com.molohala.infinity.ui.main.MainViewType
+import com.molohala.infinity.typo.TopBar
+import com.molohala.infinity.ui.main.main.MainViewType
 
 @Composable
 fun GithubRankScreen(
@@ -36,91 +36,88 @@ fun GithubRankScreen(
 
     val tempRankings = Array(10) { it }
 
-    LazyColumn(
-        modifier = Modifier
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally
+    TopBar(
+        text = "Github 랭킹"
     ) {
-        item {
-            Title(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                text = "Github 랭킹"
-            )
-        }
-        item {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                if (true) {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .fillMaxWidth()
-                            .border(
-                                width = 1.5.dp,
-                                color = Color.LightGray.copy(alpha = 0.5f),
-                                shape = RoundedCornerShape(10)
-                            )
-                            .padding(horizontal = 20.dp, vertical = 24.dp)
-                    ) {
-                        Text(
-                            modifier = Modifier,
-                            text = "아직 Github 설정이 완료되지 않았어요",
-                            color = Color.Gray,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                        Text(
-                            text = "Github Id를 설정하고 순위권 도전해 보세요!",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Color.Black
-                        )
-                        InfinityButton(
+        LazyColumn(
+            modifier = Modifier
+                .background(Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    if (true) {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
-                                .width(110.dp)
-                                .height(40.dp)
-                                .padding(top = 4.dp),
-                            text = "설정하기"
+                                .padding(horizontal = 20.dp)
+                                .fillMaxWidth()
+                                .border(
+                                    width = 1.5.dp,
+                                    color = Color.LightGray.copy(alpha = 0.5f),
+                                    shape = RoundedCornerShape(10)
+                                )
+                                .padding(horizontal = 20.dp, vertical = 24.dp)
                         ) {
-                            navController.navigate(MainViewType.GithubSetting.name)
+                            Text(
+                                modifier = Modifier,
+                                text = "아직 Github 설정이 완료되지 않았어요",
+                                color = Color.Gray,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Text(
+                                text = "Github Id를 설정하고 순위권 도전해 보세요!",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = Color.Black
+                            )
+                            InfinityButton(
+                                modifier = Modifier
+                                    .width(110.dp)
+                                    .height(40.dp)
+                                    .padding(top = 4.dp),
+                                text = "설정하기"
+                            ) {
+                                navController.navigate(MainViewType.GithubSetting.name)
+                            }
                         }
                     }
+                    Row(
+                        modifier = Modifier
+                            .padding(start = 20.dp)
+                            .padding(vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        InfinitySelector(
+                            text = "이번 주",
+                            isSelected = true
+                        ) {
+
+                        }
+                        InfinitySelector(
+                            text = "전체",
+                            isSelected = false
+                        ) {
+
+                        }
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
                 }
-                Row(
+            }
+            items(tempRankings) {
+                InfinityGithubRankCell(
                     modifier = Modifier
-                        .padding(start = 20.dp)
-                        .padding(vertical = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        .padding(horizontal = 20.dp),
+                    rank = it + 1
                 ) {
-                    InfinitySelector(
-                        text = "이번 주",
-                        isSelected = true
-                    ) {
-
-                    }
-                    InfinitySelector(
-                        text = "전체",
-                        isSelected = false
-                    ) {
-
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
+                    navController.navigate("profile_detail")
                 }
             }
-        }
-        items(tempRankings) {
-            InfinityGithubRankCell(
-                modifier = Modifier
-                    .padding(horizontal = 20.dp),
-                rank = it + 1
-            ) {
-                navController.navigate("profile_detail")
+            item {
+                Spacer(modifier = Modifier.height(48.dp))
             }
-        }
-        item {
-            Spacer(modifier = Modifier.height(48.dp))
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.molohala.infinity.ui.main
+package com.molohala.infinity.ui.main.main
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

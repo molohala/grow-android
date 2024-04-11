@@ -16,8 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.textfield.InfinityTextField
-import com.molohala.infinity.typo.Title
-import com.molohala.infinity.ui.main.profile.setting.githubsetting.GithubSettingViewModel
+import com.molohala.infinity.typo.TopBar
 
 @Composable
 fun BaekjoonSettingScreen(
@@ -34,7 +33,7 @@ fun BaekjoonSettingScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Title(text = "백준 설정") {
+        TopBar(text = "백준 설정") {
             navController.popBackStack()
         }
         InfinityTextField(

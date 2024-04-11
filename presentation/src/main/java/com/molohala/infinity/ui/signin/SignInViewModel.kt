@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.molohala.infinity.dauth.request.DAuthSignInRequest
 import com.molohala.infinity.global.RetrofitClient
-import com.molohala.infinity.ui.Secret
+import com.molohala.infinity.global.Secret
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,6 +38,7 @@ class SignInViewModel: ViewModel() {
                     redirectUrl = Secret.REDIRECT_URL
                 )
                 val response = RetrofitClient.dauthApi.signIn(request)
+                // save token
             } catch (e: Exception) {
                 println(e)
             }
