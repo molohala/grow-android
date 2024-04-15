@@ -17,6 +17,7 @@ import com.molohala.infinity.ui.main.main.MainViewType
 import com.molohala.infinity.ui.main.profile.Logout
 import com.molohala.infinity.ui.main.profile.setting.component.SettingCell
 
+
 @Composable
 fun SettingScreen(
     navController: NavController
@@ -62,7 +63,7 @@ fun SettingScreen(
             Spacer(modifier = Modifier.weight(1f))
             Logout(
                 modifier = Modifier
-                    .padding(bottom = 32.dp)
+                    .padding(bottom = 48.dp)
             ) {
 
             }

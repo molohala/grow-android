@@ -51,6 +51,13 @@ android {
 
 dependencies {
 
+
+    implementation("com.patrykandpatrick.vico:compose:2.0.0-alpha.14")
+    implementation("com.patrykandpatrick.vico:compose-m2:2.0.0-alpha.14")
+    implementation("com.patrykandpatrick.vico:compose-m3:2.0.0-alpha.14")
+    implementation("com.patrykandpatrick.vico:core:2.0.0-alpha.14")
+    implementation("com.patrykandpatrick.vico:views:2.0.0-alpha.14")
+
     val nav_version = "2.7.7"
 
     implementation(project(":data"))
