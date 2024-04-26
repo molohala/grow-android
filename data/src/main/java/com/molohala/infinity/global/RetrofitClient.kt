@@ -3,14 +3,20 @@ package com.molohala.infinity.global
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.molohala.infinity.auth.api.AuthApi
+import com.molohala.infinity.comment.api.CommentApi
+import com.molohala.infinity.community.api.CommunityApi
 import com.molohala.infinity.dauth.api.DAuthApi
 import com.molohala.infinity.global.Json.isJsonArray
 import com.molohala.infinity.global.Json.isJsonObject
+import com.molohala.infinity.info.api.InfoApi
+import com.molohala.infinity.like.api.LikeApi
+import com.molohala.infinity.rank.api.RankApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
@@ -92,4 +98,9 @@ object RetrofitClient {
 
     val dauthApi: DAuthApi by lazy { dodamRetrofit.create(DAuthApi::class.java) }
     val authApi: AuthApi by lazy { infinityRetrofit.create(AuthApi::class.java) }
+    val comment: CommentApi by lazy { infinityRetrofit.create(CommentApi::class.java) }
+    val communityApi: CommunityApi by lazy { infinityRetrofit.create(CommunityApi::class.java) }
+    val rankApi: RankApi by lazy { infinityRetrofit.create(RankApi::class.java) }
+    val infoApi: InfoApi by lazy { infinityRetrofit.create(InfoApi::class.java) }
+    val likeApi: LikeApi by lazy { infinityRetrofit.create(LikeApi::class.java) }
 }
