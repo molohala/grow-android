@@ -16,28 +16,28 @@ import retrofit2.http.Query
 
 interface CommunityApi {
     @GET("/community")
-    fun getCommunities(
+    suspend fun getCommunities(
         @Query("page") page: Int,
         @Query("size") size: Int
     ): BaseResponse<List<CommunityResponse>>
 
     @POST("/community")
-    fun createCommunity(
+    suspend fun createCommunity(
         @Body request: CreateCommunityRequest
     ): BaseVoidResponse
 
     @PATCH("/community")
-    fun patchCommunity(
+    suspend fun patchCommunity(
         @Body request: PatchCommunityRequest
     ): BaseVoidResponse
 
     @GET("/community/{id}")
-    fun getCommunity(
+    suspend fun getCommunity(
         @Path("id") id: Int
     ): CommunityContentResponse
 
     @DELETE("/community/{id}")
-    fun removeCommunity(
+    suspend fun removeCommunity(
         @Path("id") id: Int
     ): BaseVoidResponse
 }

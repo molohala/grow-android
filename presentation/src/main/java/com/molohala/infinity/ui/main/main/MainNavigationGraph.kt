@@ -5,11 +5,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.molohala.infinity.application.InfinityApp
 import com.molohala.infinity.ui.main.profile.setting.SettingScreen
 import com.molohala.infinity.ui.main.profile.setting.baekjoonsetting.BaekjoonSettingScreen
 import com.molohala.infinity.ui.main.profiledetail.ProfileDetailScreen
 import com.molohala.infinity.ui.main.profile.setting.githubsetting.GithubSettingScreen
 import com.molohala.infinity.ui.main.profile.setting.profileedit.ProfileEditScreen
+import com.molohala.infinity.ui.signin.SignInScreen
 
 @Composable
 fun MainNavigationGraph(
@@ -17,25 +19,30 @@ fun MainNavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = MainViewType.Main.name
+        startDestination = getStartDestination()
     ) {
-        composable(MainViewType.Main.name) {
+        composable(NavGroup.SignIn.name) {
+            SignInScreen(navController = navController)
+        }
+        composable(NavGroup.Main.name) {
             MainScreen(navController = navController)
         }
-        composable(MainViewType.ProfileDetail.name) {
+        composable(NavGroup.ProfileDetail.name) {
             ProfileDetailScreen(navController = navController)
         }
-        composable(MainViewType.Setting.name) {
+        composable(NavGroup.Setting.name) {
             SettingScreen(navController = navController)
         }
-        composable(MainViewType.ProfileEdit.name) {
+        composable(NavGroup.ProfileEdit.name) {
             ProfileEditScreen(navController = navController)
         }
-        composable(MainViewType.GithubSetting.name) {
+        composable(NavGroup.GithubSetting.name) {
             GithubSettingScreen(navController = navController)
         }
-        composable(MainViewType.BaekjoonSetting.name) {
+        composable(NavGroup.BaekjoonSetting.name) {
             BaekjoonSettingScreen(navController = navController)
         }
     }
 }
+
+fun getStartDestination() = if (InfinityApp.prefs.accessToken.isEmpty()) NavGroup.SignIn.name else NavGroup.Main.name

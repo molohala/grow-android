@@ -15,22 +15,22 @@ import retrofit2.http.Query
 
 interface CommentApi {
     @GET("/comment")
-    fun getComment(
+    suspend fun getComment(
         @Query("communityId") communityId: Int
     ): BaseResponse<List<CommentResponse>>
 
     @POST("/comment")
-    fun createComment(
+    suspend fun createComment(
         @Body request: CreateCommentRequest
     ): BaseVoidResponse
 
     @PATCH("/comment")
-    fun patchComment(
+    suspend fun patchComment(
         @Body request: PatchCommentRequest
     ): BaseVoidResponse
 
     @DELETE("/comment/{id}")
-    fun removeComment(
+    suspend fun removeComment(
         @Path("id") id: Int
     ): BaseVoidResponse
 }

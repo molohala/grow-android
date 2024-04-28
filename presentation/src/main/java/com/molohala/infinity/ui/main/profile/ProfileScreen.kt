@@ -30,7 +30,7 @@ import com.molohala.infinity.typo.TopBar
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.IconLogout
-import com.molohala.infinity.ui.main.main.MainViewType
+import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.main.statcell.InfinityStatCell
 import com.molohala.infinity.ui.main.statcell.InfinityStatType
 
@@ -55,7 +55,7 @@ fun ProfileScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Profile {
-                navController.navigate(MainViewType.Setting.name)
+                navController.navigate(NavGroup.Setting.name)
             }
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)

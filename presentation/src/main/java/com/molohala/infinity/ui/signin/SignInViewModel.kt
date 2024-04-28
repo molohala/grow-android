@@ -2,43 +2,53 @@ package com.molohala.infinity.ui.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.molohala.infinity.application.InfinityApp
 import com.molohala.infinity.dauth.request.DAuthSignInRequest
 import com.molohala.infinity.global.RetrofitClient
 import com.molohala.infinity.global.Secret
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.security.MessageDigest
 
+data class SignInState(
+    val id: String = "",
+    val pw: String = ""
+)
+
+sealed interface SignInSideEffect {
+    data object Success : SignInSideEffect
+}
 
 class SignInViewModel: ViewModel() {
-    data class SignInState(
-        val id: String = "",
-        val pw: String = ""
-    )
 
     val uiState = MutableStateFlow(SignInState())
+    val uiEffect = MutableSharedFlow<SignInSideEffect>()
 
     fun signIn() {
 
-        val md = MessageDigest.getInstance("SHA-512")
-        val digest = md.digest(uiState.value.pw.toByteArray())
-        val sb = StringBuilder()
-        for (i in digest.indices) {
-            sb.append(((digest[i].toInt() and 0xff) + 0x100).toString(16).substring(1))
-        }
-        println(sb)
+        val id = uiState.value.id
+        val pw = uiState.value.pw
 
         viewModelScope.launch {
             try {
-                val request = DAuthSignInRequest(
-                    id = uiState.value.id,
-                    pw = sb.toString(),
+                val dAuthRequest = DAuthSignInRequest(
+                    id = id,
+                    pw = pw,
                     clientId = Secret.CLIENT_ID,
                     redirectUrl = Secret.REDIRECT_URL
                 )
-                val response = RetrofitClient.dauthApi.signIn(request)
-                // save token
+                val dAuthResponse = RetrofitClient.dauthApi.signIn(dAuthRequest).data
+
+                val code = dAuthResponse.location.split("[=&]".toRegex())[1]
+                val response = RetrofitClient.authApi.signIn(code = code).data
+
+                InfinityApp.prefs.apply {
+                    this.accessToken = response.accessToken
+                    this.refreshToken = response.refreshToken
+                }
+
+                uiEffect.emit(SignInSideEffect.Success)
             } catch (e: Exception) {
                 println(e)
             }

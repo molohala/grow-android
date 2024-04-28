@@ -5,23 +5,39 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.textfield.InfinityTextField
 import com.molohala.infinity.typo.TopBar
+import com.molohala.infinity.ui.main.main.NavGroup
 
 @Composable
 fun SignInScreen(
+    navController: NavController,
     viewModel: SignInViewModel = viewModel()
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect {
+            when (it) {
+                is SignInSideEffect.Success -> navController.navigate(NavGroup.Main.name) {
+                    launchSingleTop = true
+                }
+            }
+        }
+    }
 
     TopBar(
         text = "로그인"
@@ -40,6 +56,7 @@ fun SignInScreen(
             InfinityTextField(
                 placeholder = "비밀번호를 입력해 주세요",
                 value = uiState.pw,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 onValueChange = viewModel::updatePw
             )
             Spacer(modifier = Modifier.weight(1f))

@@ -8,11 +8,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.molohala.infinity.application.InfinityApp
+import com.molohala.infinity.application.PreferenceManager
+import com.molohala.infinity.ui.main.main.MainNavigationGraph
+import com.molohala.infinity.ui.signin.SignInScreen
 import com.molohala.infinity.ui.theme.InfinityTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        InfinityApp.prefs = PreferenceManager(applicationContext)
+
         setContent {
 
             val navController = rememberNavController()
@@ -22,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    RootNavigationGraph(navController = navController)
+                    MainNavigationGraph(navController = navController)
                 }
             }
         }

@@ -17,3 +17,4 @@ rootProject.name = "infinity"
 include(":presentation")
 include(":data")
 include(":designsystem")
+include(":common")

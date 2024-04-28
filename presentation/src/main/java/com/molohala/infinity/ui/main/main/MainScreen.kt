@@ -38,7 +38,7 @@ fun MainScreen(
 ) {
 
     var viewType by remember {
-        mutableStateOf<BottomNavigationType>(BottomNavigationType.Profile)
+        mutableStateOf<BottomNavigationType>(BottomNavigationType.Home)
     }
 
     val mainViews = arrayListOf(

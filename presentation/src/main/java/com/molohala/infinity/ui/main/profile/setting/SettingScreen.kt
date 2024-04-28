@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import com.molohala.infinity.R
 import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.typo.TopBar
-import com.molohala.infinity.ui.main.main.MainViewType
+import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.main.profile.Logout
 import com.molohala.infinity.ui.main.profile.setting.component.SettingCell
 
@@ -42,7 +42,7 @@ fun SettingScreen(
                 iconColor = Color.Gray,
                 text = "프로필 설정"
             ) {
-                navController.navigate(MainViewType.ProfileEdit.name)
+                navController.navigate(NavGroup.ProfileEdit.name)
             }
             SettingCell(
                 icon = R.drawable.ic_github,
@@ -50,7 +50,7 @@ fun SettingScreen(
                 text = "Github 설정",
                 description = "bestswlkh0310"
             ) {
-                navController.navigate(MainViewType.GithubSetting.name)
+                navController.navigate(NavGroup.GithubSetting.name)
             }
             SettingCell(
                 icon = R.drawable.ic_baekjoon,
@@ -58,7 +58,7 @@ fun SettingScreen(
                 text = "백준 설정",
                 description = "hhhello0507"
             ) {
-                navController.navigate(MainViewType.BaekjoonSetting.name)
+                navController.navigate(NavGroup.BaekjoonSetting.name)
             }
             Spacer(modifier = Modifier.weight(1f))
             Logout(

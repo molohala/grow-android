@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,6 +35,7 @@ fun InfinityTextField(
     modifier: Modifier = Modifier,
     value: String,
     enabled: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     shape: Shape = RoundedCornerShape(12.dp),
     placeholder: String = "",
     colors: TextFieldColors = TextFieldDefaults.colors(
@@ -68,6 +70,8 @@ fun InfinityTextField(
                 shape = shape,
             ),
         value = value,
+        singleLine = true,
+        keyboardOptions = keyboardOptions,
         onValueChange = onValueChange,
         cursorBrush = SolidColor(Color.LightGray),
         decorationBox = @Composable { innerTextField ->
