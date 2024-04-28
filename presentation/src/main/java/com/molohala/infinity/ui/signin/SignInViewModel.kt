@@ -17,7 +17,7 @@ data class SignInState(
 )
 
 sealed interface SignInSideEffect {
-    data object Success : SignInSideEffect
+    data class LoginSuccess(val accessToken: String, val refreshToken: String): SignInSideEffect
 }
 
 class SignInViewModel: ViewModel() {
@@ -42,13 +42,8 @@ class SignInViewModel: ViewModel() {
 
                 val code = dAuthResponse.location.split("[=&]".toRegex())[1]
                 val response = RetrofitClient.authApi.signIn(code = code).data
-
-                InfinityApp.prefs.apply {
-                    this.accessToken = response.accessToken
-                    this.refreshToken = response.refreshToken
-                }
-
-                uiEffect.emit(SignInSideEffect.Success)
+                val effect = SignInSideEffect.LoginSuccess(accessToken = response.accessToken, refreshToken = response.refreshToken)
+                uiEffect.emit(effect)
             } catch (e: Exception) {
                 println(e)
             }

@@ -19,12 +19,13 @@ import androidx.navigation.NavController
 import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.textfield.InfinityTextField
 import com.molohala.infinity.typo.TopBar
-import com.molohala.infinity.ui.main.main.NavGroup
+import com.molohala.infinity.ui.root.AppViewModel
 
 @Composable
 fun SignInScreen(
     navController: NavController,
-    viewModel: SignInViewModel = viewModel()
+    viewModel: SignInViewModel = viewModel(),
+    appViewModel: AppViewModel
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -32,13 +33,13 @@ fun SignInScreen(
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect {
             when (it) {
-                is SignInSideEffect.Success -> navController.navigate(NavGroup.Main.name) {
-                    launchSingleTop = true
+                is SignInSideEffect.LoginSuccess -> {
+                    appViewModel.updateAccessToken(it.accessToken)
+                    appViewModel.updateRefreshToken(it.refreshToken)
                 }
             }
         }
     }
-
     TopBar(
         text = "로그인"
     ) {

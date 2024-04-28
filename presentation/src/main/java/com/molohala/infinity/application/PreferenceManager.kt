@@ -10,6 +10,11 @@ class PreferenceManager(context: Context) {
     var accessToken: String by PreferenceDelegate(ACCESS_TOKEN, "")
     var refreshToken: String by PreferenceDelegate(REFRESH_TOKEN, "")
 
+    fun clearToken() {
+        accessToken = ""
+        refreshToken = ""
+    }
+
     companion object {
         private const val INFINITY_APP = "INFINITY_APP"
         

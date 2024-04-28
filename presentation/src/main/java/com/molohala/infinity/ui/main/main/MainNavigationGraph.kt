@@ -1,28 +1,32 @@
 package com.molohala.infinity.ui.main.main
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.molohala.infinity.application.InfinityApp
 import com.molohala.infinity.ui.main.profile.setting.SettingScreen
 import com.molohala.infinity.ui.main.profile.setting.baekjoonsetting.BaekjoonSettingScreen
 import com.molohala.infinity.ui.main.profiledetail.ProfileDetailScreen
 import com.molohala.infinity.ui.main.profile.setting.githubsetting.GithubSettingScreen
 import com.molohala.infinity.ui.main.profile.setting.profileedit.ProfileEditScreen
+import com.molohala.infinity.ui.root.AppViewModel
 import com.molohala.infinity.ui.signin.SignInScreen
 
 @Composable
 fun MainNavigationGraph(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    appViewModel: AppViewModel
 ) {
+    val uiState by appViewModel.accessToken.collectAsState()
     NavHost(
         navController = navController,
-        startDestination = getStartDestination()
+        startDestination = getStartDestination(isAuthorization = uiState.isEmpty())
     ) {
         composable(NavGroup.SignIn.name) {
-            SignInScreen(navController = navController)
+            SignInScreen(navController = navController, appViewModel = appViewModel)
         }
         composable(NavGroup.Main.name) {
             MainScreen(navController = navController)
@@ -31,7 +35,7 @@ fun MainNavigationGraph(
             ProfileDetailScreen(navController = navController)
         }
         composable(NavGroup.Setting.name) {
-            SettingScreen(navController = navController)
+            SettingScreen(navController = navController, appViewModel = appViewModel)
         }
         composable(NavGroup.ProfileEdit.name) {
             ProfileEditScreen(navController = navController)
@@ -45,4 +49,6 @@ fun MainNavigationGraph(
     }
 }
 
-fun getStartDestination() = if (InfinityApp.prefs.accessToken.isEmpty()) NavGroup.SignIn.name else NavGroup.Main.name
+@Composable
+fun getStartDestination(isAuthorization: Boolean) =
+    if (isAuthorization) NavGroup.SignIn.name else NavGroup.Main.name

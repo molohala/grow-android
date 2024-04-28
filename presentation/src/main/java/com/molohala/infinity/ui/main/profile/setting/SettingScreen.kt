@@ -16,11 +16,13 @@ import com.molohala.infinity.typo.TopBar
 import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.main.profile.Logout
 import com.molohala.infinity.ui.main.profile.setting.component.SettingCell
+import com.molohala.infinity.ui.root.AppViewModel
 
 
 @Composable
 fun SettingScreen(
-    navController: NavController
+    navController: NavController,
+    appViewModel: AppViewModel
 ) {
     TopBar(
         text = "설정",
@@ -65,7 +67,7 @@ fun SettingScreen(
                 modifier = Modifier
                     .padding(bottom = 48.dp)
             ) {
-
+                appViewModel.clearToken()
             }
         }
     }
