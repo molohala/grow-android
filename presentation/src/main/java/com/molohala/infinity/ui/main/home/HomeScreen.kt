@@ -12,12 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.molohala.infinity.color.InfinityColor
-import com.molohala.infinity.commnuity.InfinityCommunityCell
+import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.extension.applyCardView
-import com.molohala.infinity.designsystem.github.InfinityGithubRankCell
 import com.molohala.infinity.typo.SubTitle
-import com.molohala.infinity.typo.TopBar
+import com.molohala.infinity.designsystem.typo.TopBar
 import com.molohala.infinity.ui.main.statcell.InfinityStatCell
 import com.molohala.infinity.ui.main.statcell.InfinityStatType
 
@@ -93,9 +91,9 @@ fun WeekCommunity() {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             repeat(3) {
-                InfinityCommunityCell {
-
-                }
+//                InfinityCommunityCell {
+//
+//                }
             }
         }
     }

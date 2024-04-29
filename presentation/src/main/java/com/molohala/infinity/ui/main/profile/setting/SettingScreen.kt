@@ -11,8 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.infinity.R
-import com.molohala.infinity.color.InfinityColor
-import com.molohala.infinity.typo.TopBar
+import com.molohala.infinity.designsystem.color.InfinityColor
+import com.molohala.infinity.designsystem.typo.TopBar
 import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.main.profile.Logout
 import com.molohala.infinity.ui.main.profile.setting.component.SettingCell

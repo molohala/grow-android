@@ -1,8 +1,14 @@
 package com.molohala.infinity.data.global
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
+import com.molohala.infinity.common.constant.TAG
+import com.molohala.infinity.data.auth.api.AuthApi
+import com.molohala.infinity.data.comment.api.CommentApi
+import com.molohala.infinity.data.community.api.CommunityApi
+import com.molohala.infinity.data.dauth.api.DAuthApi
 import com.molohala.infinity.data.util.Json.isJsonArray
 import com.molohala.infinity.data.util.Json.isJsonObject
 import com.molohala.infinity.data.global.interceptor.AuthAuthenticator
@@ -25,7 +31,8 @@ object RetrofitClient {
     // json to data class
     private val gson: Gson = GsonBuilder()
         .registerTypeAdapter(LocalDateTime::class.java, JsonDeserializer { json, _, _ ->
-            LocalDateTime.parse(json.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
+            val str = json.asString.split('.')[0] + ".000000"
+            LocalDateTime.parse(str, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
         })
         .registerTypeAdapter(LocalDate::class.java, JsonDeserializer { json, _, _ ->
             LocalDate.parse(json.asString, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
@@ -35,23 +42,22 @@ object RetrofitClient {
         })
         .create()
 
-
     // loginInterceptor
     private val logInterceptor = HttpLoggingInterceptor { message ->
-        println("Retrofit-Client : $message")
+        Log.d(TAG, "Retrofit-Client : $message")
 
         when {
             message.isJsonObject() ->
-                println(JSONObject(message).toString(4))
+                Log.d(TAG, JSONObject(message).toString(4))
 
             message.isJsonArray() ->
-                println(JSONObject(message).toString(4))
+                Log.d(TAG, JSONObject(message).toString(4))
 
             else -> {
                 try {
-                    println(JSONObject(message).toString(4))
+                    Log.d(TAG, JSONObject(message).toString(4))
                 } catch (e: Exception) {
-                    println(message)
+                    Log.d(TAG, "Retrofit-Client $e")
                 }
             }
         }
@@ -78,18 +84,10 @@ object RetrofitClient {
         .client(okHttpClient)
         .build()
 
-    val dauthApi: com.molohala.infinity.data.dauth.api.DAuthApi by lazy { dodamRetrofit.create(com.molohala.infinity.data.dauth.api.DAuthApi::class.java) }
-    val authApi: com.molohala.infinity.data.auth.api.AuthApi by lazy { infinityRetrofit.create(com.molohala.infinity.data.auth.api.AuthApi::class.java) }
-    val comment: com.molohala.infinity.data.comment.api.CommentApi by lazy {
-        infinityRetrofit.create(
-            com.molohala.infinity.data.comment.api.CommentApi::class.java
-        )
-    }
-    val communityApi: com.molohala.infinity.data.community.api.CommunityApi by lazy {
-        infinityRetrofit.create(
-            com.molohala.infinity.data.community.api.CommunityApi::class.java
-        )
-    }
+    val dauthApi: DAuthApi by lazy { dodamRetrofit.create(com.molohala.infinity.data.dauth.api.DAuthApi::class.java) }
+    val authApi: AuthApi by lazy { infinityRetrofit.create(com.molohala.infinity.data.auth.api.AuthApi::class.java) }
+    val comment: CommentApi by lazy { infinityRetrofit.create(CommentApi::class.java) }
+    val communityApi: CommunityApi by lazy { infinityRetrofit.create(CommunityApi::class.java) }
     val rankApi: RankApi by lazy { infinityRetrofit.create(RankApi::class.java) }
     val infoApi: InfoApi by lazy { infinityRetrofit.create(InfoApi::class.java) }
     val likeApi: LikeApi by lazy { infinityRetrofit.create(LikeApi::class.java) }

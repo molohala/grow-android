@@ -3,7 +3,7 @@ package com.molohala.infinity.ui.main.statcell
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
 import com.molohala.infinity.R
-import com.molohala.infinity.color.InfinityColor
+import com.molohala.infinity.designsystem.color.InfinityColor
 
 sealed class InfinityStatType(
     @DrawableRes val icon: Int,

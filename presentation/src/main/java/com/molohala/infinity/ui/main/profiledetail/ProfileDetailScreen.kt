@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.infinity.baekjoon.InfinityBaekjoonCell
 import com.molohala.infinity.designsystem.github.InfinityChartCell
-import com.molohala.infinity.typo.TopBar
+import com.molohala.infinity.designsystem.typo.TopBar
 
 @Composable
 fun ProfileDetailScreen(

@@ -16,7 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.designsystem.InfinityTextField
-import com.molohala.infinity.typo.TopBar
+import com.molohala.infinity.designsystem.typo.TopBar
 
 @Composable
 fun BaekjoonSettingScreen(

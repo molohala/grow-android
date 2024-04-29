@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.infinity.designsystem.github.InfinityChartCell
-import com.molohala.infinity.color.InfinityColor
+import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.data.info.response.ProfileResponse
-import com.molohala.infinity.typo.TopBar
+import com.molohala.infinity.designsystem.typo.TopBar
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.IconLogout

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.infinity.ui.main.profile.ProfileScreen
 import com.molohala.infinity.R
-import com.molohala.infinity.color.InfinityColor
+import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.extension.shadow
 import com.molohala.infinity.ui.main.baekjoonrank.BaekjoonRankScreen
@@ -113,7 +113,7 @@ fun MainScreen(
         ) {
             when (viewType) {
                 is BottomNavigationType.Home -> HomeScreen(navController = navController)
-                is BottomNavigationType.Community -> CommunityScreen(navController = navController)
+                is BottomNavigationType.Community -> CommunityScreen(navController = navController, appViewModel = appViewModel)
                 BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController)
                 BottomNavigationType.Baekjoon -> BaekjoonRankScreen(navController = navController)
                 BottomNavigationType.Profile -> ProfileScreen(navController = navController, appViewModel = appViewModel)

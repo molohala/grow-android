@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.designsystem.github.InfinityGithubRankCell
 import com.molohala.infinity.selector.InfinitySelector
-import com.molohala.infinity.typo.TopBar
+import com.molohala.infinity.designsystem.typo.TopBar
 import com.molohala.infinity.ui.main.main.NavGroup
 
 @Composable
@@ -44,7 +44,8 @@ fun GithubRankScreen(
     }
 
     TopBar(
-        text = "Github 랭킹"
+        text = "Github 랭킹",
+        backgroundColor = Color.White
     ) {
         LazyColumn(
             modifier = Modifier

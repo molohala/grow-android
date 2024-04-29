@@ -1,4 +1,4 @@
-package com.molohala.infinity.typo
+package com.molohala.infinity.designsystem.typo
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.molohala.infinity.R
-import com.molohala.infinity.color.InfinityColor
+import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.extension.bounceClick
 
 @Composable

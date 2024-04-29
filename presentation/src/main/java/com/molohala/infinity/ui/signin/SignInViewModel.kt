@@ -1,7 +1,9 @@
 package com.molohala.infinity.ui.signin
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.molohala.infinity.common.constant.TAG
 import com.molohala.infinity.data.global.RetrofitClient
 import com.molohala.infinity.data.global.Secret
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -43,7 +45,7 @@ class SignInViewModel: ViewModel() {
                 val effect = SignInSideEffect.LoginSuccess(accessToken = response.accessToken, refreshToken = response.refreshToken)
                 uiEffect.emit(effect)
             } catch (e: Exception) {
-                println(e)
+                Log.d(TAG, "signIn: $e")
             }
         }
     }

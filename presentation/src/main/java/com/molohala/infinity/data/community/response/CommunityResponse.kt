@@ -4,8 +4,8 @@ import com.molohala.infinity.data.comment.response.CommentResponse
 import java.time.LocalDateTime
 
 data class CommunityResponse(
-    val community: com.molohala.infinity.data.community.response.CommunityContentResponse,
-    val recentComment: com.molohala.infinity.data.comment.response.CommentResponse
+    val community: CommunityContentResponse,
+    val recentComment: CommentResponse?
 )
 
 data class CommunityContentResponse(
