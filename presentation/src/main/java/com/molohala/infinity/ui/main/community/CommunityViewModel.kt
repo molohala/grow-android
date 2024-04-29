@@ -18,7 +18,8 @@ import kotlinx.coroutines.launch
 data class CommunityState(
     val communities: List<CommunityResponse> = arrayListOf(),
     val page: Int = 1,
-    val communityFetchFlow: FetchFlow = FetchFlow.Fetching
+    val communityFetchFlow: FetchFlow = FetchFlow.Fetching,
+    val isRefresh: Boolean = false
 )
 
 class CommunityViewModel : ViewModel() {
@@ -26,9 +27,9 @@ class CommunityViewModel : ViewModel() {
     val uiState = MutableStateFlow(CommunityState())
 
     fun fetchCommunities() {
-        uiState.update { it.copy(communityFetchFlow = FetchFlow.Fetching) }
         viewModelScope.launch {
             try {
+                uiState.update { it.copy(communityFetchFlow = FetchFlow.Fetching) }
                 val nextPage = 1
                 val communities = RetrofitClient.communityApi.getCommunities(
                     page = nextPage,
@@ -84,25 +85,8 @@ class CommunityViewModel : ViewModel() {
         }
     }
 
-    /**
-     *
-     *     @MainActor
-     *     public func fetchNextCommunities() {
-     *         Task {
-     *             do {
-     *                 let nextPage = communities.count / pagingInterval + 1
-     *                 print("\(#function) - fetching ... nextPage: \(nextPage)")
-     *                 let request = PageRequest(page: nextPage, size: pagingInterval)
-     *
-     *                 let pagedCommunities = try await getCommunitesUseCase(request)
-     *                 communities.append(contentsOf: pagedCommunities)
-     *             } catch {
-     *                 communities = []
-     *                 page = 1
-     *                 print("❌ 커뮤니티 페이징 실패")
-     *             }
-     *         }
-     *     }
-     *
-     */
+    fun refresh() {
+        fetchCommunities()
+        uiState.update { it.copy(isRefresh = false) }
+    }
 }

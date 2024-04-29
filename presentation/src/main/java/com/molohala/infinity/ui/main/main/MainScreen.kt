@@ -114,7 +114,7 @@ fun MainScreen(
             when (viewType) {
                 is BottomNavigationType.Home -> HomeScreen(navController = navController)
                 is BottomNavigationType.Community -> CommunityScreen(navController = navController, appViewModel = appViewModel)
-                BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController)
+                BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController, appViewModel = appViewModel)
                 BottomNavigationType.Baekjoon -> BaekjoonRankScreen(navController = navController)
                 BottomNavigationType.Profile -> ProfileScreen(navController = navController, appViewModel = appViewModel)
             }

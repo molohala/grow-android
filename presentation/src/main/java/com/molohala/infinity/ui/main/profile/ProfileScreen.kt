@@ -59,14 +59,11 @@ fun ProfileScreen(
     val scrollState = rememberLazyListState()
     val uiAppState by appViewModel.uiState.collectAsState()
     val uiState by profileViewModel.uiState.collectAsState()
-    val coroutine = rememberCoroutineScope()
     val pullRefreshState = rememberPullRefreshState(
         refreshing = uiState.isRefresh,
         onRefresh = {
-            coroutine.launch {
-                appViewModel.fetchProfile()
-                profileViewModel.refresh()
-            }
+            appViewModel.fetchProfile()
+            profileViewModel.refresh()
         }
     )
 
@@ -77,7 +74,7 @@ fun ProfileScreen(
         Box(
             modifier = Modifier
                 .pullRefresh(pullRefreshState),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.TopCenter
         ) {
             LazyColumn(
                 modifier = Modifier
