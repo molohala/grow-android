@@ -10,11 +10,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.designsystem.github.InfinityChartCell
 import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.data.info.response.ProfileResponse
@@ -38,8 +42,9 @@ import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.IconLogout
 import com.molohala.infinity.ui.main.main.NavGroup
-import com.molohala.infinity.ui.main.statcell.InfinityStatCell
-import com.molohala.infinity.ui.main.statcell.InfinityStatType
+import com.molohala.infinity.designsystem.statcell.InfinityStatCell
+import com.molohala.infinity.designsystem.statcell.InfinityStatCellShimmer
+import com.molohala.infinity.designsystem.statcell.InfinityStatType
 import com.molohala.infinity.ui.root.AppViewModel
 import kotlinx.coroutines.launch
 
@@ -51,7 +56,7 @@ fun ProfileScreen(
     profileViewModel: ProfileViewModel = viewModel()
 ) {
 
-    val scrollState = rememberScrollState()
+    val scrollState = rememberLazyListState()
     val uiAppState by appViewModel.uiState.collectAsState()
     val uiState by profileViewModel.uiState.collectAsState()
     val coroutine = rememberCoroutineScope()
@@ -64,53 +69,105 @@ fun ProfileScreen(
             }
         }
     )
+
     TopBar(
-        modifier = Modifier,
         backgroundColor = InfinityColor.background,
         text = "프로필"
     ) {
-        Column(
+        Box(
             modifier = Modifier
-                .background(InfinityColor.background)
-                .padding(horizontal = 16.dp)
-                .fillMaxHeight()
-                .verticalScroll(state = scrollState)
-                .pullRefresh(pullRefreshState)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .pullRefresh(pullRefreshState),
+            contentAlignment = Alignment.Center
         ) {
-            uiAppState.profile?.let {
-                Profile(profile = it) {
-                    navController.navigate(NavGroup.Setting.name)
-                }
-            }
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            LazyColumn(
+                modifier = Modifier
+                    .background(InfinityColor.background)
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                state = scrollState
             ) {
-                uiAppState.github?.let {
-                    InfinityStatCell(
-                        modifier = Modifier
-                            .weight(1f),
-                        title = "커밋 개수",
-                        type = InfinityStatType.Github(commit = it.totalCommits)
+                item {
+                    uiAppState.profile?.let {
+                        Profile(profile = it) {
+                            navController.navigate(NavGroup.Setting.name)
+                        }
+                    }
+                }
+                item {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
+                        when (uiAppState.githubFetchFlow) {
+                            FetchFlow.Failure -> {
+                                InfinityStatCell(
+                                    title = "커밋 개수",
+                                    type = InfinityStatType.Baekjoon()
+                                ) {
+
+                                }
+                            }
+                            FetchFlow.Fetching -> {
+                                InfinityStatCellShimmer(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                )
+                            }
+                            FetchFlow.Success -> {
+                                uiAppState.github?.let {
+                                    InfinityStatCell(
+                                        modifier = Modifier
+                                            .weight(1f),
+                                        title = "커밋 개수",
+                                        type = InfinityStatType.Github(commit = it.totalCommits)
+                                    ) {
+
+                                    }
+                                }
+                            }
+                        }
+                        when (uiAppState.githubFetchFlow) {
+                            FetchFlow.Failure -> {
+                                InfinityStatCell(
+                                    title = "문제 푼 개수",
+                                    type = InfinityStatType.Baekjoon()
+                                ) {
+
+                                }
+                            }
+
+                            FetchFlow.Fetching -> {
+                                InfinityStatCellShimmer(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                )
+                            }
+
+                            FetchFlow.Success -> {
+                                uiAppState.solvedac?.let {
+                                    InfinityStatCell(
+                                        modifier = Modifier
+                                            .weight(1f),
+                                        title = "문제 푼 개수",
+                                        type = InfinityStatType.Baekjoon(solved = it.totalSolves)
+                                    ) {
+
+                                    }
+                                }
+                            }
+                        }
 
                     }
                 }
-                uiAppState.solvedac?.let {
-                    InfinityStatCell(
-                        modifier = Modifier
-                            .weight(1f),
-                        title = "문제 푼 개수",
-                        type = InfinityStatType.Baekjoon(solved = it.totalSolves)
-                    ) {
+                item {
+                    InfinityChartCell {
 
                     }
                 }
             }
-            InfinityChartCell {
-
-            }
+            PullRefreshIndicator(
+                refreshing = uiState.isRefresh,
+                state = pullRefreshState
+            )
         }
     }
 }

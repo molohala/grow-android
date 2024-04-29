@@ -16,8 +16,8 @@ import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.typo.SubTitle
 import com.molohala.infinity.designsystem.typo.TopBar
-import com.molohala.infinity.ui.main.statcell.InfinityStatCell
-import com.molohala.infinity.ui.main.statcell.InfinityStatType
+import com.molohala.infinity.designsystem.statcell.InfinityStatCell
+import com.molohala.infinity.designsystem.statcell.InfinityStatType
 
 @Composable
 fun HomeScreen(

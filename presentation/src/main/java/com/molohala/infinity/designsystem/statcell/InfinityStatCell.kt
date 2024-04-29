@@ -1,4 +1,4 @@
-package com.molohala.infinity.ui.main.statcell
+package com.molohala.infinity.designsystem.statcell
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -42,7 +42,7 @@ fun InfinityStatCell(
                 is InfinityStatType.Github -> type.commit
             }
             Text(
-                text = number.toString(),
+                text = number?.toString() ?: "??",
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.ExtraBold
             )

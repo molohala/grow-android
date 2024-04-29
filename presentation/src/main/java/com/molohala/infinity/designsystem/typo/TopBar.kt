@@ -3,6 +3,7 @@ package com.molohala.infinity.designsystem.typo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -30,7 +31,7 @@ fun TopBar(
     backgroundColor: Color = Color.White,
     text: String,
     onClickBackButton: (() -> Unit)? = null,
-    content: @Composable () -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column {
         Row(
