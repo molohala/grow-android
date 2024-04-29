@@ -9,11 +9,14 @@ import com.molohala.infinity.data.info.response.SolvedacResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface InfoApi {
 
     @GET("/info/solvedac")
-    suspend fun getSolvedacInfo(): BaseResponse<SolvedacResponse>
+    suspend fun getSolvedacInfo(
+        @Query("name") name: String
+    ): BaseResponse<SolvedacResponse>
 
     @POST("/info/solvedac")
     suspend fun registerSolvedac(
@@ -21,7 +24,9 @@ interface InfoApi {
     ): BaseVoidResponse
 
     @GET("/info/github")
-    suspend fun getGithubInfo(): BaseResponse<GithubResponse>
+    suspend fun getGithubInfo(
+        @Query("name") name: String
+    ): BaseResponse<GithubResponse>
 
     @POST("/info/github")
     suspend fun registerGithub(

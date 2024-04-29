@@ -17,6 +17,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,9 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.infinity.baekjoon.InfinityBaekjoonCell
-import com.molohala.infinity.github.InfinityGithubCell
+import com.molohala.infinity.designsystem.github.InfinityChartCell
 import com.molohala.infinity.color.InfinityColor
+import com.molohala.infinity.data.info.response.ProfileResponse
 import com.molohala.infinity.typo.TopBar
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
@@ -44,6 +46,7 @@ fun ProfileScreen(
 ) {
 
     val scrollState = rememberScrollState()
+    val uiAppState by appViewModel.uiState.collectAsState()
 
     TopBar(
         modifier = Modifier,
@@ -58,33 +61,36 @@ fun ProfileScreen(
                 .verticalScroll(state = scrollState),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Profile {
-                navController.navigate(NavGroup.Setting.name)
+            uiAppState.profile?.let {
+                Profile(profile = it) {
+                    navController.navigate(NavGroup.Setting.name)
+                }
             }
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                InfinityStatCell(
-                    modifier = Modifier
-                        .weight(1f),
-                    title = "커밋 개수",
-                    type = InfinityStatType.Github(commit = 1204)
-                ) {
+                uiAppState.github?.let {
+                    InfinityStatCell(
+                        modifier = Modifier
+                            .weight(1f),
+                        title = "커밋 개수",
+                        type = InfinityStatType.Github(commit = it.totalCommits)
+                    ) {
 
+                    }
                 }
-                InfinityStatCell(
-                    modifier = Modifier
-                        .weight(1f),
-                    title = "문제 푼 개수",
-                    type = InfinityStatType.Baekjoon(solved = 385)
-                ) {
+                uiAppState.solvedac?.let {
+                    InfinityStatCell(
+                        modifier = Modifier
+                            .weight(1f),
+                        title = "문제 푼 개수",
+                        type = InfinityStatType.Baekjoon(solved = it.totalSolves)
+                    ) {
 
+                    }
                 }
             }
-            InfinityGithubCell {
-
-            }
-            InfinityBaekjoonCell {
+            InfinityChartCell {
 
             }
         }
@@ -93,6 +99,7 @@ fun ProfileScreen(
 
 @Composable
 fun Profile(
+    profile: ProfileResponse,
     onClick: () -> Unit
 ) {
     Column(
@@ -114,7 +121,7 @@ fun Profile(
             Text(
                 modifier = Modifier
                     .padding(start = 8.dp),
-                text = "노영재",
+                text = profile.name,
                 color = Color.Black,
                 style = MaterialTheme.typography.titleMedium
             )

@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.infinity.baekjoon.InfinityBaekjoonCell
-import com.molohala.infinity.github.InfinityGithubCell
+import com.molohala.infinity.designsystem.github.InfinityChartCell
 import com.molohala.infinity.typo.TopBar
 
 @Composable
@@ -35,7 +35,7 @@ fun ProfileDetailScreen(
         ) {
             navController.popBackStack()
         }
-        InfinityGithubCell {
+        InfinityChartCell {
 
         }
         InfinityBaekjoonCell {

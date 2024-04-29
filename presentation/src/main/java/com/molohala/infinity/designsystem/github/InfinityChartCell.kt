@@ -1,11 +1,10 @@
-package com.molohala.infinity.github
+package com.molohala.infinity.designsystem.github
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -21,11 +20,12 @@ import com.molohala.infinity.R
 import com.molohala.infinity.chart.InfinityChart
 import com.molohala.infinity.chart.pointsData
 import com.molohala.infinity.color.InfinityColor
+import com.molohala.infinity.data.info.response.SocialAccountResponse
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.IconRightArrow
 
 @Composable
-fun InfinityGithubCell(
+fun InfinityChartCell(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -39,18 +39,19 @@ fun InfinityGithubCell(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Icon(
-                modifier = Modifier
-                    .size(20.dp),
-                painter = painterResource(id = R.drawable.ic_github),
-                contentDescription = "github rank",
-                tint = InfinityColor.github
-            )
-            Text(
-                text = "nohjason",
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.Black
-            )
+            Column(
+                horizontalAlignment = Alignment.Start
+            ) {
+                Text(
+                    text = "이번주에 한 커밋",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Black
+                )
+                Text(
+                    text = "116",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
             Spacer(modifier = Modifier.weight(1f))
             IconRightArrow()
         }
