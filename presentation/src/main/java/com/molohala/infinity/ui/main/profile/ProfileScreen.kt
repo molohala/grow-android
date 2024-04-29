@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.infinity.baekjoon.InfinityBaekjoonCell
 import com.molohala.infinity.github.InfinityGithubCell
@@ -33,10 +34,13 @@ import com.molohala.infinity.icon.IconLogout
 import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.main.statcell.InfinityStatCell
 import com.molohala.infinity.ui.main.statcell.InfinityStatType
+import com.molohala.infinity.ui.root.AppViewModel
 
 @Composable
 fun ProfileScreen(
-    navController: NavController
+    navController: NavController,
+    appViewModel: AppViewModel,
+    profileViewModel: ProfileViewModel = viewModel()
 ) {
 
     val scrollState = rememberScrollState()

@@ -15,7 +15,7 @@ import androidx.navigation.NavController
 import com.molohala.infinity.color.InfinityColor
 import com.molohala.infinity.commnuity.InfinityCommunityCell
 import com.molohala.infinity.extension.applyCardView
-import com.molohala.infinity.github.InfinityGithubRankCell
+import com.molohala.infinity.designsystem.github.InfinityGithubRankCell
 import com.molohala.infinity.typo.SubTitle
 import com.molohala.infinity.typo.TopBar
 import com.molohala.infinity.ui.main.statcell.InfinityStatCell
@@ -114,13 +114,13 @@ fun TodayGithub() {
                 .applyCardView(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            repeat(3) {
-                InfinityGithubRankCell(
-                    rank = it + 1
-                ) {
-
-                }
-            }
+//            repeat(3) {
+//                InfinityGithubRankCell(
+//                    githubRank =
+//                ) {
+//
+//                }
+//            }
         }
     }
 }
@@ -139,11 +139,11 @@ fun TodayBaekjoon() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             repeat(3) {
-                InfinityGithubRankCell(
-                    rank = it + 1
-                ) {
-
-                }
+//                InfinityGithubRankCell(
+//                    rank = it + 1
+//                ) {
+//
+//                }
             }
         }
     }

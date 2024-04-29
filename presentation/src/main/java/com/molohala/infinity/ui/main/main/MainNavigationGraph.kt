@@ -16,7 +16,7 @@ import com.molohala.infinity.ui.root.AppViewModel
 import com.molohala.infinity.ui.signin.SignInScreen
 
 @Composable
-fun MainNavigationGraph(
+fun NavigationGraph(
     navController: NavHostController = rememberNavController(),
     appViewModel: AppViewModel
 ) {
@@ -29,7 +29,7 @@ fun MainNavigationGraph(
             SignInScreen(navController = navController, appViewModel = appViewModel)
         }
         composable(NavGroup.Main.name) {
-            MainScreen(navController = navController)
+            MainScreen(navController = navController, appViewModel = appViewModel)
         }
         composable(NavGroup.ProfileDetail.name) {
             ProfileDetailScreen(navController = navController)

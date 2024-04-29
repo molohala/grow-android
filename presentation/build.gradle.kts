@@ -51,18 +51,18 @@ android {
 
 dependencies {
 
+    implementation("org.json:json:20240303")
 
-    implementation("com.patrykandpatrick.vico:compose:2.0.0-alpha.14")
-    implementation("com.patrykandpatrick.vico:compose-m2:2.0.0-alpha.14")
-    implementation("com.patrykandpatrick.vico:compose-m3:2.0.0-alpha.14")
-    implementation("com.patrykandpatrick.vico:core:2.0.0-alpha.14")
-    implementation("com.patrykandpatrick.vico:views:2.0.0-alpha.14")
+    // retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+    // chart
+    implementation("co.yml:ycharts:2.1.0")
 
     val nav_version = "2.7.7"
-
-    implementation(project(":data"))
-    implementation(project(":designsystem"))
-
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 

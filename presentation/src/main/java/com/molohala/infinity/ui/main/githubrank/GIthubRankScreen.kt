@@ -16,6 +16,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.infinity.button.InfinityButton
-import com.molohala.infinity.github.InfinityGithubRankCell
+import com.molohala.infinity.designsystem.github.InfinityGithubRankCell
 import com.molohala.infinity.selector.InfinitySelector
 import com.molohala.infinity.typo.TopBar
 import com.molohala.infinity.ui.main.main.NavGroup
@@ -34,7 +37,11 @@ fun GithubRankScreen(
     viewModel: GithubRankViewModel = viewModel()
 ) {
 
-    val tempRankings = Array(10) { it }
+    val uiState by viewModel.githubRanks.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchGithubRank()
+    }
 
     TopBar(
         text = "Github 랭킹"
@@ -106,11 +113,11 @@ fun GithubRankScreen(
                     }
                 }
             }
-            items(tempRankings) {
+            items(uiState.githubRanks) {
                 InfinityGithubRankCell(
                     modifier = Modifier
                         .padding(horizontal = 20.dp),
-                    rank = it + 1
+                    githubRank = it
                 ) {
                     navController.navigate("profile_detail")
                 }

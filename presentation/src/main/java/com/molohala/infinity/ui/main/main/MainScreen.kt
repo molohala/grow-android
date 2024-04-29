@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,10 +32,12 @@ import com.molohala.infinity.ui.main.baekjoonrank.BaekjoonRankScreen
 import com.molohala.infinity.ui.main.community.CommunityScreen
 import com.molohala.infinity.ui.main.githubrank.GithubRankScreen
 import com.molohala.infinity.ui.main.home.HomeScreen
+import com.molohala.infinity.ui.root.AppViewModel
 
 @Composable
 fun MainScreen(
-    navController: NavController
+    navController: NavController,
+    appViewModel: AppViewModel
 ) {
 
     var viewType by remember {
@@ -48,6 +51,10 @@ fun MainScreen(
         BottomNavigationType.Baekjoon,
         BottomNavigationType.Profile,
     )
+
+    LaunchedEffect(Unit) {
+        appViewModel.fetchProfile()
+    }
 
     Scaffold(
         bottomBar = {
@@ -100,7 +107,7 @@ fun MainScreen(
                 is BottomNavigationType.Community -> CommunityScreen(navController = navController)
                 BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController)
                 BottomNavigationType.Baekjoon -> BaekjoonRankScreen(navController = navController)
-                BottomNavigationType.Profile -> ProfileScreen(navController = navController)
+                BottomNavigationType.Profile -> ProfileScreen(navController = navController, appViewModel = appViewModel)
             }
         }
     }

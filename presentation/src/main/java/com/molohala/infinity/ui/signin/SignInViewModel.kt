@@ -2,10 +2,8 @@ package com.molohala.infinity.ui.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.molohala.infinity.application.InfinityApp
-import com.molohala.infinity.dauth.request.DAuthSignInRequest
-import com.molohala.infinity.global.RetrofitClient
-import com.molohala.infinity.global.Secret
+import com.molohala.infinity.data.global.RetrofitClient
+import com.molohala.infinity.data.global.Secret
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -32,7 +30,7 @@ class SignInViewModel: ViewModel() {
 
         viewModelScope.launch {
             try {
-                val dAuthRequest = DAuthSignInRequest(
+                val dAuthRequest = com.molohala.infinity.data.dauth.request.DAuthSignInRequest(
                     id = id,
                     pw = pw,
                     clientId = Secret.CLIENT_ID,

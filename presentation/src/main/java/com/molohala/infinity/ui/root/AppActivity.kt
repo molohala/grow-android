@@ -11,28 +11,27 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.molohala.infinity.application.InfinityApp
 import com.molohala.infinity.application.PreferenceManager
-import com.molohala.infinity.ui.main.main.MainNavigationGraph
+import com.molohala.infinity.ui.main.main.NavigationGraph
 import com.molohala.infinity.ui.theme.InfinityTheme
 
 class AppActivity : ComponentActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         InfinityApp.prefs = PreferenceManager(applicationContext)
 
         setContent {
-            val mainViewModel: AppViewModel = viewModel()
-
+            val appViewModel: AppViewModel = viewModel()
             val navController = rememberNavController()
+
             InfinityTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainNavigationGraph(
+                    NavigationGraph(
                         navController = navController,
-                        appViewModel = mainViewModel
+                        appViewModel = appViewModel
                     )
                 }
             }
