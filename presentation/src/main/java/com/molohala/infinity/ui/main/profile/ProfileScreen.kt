@@ -14,11 +14,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,7 +41,9 @@ import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.main.statcell.InfinityStatCell
 import com.molohala.infinity.ui.main.statcell.InfinityStatType
 import com.molohala.infinity.ui.root.AppViewModel
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProfileScreen(
     navController: NavController,
@@ -47,7 +53,17 @@ fun ProfileScreen(
 
     val scrollState = rememberScrollState()
     val uiAppState by appViewModel.uiState.collectAsState()
-
+    val uiState by profileViewModel.uiState.collectAsState()
+    val coroutine = rememberCoroutineScope()
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = uiState.isRefresh,
+        onRefresh = {
+            coroutine.launch {
+                appViewModel.fetchProfile()
+                profileViewModel.refresh()
+            }
+        }
+    )
     TopBar(
         modifier = Modifier,
         backgroundColor = InfinityColor.background,
@@ -58,7 +74,9 @@ fun ProfileScreen(
                 .background(InfinityColor.background)
                 .padding(horizontal = 16.dp)
                 .fillMaxHeight()
-                .verticalScroll(state = scrollState),
+                .verticalScroll(state = scrollState)
+                .pullRefresh(pullRefreshState)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             uiAppState.profile?.let {

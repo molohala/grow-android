@@ -1,3 +1,3 @@
 package com.molohala.infinity.common.constant
 
-val TAG = "인피니티 🔥"
+val TAG = "그로우 🔥"
