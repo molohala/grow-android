@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,10 +41,7 @@ fun MainScreen(
     navController: NavController,
     appViewModel: AppViewModel
 ) {
-
-    var viewType by remember {
-        mutableStateOf<BottomNavigationType>(BottomNavigationType.Home)
-    }
+    val uiAppState by appViewModel.uiState.collectAsState()
 
     val mainViews = arrayListOf(
         BottomNavigationType.Home,
@@ -80,27 +78,27 @@ fun MainScreen(
                     .padding(vertical = 12.dp, horizontal = 12.dp)
                     .padding(bottom = 16.dp)
             ) {
-                mainViews.forEach { view ->
+                mainViews.forEach { tab ->
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .bounceClick(onClick = {
-                                viewType = view
+                                appViewModel.clickTab(tab)
                             }),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Icon(
                             modifier = Modifier
                                 .size(28.dp),
-                            painter = painterResource(id = view.icon),
-                            contentDescription = view.name,
-                            tint = if (viewType == view) InfinityColor.blue else Color.LightGray
+                            painter = painterResource(id = tab.icon),
+                            contentDescription = tab.name,
+                            tint = if (uiAppState.selectedTab == tab) InfinityColor.blue else Color.LightGray
                         )
                         Text(
                             modifier = Modifier,
-                            text = view.name,
+                            text = tab.name,
                             style = MaterialTheme.typography.bodySmall,
-                            color = if (viewType == view) InfinityColor.blue else Color.Gray
+                            color = if (uiAppState.selectedTab == tab) InfinityColor.blue else Color.Gray
                         )
                     }
                 }
@@ -111,7 +109,7 @@ fun MainScreen(
             modifier = Modifier
                 .padding(it)
         ) {
-            when (viewType) {
+            when (uiAppState.selectedTab) {
                 is BottomNavigationType.Home -> HomeScreen(navController = navController)
                 is BottomNavigationType.Community -> CommunityScreen(navController = navController, appViewModel = appViewModel)
                 BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController, appViewModel = appViewModel)

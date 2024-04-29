@@ -10,6 +10,7 @@ import com.molohala.infinity.data.global.RetrofitClient
 import com.molohala.infinity.data.info.response.GithubResponse
 import com.molohala.infinity.data.info.response.ProfileResponse
 import com.molohala.infinity.data.info.response.SolvedacResponse
+import com.molohala.infinity.ui.main.main.BottomNavigationType
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -25,7 +26,8 @@ data class AppState(
     val solvedac: SolvedacResponse? = null,
     val profileFetchFlow: FetchFlow = FetchFlow.Fetching,
     val githubFetchFlow: FetchFlow = FetchFlow.Fetching,
-    val solvedacFetchFlow: FetchFlow = FetchFlow.Fetching
+    val solvedacFetchFlow: FetchFlow = FetchFlow.Fetching,
+    val selectedTab: BottomNavigationType = BottomNavigationType.Home
 )
 
 class AppViewModel : ViewModel() {
@@ -118,5 +120,9 @@ class AppViewModel : ViewModel() {
                 uiState.update { it.copy(solvedacFetchFlow = FetchFlow.Failure) }
             }
         }
+    }
+
+    fun clickTab(tab: BottomNavigationType) {
+        uiState.update { it.copy(selectedTab = tab) }
     }
 }
