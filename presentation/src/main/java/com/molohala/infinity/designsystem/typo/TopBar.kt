@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,6 +33,7 @@ fun TopBar(
     backgroundColor: Color = Color.White,
     text: String,
     onClickBackButton: (() -> Unit)? = null,
+    trailingContent: (@Composable RowScope.() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column {
@@ -62,6 +65,7 @@ fun TopBar(
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.weight(1f))
+            trailingContent?.let { it() }
         }
         content()
     }
@@ -72,7 +76,12 @@ fun TopBar(
 fun TopBarPreview() {
     TopBar(
         modifier = Modifier.background(InfinityColor.background),
-        text = "히히"
+        text = "히히",
+        trailingContent = {
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "complete")
+            }
+        }
     ) {
         Text(text = "히히")
     }

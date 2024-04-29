@@ -38,6 +38,7 @@ import com.molohala.infinity.designsystem.commnuity.InfinityCommunityCellShimmer
 import com.molohala.infinity.extension.bounceClick
 import com.molohala.infinity.icon.IconAdd
 import com.molohala.infinity.designsystem.typo.TopBar
+import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.root.AppViewModel
 import kotlinx.coroutines.launch
 
@@ -115,7 +116,7 @@ fun CommunityScreen(
                             .padding(end = 24.dp)
                             .padding(bottom = 24.dp)
                             .bounceClick(onClick = {
-
+                                navController.navigate(NavGroup.CreateCommunity.name)
                             })
                             .align(Alignment.BottomEnd)
                             .height(48.dp)

@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.molohala.infinity.ui.main.createcommunity.CreateCommunityScreen
 import com.molohala.infinity.ui.main.profile.setting.SettingScreen
 import com.molohala.infinity.ui.main.profile.setting.baekjoonsetting.BaekjoonSettingScreen
 import com.molohala.infinity.ui.main.profiledetail.ProfileDetailScreen
@@ -45,6 +46,9 @@ fun NavigationGraph(
         }
         composable(NavGroup.BaekjoonSetting.name) {
             BaekjoonSettingScreen(navController = navController)
+        }
+        composable(NavGroup.CreateCommunity.name) {
+            CreateCommunityScreen(navController = navController)
         }
     }
 }

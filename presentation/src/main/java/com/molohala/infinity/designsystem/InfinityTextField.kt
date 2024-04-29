@@ -38,6 +38,7 @@ fun InfinityTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     shape: Shape = RoundedCornerShape(12.dp),
     placeholder: String = "",
+    singleLine: Boolean = true,
     colors: TextFieldColors = TextFieldDefaults.colors(
         focusedTextColor = Color.LightGray,
         focusedContainerColor = Color.White,
@@ -70,7 +71,7 @@ fun InfinityTextField(
                 shape = shape,
             ),
         value = value,
-        singleLine = true,
+        singleLine = singleLine,
         keyboardOptions = keyboardOptions,
         onValueChange = onValueChange,
         cursorBrush = SolidColor(Color.LightGray),
