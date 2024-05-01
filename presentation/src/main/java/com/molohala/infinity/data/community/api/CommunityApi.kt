@@ -1,5 +1,8 @@
 package com.molohala.infinity.data.community.api
 
+import com.molohala.infinity.data.community.request.CreateCommunityRequest
+import com.molohala.infinity.data.community.request.PatchCommunityRequest
+import com.molohala.infinity.data.community.response.CommunityContentResponse
 import com.molohala.infinity.data.community.response.CommunityResponse
 import com.molohala.infinity.data.global.dto.response.BaseResponse
 import com.molohala.infinity.data.global.dto.response.BaseVoidResponse
@@ -20,21 +23,24 @@ interface CommunityApi {
 
     @POST("/community")
     suspend fun createCommunity(
-        @Body request: com.molohala.infinity.data.community.request.CreateCommunityRequest
+        @Body request: CreateCommunityRequest
     ): BaseVoidResponse
 
     @PATCH("/community")
     suspend fun patchCommunity(
-        @Body request: com.molohala.infinity.data.community.request.PatchCommunityRequest
+        @Body request: PatchCommunityRequest
     ): BaseVoidResponse
 
     @GET("/community/{id}")
     suspend fun getCommunity(
         @Path("id") id: Int
-    ): com.molohala.infinity.data.community.response.CommunityContentResponse
+    ): CommunityContentResponse
 
     @DELETE("/community/{id}")
     suspend fun removeCommunity(
         @Path("id") id: Int
     ): BaseVoidResponse
+
+    @GET("/community/best")
+    suspend fun getBestCommunities(): List<CommunityResponse>
 }

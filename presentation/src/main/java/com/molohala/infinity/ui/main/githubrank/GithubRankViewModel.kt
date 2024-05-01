@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.molohala.infinity.common.constant.TAG
 import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.data.global.RetrofitClient
-import com.molohala.infinity.data.rank.response.GithubRankResponse
+import com.molohala.infinity.data.rank.response.RankResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ enum class GithubRankTab(
 }
 
 data class GithubRankState(
-    val githubRanks: List<GithubRankResponse> = arrayListOf(),
+    val githubRanks: List<RankResponse> = arrayListOf(),
     val githubRanksFetchFlow: FetchFlow = FetchFlow.Fetching,
     val selectedTab: GithubRankTab = GithubRankTab.WEEK,
     val isRefresh: Boolean = false

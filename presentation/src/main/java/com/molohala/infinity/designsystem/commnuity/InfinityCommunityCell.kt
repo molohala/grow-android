@@ -113,11 +113,13 @@ fun InfinityCommunityCell(
                 },
                 overflow = TextOverflow.Ellipsis
             )
-            Text(
-                text = "더보기",
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.Gray
-            )
+            if (expandedState) {
+                Text(
+                    text = "더보기",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Gray
+                )
+            }
         }
 
         Column(

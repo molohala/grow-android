@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.molohala.infinity.R
-import com.molohala.infinity.data.rank.response.GithubRankResponse
+import com.molohala.infinity.data.rank.response.RankResponse
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.extension.bounceClick
 
@@ -30,7 +30,7 @@ import com.molohala.infinity.extension.bounceClick
 fun InfinityGithubRankCell(
     modifier: Modifier = Modifier,
     isCard: Boolean = false,
-    githubRank: GithubRankResponse,
+    githubRank: RankResponse,
     onClick: () -> Unit
 ) {
     Row(
@@ -93,7 +93,7 @@ fun InfinityGithubRankCell(
                 .weight(1f)
         )
         Text(
-            text = "${githubRank.commits} 커밋",
+            text = "${githubRank.count} 커밋",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
