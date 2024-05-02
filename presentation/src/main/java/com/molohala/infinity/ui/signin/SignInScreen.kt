@@ -57,7 +57,7 @@ fun SignInScreen(
             InfinityTextField(
                 placeholder = "비밀번호를 입력해 주세요",
                 value = uiState.pw,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                isPassword = true,
                 onValueChange = viewModel::updatePw
             )
             Spacer(modifier = Modifier.weight(1f))

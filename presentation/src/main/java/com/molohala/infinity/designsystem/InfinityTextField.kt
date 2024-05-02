@@ -11,6 +11,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
@@ -25,6 +27,9 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,7 +40,7 @@ fun InfinityTextField(
     modifier: Modifier = Modifier,
     value: String,
     enabled: Boolean = true,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    isPassword: Boolean = false,
     shape: Shape = RoundedCornerShape(12.dp),
     placeholder: String = "",
     singleLine: Boolean = true,
@@ -72,9 +77,10 @@ fun InfinityTextField(
             ),
         value = value,
         singleLine = singleLine,
-        keyboardOptions = keyboardOptions,
+        keyboardOptions = if (isPassword) KeyboardOptions.Default else KeyboardOptions(keyboardType = KeyboardType.Password),
         onValueChange = onValueChange,
         cursorBrush = SolidColor(Color.LightGray),
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         decorationBox = @Composable { innerTextField ->
             TextFieldDefaults.DecorationBox(
                 value = value,
@@ -97,7 +103,7 @@ fun InfinityTextField(
                     MutableInteractionSource()
                 },
                 singleLine = false,
-                visualTransformation = VisualTransformation.None,
+                visualTransformation = VisualTransformation.None
             )
         },
     )

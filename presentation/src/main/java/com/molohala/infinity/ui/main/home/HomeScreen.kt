@@ -8,21 +8,39 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.typo.SubTitle
 import com.molohala.infinity.designsystem.typo.TopBar
 import com.molohala.infinity.designsystem.statcell.InfinityStatCell
 import com.molohala.infinity.designsystem.statcell.InfinityStatType
+import com.molohala.infinity.ui.root.AppViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: HomeViewModel = viewModel(),
+    appViewModel: AppViewModel
 ) {
+
+    val uiAppState by appViewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchTodayGithubRank()
+        viewModel.fetchTodayBaekjoonRank()
+        viewModel.fetchWeekCommunities()
+    }
+
     TopBar(
         modifier = Modifier,
         backgroundColor = InfinityColor.background,
@@ -38,7 +56,19 @@ fun HomeScreen(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    SubTitle(text = "iOS 개발자\n이강현님 환영합니다")
+                    when (uiAppState.profileFetchFlow) {
+                        FetchFlow.Failure -> {
+                            Text(text = "불러오기 실패")
+                        }
+                        FetchFlow.Fetching -> {
+
+                        }
+                        FetchFlow.Success -> {
+                            uiAppState.profile?.let {
+                                SubTitle(text = "iOS 개발자\n${it.name}님 환영합니다")
+                            }
+                        }
+                    }
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {

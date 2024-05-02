@@ -110,7 +110,7 @@ fun MainScreen(
                 .padding(it)
         ) {
             when (uiAppState.selectedTab) {
-                is BottomNavigationType.Home -> HomeScreen(navController = navController)
+                is BottomNavigationType.Home -> HomeScreen(navController = navController, appViewModel = appViewModel)
                 is BottomNavigationType.Community -> CommunityScreen(navController = navController, appViewModel = appViewModel)
                 BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController, appViewModel = appViewModel)
                 BottomNavigationType.Baekjoon -> BaekjoonRankScreen(navController = navController)

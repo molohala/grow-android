@@ -42,5 +42,5 @@ interface CommunityApi {
     ): BaseVoidResponse
 
     @GET("/community/best")
-    suspend fun getBestCommunities(): List<CommunityResponse>
+    suspend fun getBestCommunities(): BaseResponse<List<CommunityResponse>>
 }
