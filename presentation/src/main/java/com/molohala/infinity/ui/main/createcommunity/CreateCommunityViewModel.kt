@@ -3,6 +3,7 @@ package com.molohala.infinity.ui.main.createcommunity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.molohala.infinity.common.flow.FetchFlow
+import com.molohala.infinity.common.flow.IdleFlow
 import com.molohala.infinity.data.community.request.CreateCommunityRequest
 import com.molohala.infinity.data.global.RetrofitClient
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 
 data class CreateCommunityState(
     val content: String = "",
-    val createCommunityFetchFlow: FetchFlow = FetchFlow.Fetching
+    val createCommunityFetchFlow: IdleFlow = IdleFlow.Idle
 )
 
 sealed interface CreateCommunitySideEffect {
@@ -28,13 +29,13 @@ class CreateCommunityViewModel: ViewModel() {
     fun createCommunity() {
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(createCommunityFetchFlow = FetchFlow.Fetching) }
+                uiState.update { it.copy(createCommunityFetchFlow = IdleFlow.Fetching) }
                 val request = CreateCommunityRequest(content = uiState.value.content)
                 RetrofitClient.communityApi.createCommunity(request)
-                uiState.update { it.copy(createCommunityFetchFlow = FetchFlow.Success) }
+                uiState.update { it.copy(createCommunityFetchFlow = IdleFlow.Success) }
                 uiEffect.emit(CreateCommunitySideEffect.Success)
             } catch (e: Exception) {
-                uiState.update { it.copy(createCommunityFetchFlow = FetchFlow.Failure) }
+                uiState.update { it.copy(createCommunityFetchFlow = IdleFlow.Failure) }
                 uiEffect.emit(CreateCommunitySideEffect.Failure)
             }
         }

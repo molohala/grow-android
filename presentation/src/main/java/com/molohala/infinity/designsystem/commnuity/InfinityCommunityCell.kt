@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -32,8 +31,8 @@ import com.molohala.infinity.R
 import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.common.util.timeAgo
 import com.molohala.infinity.data.community.response.CommunityResponse
+import com.molohala.infinity.designsystem.extension.bounceClick
 import com.molohala.infinity.extension.applyCardView
-import com.molohala.infinity.extension.bounceClick
 
 
 @Composable

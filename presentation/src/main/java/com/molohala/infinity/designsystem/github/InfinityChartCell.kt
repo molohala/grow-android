@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.chart.InfinityChart
 import com.molohala.infinity.chart.pointsData
-import com.molohala.infinity.extension.bounceClick
+import com.molohala.infinity.designsystem.extension.bounceClick
 import com.molohala.infinity.icon.IconRightArrow
 
 @Composable

@@ -35,7 +35,7 @@ import com.molohala.infinity.button.InfinityButton
 import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.designsystem.github.InfinityGithubRankCell
 import com.molohala.infinity.designsystem.github.InfinityGithubRankCellShimmer
-import com.molohala.infinity.selector.InfinitySelector
+import com.molohala.infinity.designsystem.selector.InfinitySelector
 import com.molohala.infinity.designsystem.typo.TopBar
 import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.root.AppViewModel

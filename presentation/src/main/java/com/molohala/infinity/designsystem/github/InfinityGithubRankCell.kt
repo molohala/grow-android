@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.molohala.infinity.R
 import com.molohala.infinity.data.rank.response.RankResponse
+import com.molohala.infinity.designsystem.extension.bounceClick
 import com.molohala.infinity.extension.applyCardView
-import com.molohala.infinity.extension.bounceClick
 
 @Composable
 fun InfinityGithubRankCell(

@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import com.molohala.infinity.ui.main.profile.ProfileScreen
 import com.molohala.infinity.R
 import com.molohala.infinity.designsystem.color.InfinityColor
-import com.molohala.infinity.extension.bounceClick
+import com.molohala.infinity.designsystem.extension.bounceClick
 import com.molohala.infinity.extension.shadow
 import com.molohala.infinity.ui.main.baekjoonrank.BaekjoonRankScreen
 import com.molohala.infinity.ui.main.community.CommunityScreen

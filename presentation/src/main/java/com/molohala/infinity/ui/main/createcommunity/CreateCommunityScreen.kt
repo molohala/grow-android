@@ -16,10 +16,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.molohala.infinity.common.flow.IdleFlow
 import com.molohala.infinity.designsystem.InfinityTextField
 import com.molohala.infinity.designsystem.color.InfinityColor
+import com.molohala.infinity.designsystem.extension.bounceClick
 import com.molohala.infinity.designsystem.typo.TopBar
-import com.molohala.infinity.extension.bounceClick
 
 @Composable
 fun CreateCommunityScreen(
@@ -35,6 +36,7 @@ fun CreateCommunityScreen(
                 CreateCommunitySideEffect.Failure -> {
                     Toast.makeText(context, "글작성 실패", Toast.LENGTH_SHORT).show()
                 }
+
                 CreateCommunitySideEffect.Success -> {
                     navController.popBackStack()
                 }
@@ -48,9 +50,12 @@ fun CreateCommunityScreen(
             Text(
                 modifier = Modifier
                     .padding(end = 16.dp)
-                    .bounceClick(onClick = {
-                        viewModel.createCommunity()
-                    }),
+                    .bounceClick(
+                        onClick = {
+                            viewModel.createCommunity()
+                        },
+                        enabled = uiState.createCommunityFetchFlow == IdleFlow.Idle
+                    ),
                 text = "완료",
                 style = MaterialTheme.typography.titleMedium,
                 color = InfinityColor.blue

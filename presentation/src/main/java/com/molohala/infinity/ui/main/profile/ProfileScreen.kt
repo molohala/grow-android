@@ -6,16 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -25,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,19 +30,18 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.infinity.common.flow.FetchFlow
-import com.molohala.infinity.designsystem.github.InfinityChartCell
-import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.data.info.response.ProfileResponse
-import com.molohala.infinity.designsystem.typo.TopBar
-import com.molohala.infinity.extension.applyCardView
-import com.molohala.infinity.extension.bounceClick
-import com.molohala.infinity.icon.IconLogout
-import com.molohala.infinity.ui.main.main.NavGroup
+import com.molohala.infinity.designsystem.color.InfinityColor
+import com.molohala.infinity.designsystem.extension.bounceClick
+import com.molohala.infinity.designsystem.github.InfinityChartCell
 import com.molohala.infinity.designsystem.statcell.InfinityStatCell
 import com.molohala.infinity.designsystem.statcell.InfinityStatCellShimmer
 import com.molohala.infinity.designsystem.statcell.InfinityStatType
+import com.molohala.infinity.designsystem.typo.TopBar
+import com.molohala.infinity.extension.applyCardView
+import com.molohala.infinity.icon.IconLogout
+import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.root.AppViewModel
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

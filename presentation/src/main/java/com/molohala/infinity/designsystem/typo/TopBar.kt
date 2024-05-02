@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.molohala.infinity.R
 import com.molohala.infinity.designsystem.color.InfinityColor
-import com.molohala.infinity.extension.bounceClick
+import com.molohala.infinity.designsystem.extension.bounceClick
 
 @Composable
 fun TopBar(

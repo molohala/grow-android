@@ -20,7 +20,7 @@ import androidx.navigation.NavController
 import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.extension.applyCardView
-import com.molohala.infinity.typo.SubTitle
+import com.molohala.infinity.designsystem.typo.SubTitle
 import com.molohala.infinity.designsystem.typo.TopBar
 import com.molohala.infinity.designsystem.statcell.InfinityStatCell
 import com.molohala.infinity.designsystem.statcell.InfinityStatType
@@ -33,6 +33,7 @@ fun HomeScreen(
     appViewModel: AppViewModel
 ) {
 
+    val uiState by viewModel.uiState.collectAsState()
     val uiAppState by appViewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {

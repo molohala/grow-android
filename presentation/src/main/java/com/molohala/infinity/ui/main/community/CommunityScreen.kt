@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,17 +29,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.common.constant.Constant
 import com.molohala.infinity.common.flow.FetchFlow
+import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.designsystem.commnuity.InfinityCommunityCell
 import com.molohala.infinity.designsystem.commnuity.InfinityCommunityCellShimmer
-import com.molohala.infinity.extension.bounceClick
-import com.molohala.infinity.icon.IconAdd
+import com.molohala.infinity.designsystem.extension.bounceClick
 import com.molohala.infinity.designsystem.typo.TopBar
+import com.molohala.infinity.icon.IconAdd
 import com.molohala.infinity.ui.main.main.NavGroup
 import com.molohala.infinity.ui.root.AppViewModel
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

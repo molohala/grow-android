@@ -1,4 +1,4 @@
-package com.molohala.infinity.selector
+package com.molohala.infinity.designsystem.selector
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.molohala.infinity.designsystem.color.InfinityColor
-import com.molohala.infinity.extension.bounceClick
+import com.molohala.infinity.designsystem.extension.bounceClick
 
 @Composable
 fun InfinitySelector(

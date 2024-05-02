@@ -1,4 +1,4 @@
-package com.molohala.infinity.extension
+package com.molohala.infinity.designsystem.extension
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
@@ -17,6 +17,7 @@ import com.molohala.infinity.button.ButtonState
 
 fun Modifier.bounceClick(
     onChangeButtonState: (ButtonState) -> Unit = {},
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) = composed {
     var buttonState by remember { mutableStateOf(ButtonState.Idle) }
@@ -29,6 +30,7 @@ fun Modifier.bounceClick(
         .clickable(
             interactionSource = remember { MutableInteractionSource() },
             indication = null,
+            enabled = enabled,
             onClick = onClick,
         )
         .graphicsLayer {
