@@ -11,4 +11,5 @@ sealed class NavGroup(
     data object GithubSetting: NavGroup(name = "github_setting")
     data object BaekjoonSetting: NavGroup(name = "baekjoon_setting")
     data object CreateCommunity: NavGroup(name = "create_community")
+    data object CommunityDetail: NavGroup(name = "community_detail")
 }

@@ -103,7 +103,7 @@ fun CommunityScreen(
                                         communityViewModel.fetchNextCommunities()
                                     }
                                 }) {
-
+                                    navController.navigate(NavGroup.CommunityDetail.name)
                                 }
                             }
                             item {

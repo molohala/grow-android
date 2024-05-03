@@ -50,6 +50,9 @@ fun NavigationGraph(
         composable(NavGroup.CreateCommunity.name) {
             CreateCommunityScreen(navController = navController)
         }
+        composable(NavGroup.CommunityDetail.name) {
+
+        }
     }
 }
 

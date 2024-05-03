@@ -34,7 +34,7 @@ interface CommunityApi {
     @GET("/community/{id}")
     suspend fun getCommunity(
         @Path("id") id: Int
-    ): CommunityContentResponse
+    ): BaseResponse<CommunityContentResponse>
 
     @DELETE("/community/{id}")
     suspend fun removeCommunity(
