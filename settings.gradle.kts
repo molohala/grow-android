@@ -13,8 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "infinity"
+rootProject.name = "grow"
 include(":presentation")
-include(":data")
-include(":designsystem")
-include(":common")

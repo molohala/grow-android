@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.molohala.infinity"
+    namespace = "com.molohala.grow"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.molohala.infinity"
+        applicationId = "com.molohala.grow"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
