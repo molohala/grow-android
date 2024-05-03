@@ -1,4 +1,4 @@
-package com.molohala.infinity.designsystem.github
+package com.molohala.infinity.designsystem.rank
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,7 +30,7 @@ import com.molohala.infinity.extension.applyCardView
 fun InfinityGithubRankCell(
     modifier: Modifier = Modifier,
     isCard: Boolean = false,
-    githubRank: RankResponse,
+    rank: RankResponse,
     onClick: () -> Unit
 ) {
     Row(
@@ -42,7 +42,7 @@ fun InfinityGithubRankCell(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "${githubRank.rank}",
+            text = "${rank.rank}",
             style = MaterialTheme.typography.titleMedium,
             color = Color.Black
         )
@@ -55,34 +55,32 @@ fun InfinityGithubRankCell(
                     .clip(CircleShape)
                     .background(Color.LightGray),
             )
-            val medal = when (githubRank.rank) {
+            val medal = when (rank.rank) {
                 1 -> R.drawable.first_medal
                 2 -> R.drawable.second_medal
                 3 -> R.drawable.third_medal
                 else -> null
-            }
-            if (githubRank.rank in 1..<4 && medal != null) {
-                Column {
-                    Image(
-                        modifier = Modifier
-                            .size(28.dp),
-                        painter = painterResource(id = medal),
-                        contentDescription = null
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                }
+            } ?: return@Box
+            Column {
+                Image(
+                    modifier = Modifier
+                        .size(28.dp),
+                    painter = painterResource(id = medal),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.weight(1f))
             }
         }
         Column(
             verticalArrangement = Arrangement.spacedBy(0.dp)
         ) {
             Text(
-                text = githubRank.memberName,
+                text = rank.memberName,
                 color = Color.Black,
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp)
             )
             Text(
-                text = githubRank.socialId,
+                text = rank.socialId,
                 color = Color.Gray,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.W400
@@ -93,7 +91,7 @@ fun InfinityGithubRankCell(
                 .weight(1f)
         )
         Text(
-            text = "${githubRank.count} 커밋",
+            text = "${rank.count} 커밋",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )

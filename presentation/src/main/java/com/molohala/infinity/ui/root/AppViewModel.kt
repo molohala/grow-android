@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 sealed interface AppSideEffect {
-    data object Success : AppSideEffect
 }
 
 data class AppState(
@@ -58,7 +57,6 @@ class AppViewModel : ViewModel() {
                 uiState.update { it.copy(profile = FetchFlow.Fetching()) }
                 val profile = RetrofitClient.infoApi.getProfile().data
                 uiState.update { it.copy(profile = FetchFlow.Success(profile)) }
-                uiEffect.emit(AppSideEffect.Success)
                 fetchGithub()
                 fetchSolvedac()
             } catch (e: Exception) {

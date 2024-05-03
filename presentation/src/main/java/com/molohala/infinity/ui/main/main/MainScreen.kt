@@ -53,14 +53,6 @@ fun MainScreen(
 
     LaunchedEffect(Unit) {
         appViewModel.fetchProfile()
-        appViewModel.uiEffect.collect {
-            when (it) {
-                AppSideEffect.Success -> {
-                    appViewModel.fetchGithub()
-                    appViewModel.fetchSolvedac()
-                }
-            }
-        }
     }
 
     Scaffold(

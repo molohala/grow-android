@@ -33,7 +33,7 @@ import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.data.info.response.ProfileResponse
 import com.molohala.infinity.designsystem.color.InfinityColor
 import com.molohala.infinity.designsystem.extension.bounceClick
-import com.molohala.infinity.designsystem.github.InfinityChartCell
+import com.molohala.infinity.designsystem.rank.InfinityChartCell
 import com.molohala.infinity.designsystem.statcell.InfinityStatCell
 import com.molohala.infinity.designsystem.statcell.InfinityStatCellShimmer
 import com.molohala.infinity.designsystem.statcell.InfinityStatType

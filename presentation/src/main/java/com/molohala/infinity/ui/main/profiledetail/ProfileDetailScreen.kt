@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.molohala.infinity.baekjoon.InfinityBaekjoonCell
-import com.molohala.infinity.designsystem.github.InfinityChartCell
+import com.molohala.infinity.designsystem.baekjoon.InfinityBaekjoonRankCell
+import com.molohala.infinity.designsystem.rank.InfinityChartCell
 import com.molohala.infinity.designsystem.typo.TopBar
 
 @Composable
@@ -36,9 +36,6 @@ fun ProfileDetailScreen(
             navController.popBackStack()
         }
         InfinityChartCell {
-
-        }
-        InfinityBaekjoonCell {
 
         }
     }

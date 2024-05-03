@@ -57,7 +57,6 @@ object RetrofitClient {
                 try {
                     Log.d(TAG, JSONObject(message).toString(4))
                 } catch (e: Exception) {
-                    Log.d(TAG, "Retrofit-Client $e")
                 }
             }
         }
@@ -84,8 +83,8 @@ object RetrofitClient {
         .client(okHttpClient)
         .build()
 
-    val dauthApi: DAuthApi by lazy { dodamRetrofit.create(com.molohala.infinity.data.dauth.api.DAuthApi::class.java) }
-    val authApi: AuthApi by lazy { infinityRetrofit.create(com.molohala.infinity.data.auth.api.AuthApi::class.java) }
+    val dauthApi: DAuthApi by lazy { dodamRetrofit.create(DAuthApi::class.java) }
+    val authApi: AuthApi by lazy { infinityRetrofit.create(AuthApi::class.java) }
     val comment: CommentApi by lazy { infinityRetrofit.create(CommentApi::class.java) }
     val communityApi: CommunityApi by lazy { infinityRetrofit.create(CommunityApi::class.java) }
     val rankApi: RankApi by lazy { infinityRetrofit.create(RankApi::class.java) }

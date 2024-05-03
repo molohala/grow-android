@@ -18,7 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.infinity.common.flow.FetchFlow
+import com.molohala.infinity.designsystem.baekjoon.InfinityBaekjoonRankCell
+import com.molohala.infinity.designsystem.baekjoon.InfinityBaekjoonRankCellShimmer
 import com.molohala.infinity.designsystem.color.InfinityColor
+import com.molohala.infinity.designsystem.commnuity.InfinityCommunityCell
+import com.molohala.infinity.designsystem.commnuity.InfinityCommunityCellShimmer
+import com.molohala.infinity.designsystem.rank.InfinityGithubRankCell
+import com.molohala.infinity.designsystem.rank.InfinityGithubRankCellShimmer
 import com.molohala.infinity.extension.applyCardView
 import com.molohala.infinity.designsystem.typo.SubTitle
 import com.molohala.infinity.designsystem.typo.TopBar
@@ -39,7 +45,7 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         viewModel.fetchTodayGithubRank()
         viewModel.fetchTodayBaekjoonRank()
-        viewModel.fetchWeekCommunities()
+//        viewModel.fetchWeekCommunities()
     }
 
     TopBar(
@@ -62,9 +68,11 @@ fun HomeScreen(
                             is FetchFlow.Fetching -> {
                                 Text(text = "불러오기 실패")
                             }
+
                             is FetchFlow.Failure -> {
 
                             }
+
                             is FetchFlow.Success -> {
                                 SubTitle(text = "iOS 개발자\n${it.data.name}님 환영합니다")
                             }
@@ -93,13 +101,13 @@ fun HomeScreen(
 
             }
             item {
-                TodayGithub()
+                TodayGithub(uiState = uiState)
             }
             item {
-                TodayBaekjoon()
+                TodayBaekjoon(uiState = uiState)
             }
             item {
-                WeekCommunity()
+                WeekCommunity(uiState = uiState)
             }
             item {
                 Spacer(modifier = Modifier.height(32.dp))
@@ -109,7 +117,9 @@ fun HomeScreen(
 }
 
 @Composable
-fun WeekCommunity() {
+fun WeekCommunity(
+    uiState: HomeState
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -121,17 +131,32 @@ fun WeekCommunity() {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            repeat(3) {
-//                InfinityCommunityCell {
-//
-//                }
+            uiState.weekCommunities.let {
+                when (it) {
+                    is FetchFlow.Failure -> Text(text = "불러오기 실패")
+                    is FetchFlow.Fetching -> {
+                        repeat(3) {
+                            InfinityCommunityCellShimmer()
+                        }
+                    }
+
+                    is FetchFlow.Success -> {
+                        it.data.forEach {
+                            InfinityCommunityCell(
+                                community = it,
+                                onAppear = { /*TODO*/ }) {
+
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun TodayGithub() {
+fun TodayGithub(uiState: HomeState) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -143,19 +168,32 @@ fun TodayGithub() {
                 .applyCardView(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-//            repeat(3) {
-//                InfinityGithubRankCell(
-//                    githubRank =
-//                ) {
-//
-//                }
-//            }
+            uiState.todayGithubRanks.let {
+                when (it) {
+                    is FetchFlow.Failure -> Text(text = "불러오기 실패")
+                    is FetchFlow.Fetching -> {
+                        repeat(3) {
+                            InfinityGithubRankCellShimmer()
+                        }
+                    }
+
+                    is FetchFlow.Success -> {
+                        it.data.forEach {
+                            InfinityGithubRankCell(
+                                rank = it
+                            ) {
+
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-fun TodayBaekjoon() {
+fun TodayBaekjoon(uiState: HomeState) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -167,6 +205,23 @@ fun TodayBaekjoon() {
                 .applyCardView(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            uiState.todayBaekjoonRanks.let {
+                when (it) {
+                    is FetchFlow.Failure -> Text(text = "불러오기 실패")
+                    is FetchFlow.Fetching -> {
+                        repeat(3) {
+                            InfinityBaekjoonRankCellShimmer()
+                        }
+                    }
+                    is FetchFlow.Success -> {
+                        it.data.forEach {
+                            InfinityBaekjoonRankCell(rank = it) {
+
+                            }
+                        }
+                    }
+                }
+            }
             repeat(3) {
 //                InfinityGithubRankCell(
 //                    rank = it + 1
