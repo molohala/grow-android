@@ -2,7 +2,7 @@ package com.molohala.infinity.ui.main.profile.setting.profileedit
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.asStateFlow
 
 
 class ProfileEditViewModel: ViewModel() {
@@ -10,5 +10,6 @@ class ProfileEditViewModel: ViewModel() {
         val jobs: ArrayList<String> = arrayListOf()
     )
 
-    var uiState = MutableStateFlow(State())
+    private val _uiState = MutableStateFlow(State())
+    val uiState = _uiState.asStateFlow()
 }

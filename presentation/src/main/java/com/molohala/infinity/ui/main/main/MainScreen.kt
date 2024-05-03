@@ -33,7 +33,6 @@ import com.molohala.infinity.ui.main.baekjoonrank.BaekjoonRankScreen
 import com.molohala.infinity.ui.main.community.CommunityScreen
 import com.molohala.infinity.ui.main.githubrank.GithubRankScreen
 import com.molohala.infinity.ui.main.home.HomeScreen
-import com.molohala.infinity.ui.root.AppSideEffect
 import com.molohala.infinity.ui.root.AppViewModel
 
 @Composable

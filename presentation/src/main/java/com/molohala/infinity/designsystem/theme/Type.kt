@@ -1,4 +1,4 @@
-package com.molohala.infinity.ui.theme
+package com.molohala.infinity.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

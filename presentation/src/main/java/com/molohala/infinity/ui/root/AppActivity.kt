@@ -13,7 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.molohala.infinity.application.InfinityApp
 import com.molohala.infinity.application.PreferenceManager
 import com.molohala.infinity.ui.main.main.NavigationGraph
-import com.molohala.infinity.ui.theme.InfinityTheme
+import com.molohala.infinity.designsystem.theme.InfinityTheme
 
 class AppActivity : ComponentActivity() {
 

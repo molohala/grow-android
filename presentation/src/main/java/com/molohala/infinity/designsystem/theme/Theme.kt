@@ -1,4 +1,4 @@
-package com.molohala.infinity.ui.theme
+package com.molohala.infinity.designsystem.theme
 
 import android.app.Activity
 import android.graphics.Color.toArgb

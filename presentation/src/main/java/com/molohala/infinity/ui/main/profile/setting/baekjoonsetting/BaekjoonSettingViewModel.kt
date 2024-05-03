@@ -2,6 +2,7 @@ package com.molohala.infinity.ui.main.profile.setting.baekjoonsetting
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 
@@ -10,9 +11,10 @@ class BaekjoonSettingViewModel: ViewModel() {
         val baekjoonId: String = ""
     )
 
-    var uiState = MutableStateFlow(State())
+    private val _uiState = MutableStateFlow(State())
+    val uiState = _uiState.asStateFlow()
 
     fun updateBaekjoonId(id: String) {
-        uiState.update { it.copy(baekjoonId = id) }
+        _uiState.update { it.copy(baekjoonId = id) }
     }
 }

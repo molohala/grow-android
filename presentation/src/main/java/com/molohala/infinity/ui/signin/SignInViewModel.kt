@@ -8,6 +8,8 @@ import com.molohala.infinity.data.global.RetrofitClient
 import com.molohala.infinity.data.global.Secret
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -22,13 +24,16 @@ sealed interface SignInSideEffect {
 
 class SignInViewModel: ViewModel() {
 
-    val uiState = MutableStateFlow(SignInState())
-    val uiEffect = MutableSharedFlow<SignInSideEffect>()
+    private val _uiEffect = MutableSharedFlow<SignInSideEffect>()
+    val uiEffect = _uiEffect.asSharedFlow()
+
+    private val _uiState = MutableStateFlow(SignInState())
+    val uiState = _uiState.asStateFlow()
 
     fun signIn() {
 
-        val id = uiState.value.id
-        val pw = uiState.value.pw
+        val id = _uiState.value.id
+        val pw = _uiState.value.pw
 
         viewModelScope.launch {
             try {
@@ -43,7 +48,7 @@ class SignInViewModel: ViewModel() {
                 val code = dAuthResponse.location.split("[=&]".toRegex())[1]
                 val response = RetrofitClient.authApi.signIn(code = code).data
                 val effect = SignInSideEffect.LoginSuccess(accessToken = response.accessToken, refreshToken = response.refreshToken)
-                uiEffect.emit(effect)
+                _uiEffect.emit(effect)
             } catch (e: Exception) {
                 Log.d(TAG, "signIn: $e")
             }
@@ -51,10 +56,10 @@ class SignInViewModel: ViewModel() {
     }
 
     fun updateId(id: String) {
-        uiState.update { it.copy(id = id) }
+        _uiState.update { it.copy(id = id) }
     }
 
     fun updatePw(pw: String) {
-        uiState.update { it.copy(pw = pw) }
+        _uiState.update { it.copy(pw = pw) }
     }
 }

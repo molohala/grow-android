@@ -1,13 +1,12 @@
 package com.molohala.infinity.ui.main.githubrank
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.molohala.infinity.common.constant.TAG
 import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.data.global.RetrofitClient
 import com.molohala.infinity.data.rank.response.RankResponse
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -26,34 +25,35 @@ data class GithubRankState(
 
 class GithubRankViewModel : ViewModel() {
 
-    val uiState = MutableStateFlow(GithubRankState())
+    private val _uiState = MutableStateFlow(GithubRankState())
+    val uiState = _uiState.asStateFlow()
 
     fun fetchGithubRank() {
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(githubRanksFetchFlow = FetchFlow.Fetching()) }
-                val response = when (uiState.value.selectedTab) {
+                _uiState.update { it.copy(githubRanksFetchFlow = FetchFlow.Fetching()) }
+                val response = when (_uiState.value.selectedTab) {
                     GithubRankTab.WEEK -> RetrofitClient.rankApi.getWeekGithubRank()
                     GithubRankTab.TOTAL -> RetrofitClient.rankApi.getTotalGithubRank()
                 }.data
-                uiState.update {
+                _uiState.update {
                     it.copy(
                         githubRanksFetchFlow = FetchFlow.Success(response)
                     )
                 }
             } catch (e: Exception) {
-                uiState.update { it.copy(githubRanksFetchFlow = FetchFlow.Failure()) }
+                _uiState.update { it.copy(githubRanksFetchFlow = FetchFlow.Failure()) }
             }
         }
     }
 
     fun clickTab(selectedTab: GithubRankTab) {
-        uiState.update { it.copy(selectedTab = selectedTab) }
+        _uiState.update { it.copy(selectedTab = selectedTab) }
         fetchGithubRank()
     }
 
     fun refresh() {
-        uiState.update { it.copy(isRefresh = false) }
+        _uiState.update { it.copy(isRefresh = false) }
         fetchGithubRank()
     }
 }

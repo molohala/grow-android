@@ -2,6 +2,7 @@ package com.molohala.infinity.ui.main.profile.setting.githubsetting
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 
@@ -10,9 +11,10 @@ class GithubSettingViewModel: ViewModel() {
         val githubId: String = ""
     )
 
-    var uiState = MutableStateFlow(State())
+    private val _uiState = MutableStateFlow(State())
+    val uiState = _uiState.asStateFlow()
 
     fun updateGithubId(id: String) {
-        uiState.update { it.copy(githubId = id) }
+        _uiState.update { it.copy(githubId = id) }
     }
 }

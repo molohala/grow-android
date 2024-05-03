@@ -21,10 +21,10 @@ fun NavigationGraph(
     navController: NavHostController = rememberNavController(),
     appViewModel: AppViewModel
 ) {
-    val uiState by appViewModel.accessToken.collectAsState()
+    val uiState by appViewModel.uiState.collectAsState()
     NavHost(
         navController = navController,
-        startDestination = getStartDestination(isAuthorization = uiState.isEmpty())
+        startDestination = getStartDestination(isAuthorization = uiState.accessToken.isEmpty())
     ) {
         composable(NavGroup.SignIn.name) {
             SignInScreen(navController = navController, appViewModel = appViewModel)

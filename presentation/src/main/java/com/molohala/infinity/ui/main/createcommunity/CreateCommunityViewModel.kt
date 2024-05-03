@@ -2,12 +2,13 @@ package com.molohala.infinity.ui.main.createcommunity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.common.flow.IdleFlow
 import com.molohala.infinity.data.community.request.CreateCommunityRequest
 import com.molohala.infinity.data.global.RetrofitClient
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -23,25 +24,28 @@ sealed interface CreateCommunitySideEffect {
 
 class CreateCommunityViewModel: ViewModel() {
 
-    val uiEffect = MutableSharedFlow<CreateCommunitySideEffect>()
-    val uiState = MutableStateFlow(CreateCommunityState())
+    private val _uiEffect = MutableSharedFlow<CreateCommunitySideEffect>()
+    val uiEffect = _uiEffect.asSharedFlow()
+
+    private val _uiState = MutableStateFlow(CreateCommunityState())
+    val uiState = _uiState.asStateFlow()
 
     fun createCommunity() {
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(createCommunityFetchFlow = IdleFlow.Fetching) }
-                val request = CreateCommunityRequest(content = uiState.value.content)
+                _uiState.update { it.copy(createCommunityFetchFlow = IdleFlow.Fetching) }
+                val request = CreateCommunityRequest(content = _uiState.value.content)
                 RetrofitClient.communityApi.createCommunity(request)
-                uiState.update { it.copy(createCommunityFetchFlow = IdleFlow.Success) }
-                uiEffect.emit(CreateCommunitySideEffect.Success)
+                _uiState.update { it.copy(createCommunityFetchFlow = IdleFlow.Success) }
+                _uiEffect.emit(CreateCommunitySideEffect.Success)
             } catch (e: Exception) {
-                uiState.update { it.copy(createCommunityFetchFlow = IdleFlow.Failure) }
-                uiEffect.emit(CreateCommunitySideEffect.Failure)
+                _uiState.update { it.copy(createCommunityFetchFlow = IdleFlow.Failure) }
+                _uiEffect.emit(CreateCommunitySideEffect.Failure)
             }
         }
     }
 
     fun updateContent(content: String) {
-        uiState.update { it.copy(content = content) }
+        _uiState.update { it.copy(content = content) }
     }
 }

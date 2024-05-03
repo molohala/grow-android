@@ -6,7 +6,10 @@ import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.data.community.response.CommunityResponse
 import com.molohala.infinity.data.global.RetrofitClient
 import com.molohala.infinity.data.rank.response.RankResponse
+import com.molohala.infinity.ui.util.launch
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -18,52 +21,53 @@ data class HomeState(
 
 class HomeViewModel : ViewModel() {
 
-    val uiState = MutableStateFlow(HomeState())
+    private val _uiState = MutableStateFlow(HomeState())
+    val uiState = _uiState.asStateFlow()
 
     fun fetchTodayGithubRank() {
-        viewModelScope.launch {
+        launch {
             try {
-                uiState.update { it.copy(todayGithubRanks = FetchFlow.Fetching()) }
+                _uiState.update { it.copy(todayGithubRanks = FetchFlow.Fetching()) }
                 val ranks = RetrofitClient.rankApi.getTodayGithubRank().data
-                uiState.update {
+                _uiState.update {
                     it.copy(
                         todayGithubRanks = FetchFlow.Success(ranks)
                     )
                 }
             } catch (e: Exception) {
-                uiState.update { it.copy(todayGithubRanks = FetchFlow.Failure()) }
+                _uiState.update { it.copy(todayGithubRanks = FetchFlow.Failure()) }
             }
         }
     }
 
     fun fetchTodayBaekjoonRank() {
-        viewModelScope.launch {
+        launch {
             try {
-                uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Fetching()) }
+                _uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Fetching()) }
                 val ranks = RetrofitClient.rankApi.getTodaySolvedacRank().data
-                uiState.update {
+                _uiState.update {
                     it.copy(
                         todayBaekjoonRanks = FetchFlow.Success(ranks)
                     )
                 }
             } catch (e: Exception) {
-                uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Failure()) }
+                _uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Failure()) }
             }
         }
     }
 
     fun fetchWeekCommunities() {
-        viewModelScope.launch {
+        launch {
             try {
-                uiState.update { it.copy(weekCommunities = FetchFlow.Fetching()) }
+                _uiState.update { it.copy(weekCommunities = FetchFlow.Fetching()) }
                 val communities = RetrofitClient.communityApi.getBestCommunities().data
-                uiState.update {
+                _uiState.update {
                     it.copy(
                         weekCommunities = FetchFlow.Success(communities)
                     )
                 }
             } catch (e: Exception) {
-                uiState.update { it.copy(weekCommunities = FetchFlow.Failure()) }
+                _uiState.update { it.copy(weekCommunities = FetchFlow.Failure()) }
             }
         }
     }

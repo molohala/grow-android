@@ -8,10 +8,8 @@ import com.molohala.infinity.common.constant.TAG
 import com.molohala.infinity.common.flow.FetchFlow
 import com.molohala.infinity.data.community.response.CommunityResponse
 import com.molohala.infinity.data.global.RetrofitClient
-import com.molohala.infinity.data.global.dto.request.PageRequest
-import kotlinx.coroutines.android.awaitFrame
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -23,26 +21,27 @@ data class CommunityState(
 
 class CommunityViewModel : ViewModel() {
 
-    val uiState = MutableStateFlow(CommunityState())
+    private val _uiState = MutableStateFlow(CommunityState())
+    val uiState = _uiState.asStateFlow()
 
     fun fetchCommunities() {
         val nextPage = 1
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(communities = FetchFlow.Fetching()) }
+                _uiState.update { it.copy(communities = FetchFlow.Fetching()) }
                 val communities = RetrofitClient.communityApi.getCommunities(
                     page = nextPage,
                     size = Constant.pageInterval
                 ).data
                 if (communities.isNotEmpty()) {
-                    uiState.update {
+                    _uiState.update {
                         it.copy(
                             communities = FetchFlow.Success(communities)
                         )
                     }
                 }
             } catch (e: Exception) {
-                uiState.update {
+                _uiState.update {
                     it.copy(
                         page = 1,
                         communities = FetchFlow.Failure()
@@ -54,8 +53,8 @@ class CommunityViewModel : ViewModel() {
     }
 
     fun fetchNextCommunities() {
-        val communities = uiState.value.communities as? FetchFlow.Success?: run {
-            uiState.update { it.copy(communities = FetchFlow.Failure()) }
+        val communities = _uiState.value.communities as? FetchFlow.Success?: run {
+            _uiState.update { it.copy(communities = FetchFlow.Failure()) }
             return
         }
         viewModelScope.launch {
@@ -67,13 +66,13 @@ class CommunityViewModel : ViewModel() {
                 ).data
                 val oldCommunities = communities.toMutableList()
                 oldCommunities.addAll(communities)
-                uiState.update {
+                _uiState.update {
                     it.copy(
                         communities = FetchFlow.Success(oldCommunities)
                     )
                 }
             } catch (e: Exception) {
-                uiState.update {
+                _uiState.update {
                     it.copy(
                         communities = FetchFlow.Failure(),
                         page = 1
@@ -86,6 +85,6 @@ class CommunityViewModel : ViewModel() {
 
     fun refresh() {
         fetchCommunities()
-        uiState.update { it.copy(isRefresh = false) }
+        _uiState.update { it.copy(isRefresh = false) }
     }
 }
