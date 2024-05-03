@@ -21,13 +21,13 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.color.GrowColor
 import com.molohala.grow.designsystem.commnuity.InfinityCommunityCell
 import com.molohala.grow.designsystem.commnuity.InfinityCommunityCellShimmer
-import com.molohala.grow.designsystem.component.TopBar
-import com.molohala.grow.designsystem.component.baekjoon.InfinityBaekjoonRankCell
-import com.molohala.grow.designsystem.component.baekjoon.InfinityBaekjoonRankCellShimmer
-import com.molohala.grow.designsystem.component.rank.InfinityGithubRankCell
-import com.molohala.grow.designsystem.component.rank.InfinityGithubRankCellShimmer
-import com.molohala.grow.designsystem.component.statcell.InfinityStatCell
-import com.molohala.grow.designsystem.component.statcell.InfinityStatType
+import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.legacy.baekjoon.InfinityBaekjoonRankCell
+import com.molohala.grow.designsystem.legacy.baekjoon.InfinityBaekjoonRankCellShimmer
+import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCell
+import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCellShimmer
+import com.molohala.grow.designsystem.legacy.statcell.InfinityStatCell
+import com.molohala.grow.designsystem.legacy.statcell.InfinityStatType
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.ui.root.AppViewModel
 

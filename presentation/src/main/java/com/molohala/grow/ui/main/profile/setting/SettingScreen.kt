@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.grow.R
 import com.molohala.grow.designsystem.color.GrowColor
-import com.molohala.grow.designsystem.component.TopBar
+import com.molohala.grow.designsystem.legacy.TopBar
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.main.profile.Logout
 import com.molohala.grow.ui.main.profile.setting.component.SettingCell
@@ -40,7 +40,7 @@ fun SettingScreen(
             SettingCell(
                 modifier = Modifier
                     .padding(top = 16.dp),
-                icon = R.drawable.ic_profile,
+                icon = R.drawable.ic_person,
                 iconColor = Color.Gray,
                 text = "프로필 설정"
             ) {

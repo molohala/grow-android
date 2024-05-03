@@ -32,14 +32,13 @@ import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.designsystem.color.GrowColor
-import com.molohala.grow.designsystem.component.TopBar
-import com.molohala.grow.designsystem.component.rank.InfinityChartCell
-import com.molohala.grow.designsystem.component.statcell.InfinityStatCell
-import com.molohala.grow.designsystem.component.statcell.InfinityStatCellShimmer
-import com.molohala.grow.designsystem.component.statcell.InfinityStatType
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
-import com.molohala.grow.icon.IconLogout
+import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.legacy.rank.InfinityChartCell
+import com.molohala.grow.designsystem.legacy.statcell.InfinityStatCell
+import com.molohala.grow.designsystem.legacy.statcell.InfinityStatCellShimmer
+import com.molohala.grow.designsystem.legacy.statcell.InfinityStatType
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -232,6 +231,6 @@ fun Logout(
             style = MaterialTheme.typography.bodyLarge
         )
         Spacer(modifier = Modifier.weight(1f))
-        IconLogout()
+//        IconLogout()
     }
 }

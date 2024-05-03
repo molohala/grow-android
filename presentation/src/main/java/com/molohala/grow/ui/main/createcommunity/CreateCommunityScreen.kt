@@ -18,8 +18,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.molohala.grow.common.flow.IdleFlow
 import com.molohala.grow.designsystem.color.GrowColor
-import com.molohala.grow.designsystem.component.TopBar
-import com.molohala.grow.designsystem.component.textfield.InfinityTextField
+import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.legacy.textfield.InfinityTextField
 import com.molohala.grow.designsystem.extension.bounceClick
 
 @Composable

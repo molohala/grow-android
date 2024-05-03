@@ -13,9 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.extension.applyCardView
-import com.molohala.grow.icon.IconRightArrow
+import com.molohala.grow.designsystem.extension.bounceClick
 
 @Composable
 fun SettingCell(
@@ -52,7 +51,7 @@ fun SettingCell(
                 color = Color.Gray
             )
         }
-        IconRightArrow()
+//        IconRightArrow()
     }
 }
 //            HStack {

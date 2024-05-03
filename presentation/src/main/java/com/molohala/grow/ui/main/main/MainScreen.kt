@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.molohala.grow.ui.main.profile.ProfileScreen
 import com.molohala.grow.R
 import com.molohala.grow.designsystem.color.GrowColor
 import com.molohala.grow.designsystem.extension.bounceClick
@@ -30,6 +29,7 @@ import com.molohala.grow.ui.main.baekjoonrank.BaekjoonRankScreen
 import com.molohala.grow.ui.main.community.CommunityScreen
 import com.molohala.grow.ui.main.githubrank.GithubRankScreen
 import com.molohala.grow.ui.main.home.HomeScreen
+import com.molohala.grow.ui.main.profile.ProfileScreen
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -113,8 +113,8 @@ sealed class BottomNavigationType(
     val icon: Int
 ) {
     data object Home : BottomNavigationType(name = "홈", icon = R.drawable.ic_home)
-    data object Community : BottomNavigationType(name = "커뮤니티", icon = R.drawable.ic_community)
+    data object Community : BottomNavigationType(name = "커뮤니티", icon = R.drawable.ic_chat)
     data object GithubRank : BottomNavigationType(name = "Github", icon = R.drawable.ic_github)
     data object Baekjoon : BottomNavigationType(name = "백준", icon = R.drawable.ic_baekjoon)
-    data object Profile : BottomNavigationType(name = "프로필", icon = R.drawable.ic_profile)
+    data object Profile : BottomNavigationType(name = "프로필", icon = R.drawable.ic_person)
 }

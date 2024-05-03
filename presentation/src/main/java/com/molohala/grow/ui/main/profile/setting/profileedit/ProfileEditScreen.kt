@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.button.InfinityButton
-import com.molohala.grow.designsystem.component.TopBar
+import com.molohala.grow.designsystem.legacy.TopBar
 
 @Composable
 fun ProfileEditScreen(

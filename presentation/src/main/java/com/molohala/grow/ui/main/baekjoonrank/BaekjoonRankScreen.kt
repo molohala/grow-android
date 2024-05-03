@@ -2,7 +2,7 @@ package com.molohala.grow.ui.main.baekjoonrank
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.molohala.grow.designsystem.component.TopBar
+import com.molohala.grow.designsystem.legacy.TopBar
 
 @Composable
 fun BaekjoonRankScreen(

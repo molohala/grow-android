@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     implementation("org.json:json:20240303")
 

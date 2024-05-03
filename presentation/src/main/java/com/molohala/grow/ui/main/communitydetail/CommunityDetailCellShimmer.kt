@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.molohala.grow.designsystem.comment.InfinityCommentCellShimmer
-import com.molohala.grow.designsystem.component.shimmer.shimmerEffect
+import com.molohala.grow.designsystem.legacy.shimmer.shimmerEffect
 
 @Composable
 fun CommunityDetailCellShimmer() {

@@ -33,10 +33,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.button.InfinityButton
 import com.molohala.grow.common.flow.FetchFlow
-import com.molohala.grow.designsystem.component.TopBar
-import com.molohala.grow.designsystem.component.rank.InfinityGithubRankCell
-import com.molohala.grow.designsystem.component.rank.InfinityGithubRankCellShimmer
-import com.molohala.grow.designsystem.component.selector.InfinitySelector
+import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCell
+import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCellShimmer
+import com.molohala.grow.designsystem.legacy.selector.InfinitySelector
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 

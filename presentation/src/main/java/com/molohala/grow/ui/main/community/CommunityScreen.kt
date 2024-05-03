@@ -34,9 +34,8 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.color.GrowColor
 import com.molohala.grow.designsystem.commnuity.InfinityCommunityCell
 import com.molohala.grow.designsystem.commnuity.InfinityCommunityCellShimmer
-import com.molohala.grow.designsystem.component.TopBar
 import com.molohala.grow.designsystem.extension.bounceClick
-import com.molohala.grow.icon.IconAdd
+import com.molohala.grow.designsystem.legacy.TopBar
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -125,7 +124,7 @@ fun CommunityScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
-                            IconAdd()
+//                            IconAdd()
                             Text(
                                 modifier = Modifier
                                     .padding(end = 4.dp),

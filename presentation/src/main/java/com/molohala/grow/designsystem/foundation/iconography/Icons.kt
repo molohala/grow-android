@@ -1,44 +1,22 @@
-package com.molohala.grow.icon
+package com.molohala.grow.designsystem.foundation.iconography
 
-import androidx.compose.foundation.layout.size
+import androidx.annotation.DrawableRes
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import com.molohala.grow.R
-
 
 @Composable
-fun IconRightArrow() {
+fun GrowIcon(
+    modifier: Modifier = Modifier,
+    @DrawableRes id: Int,
+    color: Color
+) {
     Icon(
-        modifier = Modifier
-            .size(18.dp),
-        painter = painterResource(id = R.drawable.ic_expand_right),
+        modifier = modifier,
+        painter = painterResource(id = id),
         contentDescription = null,
-        tint = Color.Gray
-    )
-}
-
-@Composable
-fun IconLogout() {
-    Icon(
-        modifier = Modifier
-            .size(22.dp),
-        painter = painterResource(id = R.drawable.ic_logout),
-        contentDescription = null,
-        tint = Color.Red
-    )
-}
-
-@Composable
-fun IconAdd() {
-    Icon(
-        modifier = Modifier
-            .size(22.dp),
-        painter = painterResource(id = R.drawable.ic_add),
-        contentDescription = null,
-        tint = Color.White
+        tint = color
     )
 }
