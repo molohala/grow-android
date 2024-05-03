@@ -5,7 +5,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
@@ -32,9 +31,8 @@ fun GrowTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
         }
     }
-    val rememberedColorScheme = remember { colorScheme }
     CompositionLocalProvider(
-        LocalGrowColorScheme provides rememberedColorScheme,
+        LocalGrowColorScheme provides colorScheme,
         LocalGrowTypography provides GrowTheme.typography,
         content = content
     )
