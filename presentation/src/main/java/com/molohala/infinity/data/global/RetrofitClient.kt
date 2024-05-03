@@ -85,7 +85,7 @@ object RetrofitClient {
 
     val dauthApi: DAuthApi by lazy { dodamRetrofit.create(DAuthApi::class.java) }
     val authApi: AuthApi by lazy { infinityRetrofit.create(AuthApi::class.java) }
-    val comment: CommentApi by lazy { infinityRetrofit.create(CommentApi::class.java) }
+    val commentApi: CommentApi by lazy { infinityRetrofit.create(CommentApi::class.java) }
     val communityApi: CommunityApi by lazy { infinityRetrofit.create(CommunityApi::class.java) }
     val rankApi: RankApi by lazy { infinityRetrofit.create(RankApi::class.java) }
     val infoApi: InfoApi by lazy { infinityRetrofit.create(InfoApi::class.java) }
