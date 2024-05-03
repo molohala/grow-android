@@ -10,13 +10,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.button.InfinityButton
 import com.molohala.grow.designsystem.component.TopBar
 import com.molohala.grow.designsystem.component.textfield.InfinityTextField
+import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -43,8 +43,8 @@ fun SignInScreen(
     ) {
         Column(
             modifier = Modifier
-                .background(Color.White)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp)
+                .background(GrowTheme.colorScheme.buttonPrimary),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             InfinityTextField(

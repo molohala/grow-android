@@ -16,6 +16,7 @@ class GrowColorScheme(
     textInverse: Color,
     textDisabled: Color,
     buttonPrimary: Color,
+    buttonPrimaryPressed: Color,
     buttonPrimaryDisabled: Color,
     buttonText: Color,
     buttonTextDisabled: Color,
@@ -43,27 +44,27 @@ class GrowColorScheme(
 ) {
     var textNormal by mutableStateOf(textNormal, structuralEqualityPolicy())
         internal set
-    var textDarken by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var textDarken by mutableStateOf(textDarken, structuralEqualityPolicy())
         internal set
-    var textAlt by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var textAlt by mutableStateOf(textAlt, structuralEqualityPolicy())
         internal set
-    var textInverse by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var textInverse by mutableStateOf(textInverse, structuralEqualityPolicy())
         internal set
-    var textDisabled by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var textDisabled by mutableStateOf(textDisabled, structuralEqualityPolicy())
         internal set
-    var buttonPrimary by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var buttonPrimary by mutableStateOf(buttonPrimary, structuralEqualityPolicy())
         internal set
-    var buttonPrimaryDisabled by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var buttonPrimaryDisabled by mutableStateOf(buttonPrimaryDisabled, structuralEqualityPolicy())
         internal set
-    var buttonText by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var buttonText by mutableStateOf(buttonText, structuralEqualityPolicy())
         internal set
-    var buttonTextDisabled by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var buttonTextDisabled by mutableStateOf(buttonTextDisabled, structuralEqualityPolicy())
         internal set
-    var background by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var background by mutableStateOf(background, structuralEqualityPolicy())
         internal set
-    var backgroundAlt by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var backgroundAlt by mutableStateOf(backgroundAlt, structuralEqualityPolicy())
         internal set
-    var backgroundInverse by mutableStateOf(textNormal, structuralEqualityPolicy())
+    var backgroundInverse by mutableStateOf(backgroundInverse, structuralEqualityPolicy())
         internal set
     var github by mutableStateOf(github, structuralEqualityPolicy())
         internal set
