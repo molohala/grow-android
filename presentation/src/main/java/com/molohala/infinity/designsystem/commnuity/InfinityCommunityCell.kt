@@ -44,12 +44,6 @@ fun InfinityCommunityCell(
 ) {
     val content = community.community
     val recentComment = community.recentComment
-    val minimumLineLength = 2   //Change this to your desired value
-
-    //Adding States
-    var expandedState by remember { mutableStateOf(false) }
-    var showReadMoreButtonState by remember { mutableStateOf(false) }
-    val maxLines = if (expandedState) 200 else minimumLineLength
 
     LaunchedEffect(Unit) {
         onAppear()
@@ -103,28 +97,18 @@ fun InfinityCommunityCell(
             Text(
                 text = content.content,
                 style = MaterialTheme.typography.bodyLarge,
-                onTextLayout = { textLayoutResult ->
-                    if (textLayoutResult.lineCount > minimumLineLength - 1) {
-                        if (textLayoutResult.isLineEllipsized(minimumLineLength - 1)) {
-                            showReadMoreButtonState = true
-                        }
-                    }
-                },
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 5
             )
-            if (expandedState) {
-                Text(
-                    text = "더보기",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.Gray
-                )
-            }
         }
 
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
                 Icon(
                     modifier = Modifier
                         .size(24.dp)
@@ -145,7 +129,7 @@ fun InfinityCommunityCell(
             recentComment?.let {
                 Divider(color = InfinityColor.gray100)
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(2.dp),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(

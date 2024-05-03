@@ -57,19 +57,20 @@ fun HomeScreen(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    when (uiAppState.profileFetchFlow) {
-                        FetchFlow.Failure -> {
-                            Text(text = "불러오기 실패")
-                        }
-                        FetchFlow.Fetching -> {
+                    uiAppState.profile.let {
+                        when (it) {
+                            is FetchFlow.Fetching -> {
+                                Text(text = "불러오기 실패")
+                            }
+                            is FetchFlow.Failure -> {
 
-                        }
-                        FetchFlow.Success -> {
-                            uiAppState.profile?.let {
-                                SubTitle(text = "iOS 개발자\n${it.name}님 환영합니다")
+                            }
+                            is FetchFlow.Success -> {
+                                SubTitle(text = "iOS 개발자\n${it.data.name}님 환영합니다")
                             }
                         }
                     }
+
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
@@ -109,7 +110,6 @@ fun HomeScreen(
 
 @Composable
 fun WeekCommunity() {
-
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {

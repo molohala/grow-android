@@ -71,67 +71,69 @@ fun CommunityScreen(
                 .pullRefresh(pullRefreshState),
             contentAlignment = Alignment.TopCenter
         ) {
-            when (uiState.communityFetchFlow) {
-                FetchFlow.Failure -> Text(text = "불러오기 실패")
-                FetchFlow.Fetching -> {
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        repeat(4) {
-                            InfinityCommunityCellShimmer()
+            uiState.communities.let {
+                when (it) {
+                    is FetchFlow.Failure -> Text(text = "불러오기 실패")
+                    is FetchFlow.Fetching -> {
+                        Column(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            repeat(4) {
+                                InfinityCommunityCellShimmer()
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
                         }
-                        Spacer(modifier = Modifier.weight(1f))
                     }
-                }
 
-                FetchFlow.Success -> {
-                    LazyColumn(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                        state = scrollState
-                    ) {
-                        itemsIndexed(uiState.communities) { idx, community ->
-                            InfinityCommunityCell(community = community, onAppear = {
-                                uiState.communities.firstOrNull { it.community.communityId == community.community.communityId }
-                                    ?: return@InfinityCommunityCell
-                                val interval = Constant.pageInterval
-                                if (idx % interval == (interval - 1) && idx / interval == (uiState.communities.size - 1) / interval) {
-                                    communityViewModel.fetchNextCommunities()
+                    is FetchFlow.Success -> {
+                        LazyColumn(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            state = scrollState
+                        ) {
+                            itemsIndexed(it.data) { idx, community ->
+                                InfinityCommunityCell(community = community, onAppear = {
+                                    it.data.firstOrNull { it.community.communityId == community.community.communityId }
+                                        ?: return@InfinityCommunityCell
+                                    val interval = Constant.pageInterval
+                                    if (idx % interval == (interval - 1) && idx / interval == (it.data.size - 1) / interval) {
+                                        communityViewModel.fetchNextCommunities()
+                                    }
+                                }) {
+
                                 }
-                            }) {
-
+                            }
+                            item {
+                                Spacer(modifier = Modifier.height(32.dp))
                             }
                         }
-                        item {
-                            Spacer(modifier = Modifier.height(32.dp))
-                        }
-                    }
-                    Row(
-                        modifier = Modifier
-                            .padding(end = 24.dp)
-                            .padding(bottom = 24.dp)
-                            .bounceClick(onClick = {
-                                navController.navigate(NavGroup.CreateCommunity.name)
-                            })
-                            .align(Alignment.BottomEnd)
-                            .height(48.dp)
-                            .clip(CircleShape)
-                            .background(InfinityColor.blue)
-                            .padding(horizontal = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        IconAdd()
-                        Text(
+                        Row(
                             modifier = Modifier
-                                .padding(end = 4.dp),
-                            text = "글쓰기",
-                            color = Color.White,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
+                                .padding(end = 24.dp)
+                                .padding(bottom = 24.dp)
+                                .bounceClick(onClick = {
+                                    navController.navigate(NavGroup.CreateCommunity.name)
+                                })
+                                .align(Alignment.BottomEnd)
+                                .height(48.dp)
+                                .clip(CircleShape)
+                                .background(InfinityColor.blue)
+                                .padding(horizontal = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            IconAdd()
+                            Text(
+                                modifier = Modifier
+                                    .padding(end = 4.dp),
+                                text = "글쓰기",
+                                color = Color.White,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
                     }
                 }
             }

@@ -79,75 +79,73 @@ fun ProfileScreen(
                 state = scrollState
             ) {
                 item {
-                    uiAppState.profile?.let {
-                        Profile(profile = it) {
-                            navController.navigate(NavGroup.Setting.name)
-                        }
+                    val profile = uiAppState.profile as? FetchFlow.Success ?: return@item
+                    Profile(profile = profile.data) {
+                        navController.navigate(NavGroup.Setting.name)
                     }
                 }
                 item {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        when (uiAppState.githubFetchFlow) {
-                            FetchFlow.Failure -> {
-                                InfinityStatCell(
-                                    title = "커밋 개수",
-                                    type = InfinityStatType.Baekjoon()
-                                ) {
+                        uiAppState.githubFetchFlow.let {
+                            when (it) {
+                                is FetchFlow.Failure -> {
+                                    InfinityStatCell(
+                                        title = "커밋 개수",
+                                        type = InfinityStatType.Baekjoon()
+                                    ) {
 
+                                    }
                                 }
-                            }
-                            FetchFlow.Fetching -> {
-                                InfinityStatCellShimmer(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                )
-                            }
-                            FetchFlow.Success -> {
-                                uiAppState.github?.let {
+
+                                is FetchFlow.Fetching -> {
+                                    InfinityStatCellShimmer(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                    )
+                                }
+
+                                is FetchFlow.Success -> {
                                     InfinityStatCell(
                                         modifier = Modifier
                                             .weight(1f),
                                         title = "커밋 개수",
-                                        type = InfinityStatType.Github(commit = it.totalCommits)
+                                        type = InfinityStatType.Github(commit = it.data?.totalCommits)
                                     ) {
 
                                     }
                                 }
                             }
                         }
-                        when (uiAppState.githubFetchFlow) {
-                            FetchFlow.Failure -> {
-                                InfinityStatCell(
-                                    title = "문제 푼 개수",
-                                    type = InfinityStatType.Baekjoon()
-                                ) {
+                        uiAppState.solvedac.let {
+                            when (it) {
+                                is FetchFlow.Failure -> {
+                                    InfinityStatCell(
+                                        title = "문제 푼 개수",
+                                        type = InfinityStatType.Baekjoon()
+                                    ) {
 
+                                    }
                                 }
-                            }
-
-                            FetchFlow.Fetching -> {
-                                InfinityStatCellShimmer(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                )
-                            }
-
-                            FetchFlow.Success -> {
-                                uiAppState.solvedac?.let {
+                                is FetchFlow.Fetching -> {
+                                    InfinityStatCellShimmer(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                    )
+                                }
+                                is FetchFlow.Success -> {
                                     InfinityStatCell(
                                         modifier = Modifier
                                             .weight(1f),
                                         title = "문제 푼 개수",
-                                        type = InfinityStatType.Baekjoon(solved = it.totalSolves)
+                                        type = InfinityStatType.Baekjoon(solved = it.data?.totalSolves)
                                     ) {
 
                                     }
                                 }
                             }
                         }
-
                     }
                 }
                 item {

@@ -19,8 +19,7 @@ enum class GithubRankTab(
 }
 
 data class GithubRankState(
-    val githubRanks: List<RankResponse> = arrayListOf(),
-    val githubRanksFetchFlow: FetchFlow = FetchFlow.Fetching,
+    val githubRanksFetchFlow: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
     val selectedTab: GithubRankTab = GithubRankTab.WEEK,
     val isRefresh: Boolean = false
 )
@@ -32,20 +31,18 @@ class GithubRankViewModel : ViewModel() {
     fun fetchGithubRank() {
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(githubRanksFetchFlow = FetchFlow.Fetching) }
+                uiState.update { it.copy(githubRanksFetchFlow = FetchFlow.Fetching()) }
                 val response = when (uiState.value.selectedTab) {
                     GithubRankTab.WEEK -> RetrofitClient.rankApi.getWeekGithubRank()
                     GithubRankTab.TOTAL -> RetrofitClient.rankApi.getTotalGithubRank()
                 }.data
                 uiState.update {
                     it.copy(
-                        githubRanks = response,
-                        githubRanksFetchFlow = FetchFlow.Success
+                        githubRanksFetchFlow = FetchFlow.Success(response)
                     )
                 }
             } catch (e: Exception) {
-                uiState.update { it.copy(githubRanksFetchFlow = FetchFlow.Failure) }
-                Log.d(TAG, "fetchGithubRank: ${e.localizedMessage}")
+                uiState.update { it.copy(githubRanksFetchFlow = FetchFlow.Failure()) }
             }
         }
     }

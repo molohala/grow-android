@@ -11,12 +11,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class HomeState(
-    val weekCommunities: List<CommunityResponse> = arrayListOf(),
-    val weekCommunitiesFetchFlow: FetchFlow = FetchFlow.Fetching,
-    val todayGithubRanks: List<RankResponse> = arrayListOf(),
-    val todayGithubRanksFetchFlow: FetchFlow = FetchFlow.Fetching,
-    val todayBaekjoonRanks: List<RankResponse> = arrayListOf(),
-    val todayBaekjoonRanksFetchFlow: FetchFlow = FetchFlow.Fetching
+    val weekCommunities: FetchFlow<List<CommunityResponse>> = FetchFlow.Fetching(),
+    val todayGithubRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
+    val todayBaekjoonRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
 )
 
 class HomeViewModel : ViewModel() {
@@ -26,16 +23,15 @@ class HomeViewModel : ViewModel() {
     fun fetchTodayGithubRank() {
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(todayGithubRanksFetchFlow = FetchFlow.Fetching) }
+                uiState.update { it.copy(todayGithubRanks = FetchFlow.Fetching()) }
                 val ranks = RetrofitClient.rankApi.getTodayGithubRank().data
                 uiState.update {
                     it.copy(
-                        todayGithubRanks = ranks,
-                        todayGithubRanksFetchFlow = FetchFlow.Success
+                        todayGithubRanks = FetchFlow.Success(ranks)
                     )
                 }
             } catch (e: Exception) {
-                uiState.update { it.copy(todayGithubRanksFetchFlow = FetchFlow.Failure) }
+                uiState.update { it.copy(todayGithubRanks = FetchFlow.Failure()) }
             }
         }
     }
@@ -43,16 +39,15 @@ class HomeViewModel : ViewModel() {
     fun fetchTodayBaekjoonRank() {
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(todayBaekjoonRanksFetchFlow = FetchFlow.Fetching) }
+                uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Fetching()) }
                 val ranks = RetrofitClient.rankApi.getTodaySolvedacRank().data
                 uiState.update {
                     it.copy(
-                        todayBaekjoonRanks = ranks,
-                        todayBaekjoonRanksFetchFlow = FetchFlow.Success
+                        todayBaekjoonRanks = FetchFlow.Success(ranks)
                     )
                 }
             } catch (e: Exception) {
-                uiState.update { it.copy(todayBaekjoonRanksFetchFlow = FetchFlow.Failure) }
+                uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Failure()) }
             }
         }
     }
@@ -60,16 +55,15 @@ class HomeViewModel : ViewModel() {
     fun fetchWeekCommunities() {
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(weekCommunitiesFetchFlow = FetchFlow.Fetching) }
+                uiState.update { it.copy(weekCommunities = FetchFlow.Fetching()) }
                 val communities = RetrofitClient.communityApi.getBestCommunities().data
                 uiState.update {
                     it.copy(
-                        weekCommunities = communities,
-                        weekCommunitiesFetchFlow = FetchFlow.Success
+                        weekCommunities = FetchFlow.Success(communities)
                     )
                 }
             } catch (e: Exception) {
-                uiState.update { it.copy(weekCommunitiesFetchFlow = FetchFlow.Failure) }
+                uiState.update { it.copy(weekCommunities = FetchFlow.Failure()) }
             }
         }
     }

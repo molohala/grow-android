@@ -16,9 +16,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class CommunityState(
-    val communities: List<CommunityResponse> = arrayListOf(),
     val page: Int = 1,
-    val communityFetchFlow: FetchFlow = FetchFlow.Fetching,
+    val communities: FetchFlow<List<CommunityResponse>> = FetchFlow.Fetching(),
     val isRefresh: Boolean = false
 )
 
@@ -27,10 +26,10 @@ class CommunityViewModel : ViewModel() {
     val uiState = MutableStateFlow(CommunityState())
 
     fun fetchCommunities() {
+        val nextPage = 1
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(communityFetchFlow = FetchFlow.Fetching) }
-                val nextPage = 1
+                uiState.update { it.copy(communities = FetchFlow.Fetching()) }
                 val communities = RetrofitClient.communityApi.getCommunities(
                     page = nextPage,
                     size = Constant.pageInterval
@@ -38,17 +37,15 @@ class CommunityViewModel : ViewModel() {
                 if (communities.isNotEmpty()) {
                     uiState.update {
                         it.copy(
-                            communities = communities,
-                            communityFetchFlow = FetchFlow.Success
+                            communities = FetchFlow.Success(communities)
                         )
                     }
                 }
             } catch (e: Exception) {
                 uiState.update {
                     it.copy(
-                        communities = arrayListOf(),
                         page = 1,
-                        communityFetchFlow = FetchFlow.Failure
+                        communities = FetchFlow.Failure()
                     )
                 }
                 Log.d(TAG, "fetchCommunities: $e")
@@ -57,27 +54,29 @@ class CommunityViewModel : ViewModel() {
     }
 
     fun fetchNextCommunities() {
+        val communities = uiState.value.communities as? FetchFlow.Success?: run {
+            uiState.update { it.copy(communities = FetchFlow.Failure()) }
+            return
+        }
         viewModelScope.launch {
             try {
-                val nextPage = uiState.value.communities.size / Constant.pageInterval + 1
+                val nextPage = communities.data.size / Constant.pageInterval + 1
                 val communities = RetrofitClient.communityApi.getCommunities(
                     page = nextPage,
                     size = Constant.pageInterval
                 ).data
-                val oldCommunities = uiState.value.communities.toMutableList()
+                val oldCommunities = communities.toMutableList()
                 oldCommunities.addAll(communities)
                 uiState.update {
                     it.copy(
-                        communities = oldCommunities,
-                        communityFetchFlow = FetchFlow.Success
+                        communities = FetchFlow.Success(oldCommunities)
                     )
                 }
             } catch (e: Exception) {
                 uiState.update {
                     it.copy(
-                        communities = arrayListOf(),
-                        page = 1,
-                        communityFetchFlow = FetchFlow.Failure
+                        communities = FetchFlow.Failure(),
+                        page = 1
                     )
                 }
                 Log.d(TAG, "fetchCommunities: $e")

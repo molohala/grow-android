@@ -76,7 +76,8 @@ fun GithubRankScreen(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    if (uiAppState.githubFetchFlow == FetchFlow.Success && uiAppState.github == null) {
+                    val github = uiAppState.githubFetchFlow as? FetchFlow.Success?: return@Column
+                    if (github.data == null) {
                         RecommendingSettingGithub(onClickSetting = {
                             navController.navigate(NavGroup.GithubSetting.name)
                         })
@@ -85,38 +86,40 @@ fun GithubRankScreen(
                         viewModel.clickTab(selectedTab = it)
                     })
                 }
-                when (uiState.githubRanksFetchFlow) {
-                    FetchFlow.Failure -> {
-                        Text(text = "불러오기 실패")
-                    }
-                    FetchFlow.Fetching -> {
-                        Column {
-                            repeat(4) {
-                                InfinityGithubRankCellShimmer(
-                                    modifier = Modifier
-                                        .padding(horizontal = 20.dp)
-                                )
-                            }
+                uiState.githubRanksFetchFlow.let {
+                    when (it) {
+                        is FetchFlow.Failure -> {
+                            Text(text = "불러오기 실패")
                         }
-                    }
-                    FetchFlow.Success -> {
-                        LazyColumn(
-                            modifier = Modifier
-                                .background(Color.White),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            state = scrollState
-                        ) {
-                            items(uiState.githubRanks) {
-                                InfinityGithubRankCell(
-                                    modifier = Modifier
-                                        .padding(horizontal = 20.dp),
-                                    githubRank = it
-                                ) {
-                                    navController.navigate("profile_detail")
+                        is FetchFlow.Fetching -> {
+                            Column {
+                                repeat(4) {
+                                    InfinityGithubRankCellShimmer(
+                                        modifier = Modifier
+                                            .padding(horizontal = 20.dp)
+                                    )
                                 }
                             }
-                            item {
-                                Spacer(modifier = Modifier.height(48.dp))
+                        }
+                        is FetchFlow.Success -> {
+                            LazyColumn(
+                                modifier = Modifier
+                                    .background(Color.White),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                state = scrollState
+                            ) {
+                                items(it.data) {
+                                    InfinityGithubRankCell(
+                                        modifier = Modifier
+                                            .padding(horizontal = 20.dp),
+                                        githubRank = it
+                                    ) {
+                                        navController.navigate("profile_detail")
+                                    }
+                                }
+                                item {
+                                    Spacer(modifier = Modifier.height(48.dp))
+                                }
                             }
                         }
                     }

@@ -21,12 +21,9 @@ sealed interface AppSideEffect {
 }
 
 data class AppState(
-    val profile: ProfileResponse? = null,
-    val github: GithubResponse? = null,
-    val solvedac: SolvedacResponse? = null,
-    val profileFetchFlow: FetchFlow = FetchFlow.Fetching,
-    val githubFetchFlow: FetchFlow = FetchFlow.Fetching,
-    val solvedacFetchFlow: FetchFlow = FetchFlow.Fetching,
+    val profile: FetchFlow<ProfileResponse> = FetchFlow.Fetching(),
+    val githubFetchFlow: FetchFlow<GithubResponse?> = FetchFlow.Fetching(),
+    val solvedac: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
     val selectedTab: BottomNavigationType = BottomNavigationType.Home
 )
 
@@ -58,66 +55,67 @@ class AppViewModel : ViewModel() {
     fun fetchProfile() {
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(profileFetchFlow = FetchFlow.Fetching) }
+                uiState.update { it.copy(profile = FetchFlow.Fetching()) }
                 val profile = RetrofitClient.infoApi.getProfile().data
-                uiState.update { it.copy(profile = profile) }
+                uiState.update { it.copy(profile = FetchFlow.Success(profile)) }
                 uiEffect.emit(AppSideEffect.Success)
+                fetchGithub()
+                fetchSolvedac()
             } catch (e: Exception) {
                 Log.d(TAG, "fetchProfile: $e")
-                uiState.update { it.copy(profileFetchFlow = FetchFlow.Failure) }
+                uiState.update { it.copy(profile = FetchFlow.Failure()) }
                 clearToken()
             }
         }
     }
 
     fun fetchGithub() {
-        val profile = uiState.value.profile?: run {
-            uiState.update { it.copy(githubFetchFlow = FetchFlow.Failure) }
+        val profile = uiState.value.profile as? FetchFlow.Success ?: run {
+            uiState.update { it.copy(githubFetchFlow = FetchFlow.Failure()) }
             return
         }
-        val github = profile.socialAccounts.firstOrNull { it.socialType == "GITHUB" }?: run {
-            uiState.update { it.copy(githubFetchFlow = FetchFlow.Failure) }
+        val github = profile.data.socialAccounts.firstOrNull { it.socialType == "GITHUB" } ?: run {
+            uiState.update { it.copy(githubFetchFlow = FetchFlow.Success(null)) }
             return
         }
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(githubFetchFlow = FetchFlow.Fetching) }
-                val githubResponse = RetrofitClient.infoApi.getGithubInfo(name = github.socialId).data
+                uiState.update { it.copy(githubFetchFlow = FetchFlow.Fetching()) }
+                val githubResponse =
+                    RetrofitClient.infoApi.getGithubInfo(name = github.socialId).data
                 uiState.update {
                     it.copy(
-                        github = githubResponse,
-                        githubFetchFlow = FetchFlow.Success
+                        githubFetchFlow = FetchFlow.Success(githubResponse)
                     )
                 }
             } catch (e: Exception) {
-                Log.d(TAG, "fetchGithub: $e")
-                uiState.update { it.copy(githubFetchFlow = FetchFlow.Failure) }
+                uiState.update { it.copy(githubFetchFlow = FetchFlow.Failure()) }
             }
         }
     }
 
     fun fetchSolvedac() {
-        val profile = uiState.value.profile ?: run {
-            uiState.update { it.copy(solvedacFetchFlow = FetchFlow.Failure) }
+        val profile = uiState.value.profile as? FetchFlow.Success ?: run {
+            uiState.update { it.copy(solvedac = FetchFlow.Failure()) }
             return
         }
-        val solvedac = profile.socialAccounts.firstOrNull { it.socialType == "SOLVED_AC" } ?: run {
-            uiState.update { it.copy(solvedacFetchFlow = FetchFlow.Failure) }
-            return
-        }
+        val solvedac =
+            profile.data.socialAccounts.firstOrNull { it.socialType == "SOLVED_AC" } ?: run {
+                uiState.update { it.copy(solvedac = FetchFlow.Success(null)) }
+                return
+            }
         viewModelScope.launch {
             try {
-                uiState.update { it.copy(solvedacFetchFlow = FetchFlow.Fetching) }
-                val solvedac = RetrofitClient.infoApi.getSolvedacInfo(name = solvedac.socialId).data
+                uiState.update { it.copy(solvedac = FetchFlow.Fetching()) }
+                val solvedacResponse =
+                    RetrofitClient.infoApi.getSolvedacInfo(name = solvedac.socialId).data
                 uiState.update {
                     it.copy(
-                        solvedac = solvedac,
-                        solvedacFetchFlow = FetchFlow.Success
+                        solvedac = FetchFlow.Success(solvedacResponse)
                     )
                 }
             } catch (e: Exception) {
-                Log.d(TAG, "fetchGithub: $e")
-                uiState.update { it.copy(solvedacFetchFlow = FetchFlow.Failure) }
+                uiState.update { it.copy(solvedac = FetchFlow.Failure()) }
             }
         }
     }
