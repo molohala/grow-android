@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.component
+package com.molohala.grow.designsystem.component.avatar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
