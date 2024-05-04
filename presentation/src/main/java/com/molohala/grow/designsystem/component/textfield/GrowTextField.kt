@@ -67,7 +67,6 @@ fun GrowTextField(
     BasicTextField(
         value = value,
         modifier = modifier
-            .height(48.dp)
             .fillMaxWidth()
             .background(
                 color = Color.Transparent,
@@ -83,7 +82,7 @@ fun GrowTextField(
             ),
         onValueChange = onValueChange,
         enabled = enabled,
-        textStyle = textStyle,
+        textStyle = textStyle.copy(color = GrowTheme.colorScheme.textNormal),
         singleLine = singleLine,
         cursorBrush = SolidColor(GrowTheme.colorScheme.textFieldPrimary),
         decorationBox = @Composable { innerTextField ->
@@ -112,6 +111,8 @@ fun GrowTextField(
                 contentPadding = TextFieldDefaults.contentPaddingWithoutLabel(
                     start = 12.dp,
                     end = 8.dp,
+                    top = 13.dp,
+                    bottom = 13.dp
                 ),
                 shape = shape,
                 enabled = enabled,
