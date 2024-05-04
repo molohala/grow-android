@@ -136,16 +136,21 @@ fun ForumDetailScreen(
                     trailingIcon = {},
                     singleLine = false
                 )
-                GrowIcon(
+                Column(
                     modifier = Modifier
-                        .size(32.dp)
                         .align(Alignment.Bottom)
-                        .bounceClick(onClick = {
-                            viewModel.createComment(forumId)
-                        }),
-                    id = R.drawable.ic_send,
-                    color = iconColor
-                )
+                ) {
+                    GrowIcon(
+                        modifier = Modifier
+                            .size(32.dp)
+                            .bounceClick(onClick = {
+                                viewModel.createComment(forumId)
+                            }),
+                        id = R.drawable.ic_send,
+                        color = iconColor
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
 
             PullRefreshIndicator(
