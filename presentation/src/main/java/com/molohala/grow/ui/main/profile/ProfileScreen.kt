@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,6 +31,7 @@ import com.molohala.grow.designsystem.component.avatar.GrowAvatar
 import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.applyCardView
+import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.foundation.shimmer.ShimmerRowBox
@@ -89,6 +91,9 @@ fun ProfileScreen(
 
                     }
                 }
+                item { 
+                    Spacer(modifier = Modifier.height(64.dp))
+                }
             }
             PullRefreshIndicator(
                 refreshing = uiState.isRefresh,
@@ -138,7 +143,8 @@ private fun Info(
         Spacer(modifier = Modifier.weight(1f))
         GrowIcon(
             modifier = Modifier
-                .size(32.dp),
+                .size(32.dp)
+                .bounceClick(onClick = onClick),
             id = R.drawable.ic_setting,
             color = GrowTheme.colorScheme.textAlt
         )

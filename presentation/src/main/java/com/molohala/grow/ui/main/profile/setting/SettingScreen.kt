@@ -3,6 +3,7 @@ package com.molohala.grow.ui.main.profile.setting
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,100 +38,113 @@ fun SettingScreen(
             navController.popBackStack()
         }
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                GrowSettingCell(
+            item {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    GrowSettingCell(
+                        modifier = Modifier
+                            .padding(top = 16.dp),
+                        leftIcon = R.drawable.ic_person,
+                        label = "프로필 설정",
+                        description = "이강현"
+                    ) {
+                        navController.navigate(NavGroup.ProfileEdit.name)
+                    }
+                    GrowSettingCell(
+                        leftIcon = R.drawable.ic_github,
+                        label = "Github 설정",
+                        description = "bestswlkh0310"
+                    ) {
+                        navController.navigate(NavGroup.GithubSetting.name)
+                    }
+                    GrowSettingCell(
+                        leftIcon = R.drawable.ic_baekjoon,
+                        label = "백준 설정",
+                        description = "hhhello0507"
+                    ) {
+                        navController.navigate(NavGroup.BaekjoonSetting.name)
+                    }
+                }
+            }
+            item {
+                GrowDivider()
+            }
+            item {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    GrowSettingCell(
+                        label = "알림 허용",
+                        leftIcon = R.drawable.ic_notification,
+                        content = {
+                            GrowToggle(checked = true) {
+
+                            }
+                        }
+                    )
+                    GrowSettingCell(
+                        label = "다크모드",
+                        leftIcon = R.drawable.ic_moon,
+                        content = {
+                            GrowToggle(checked = true) {
+
+                            }
+                        }
+                    )
+                }
+            }
+            item {
+                GrowDivider()
+            }
+            item {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    GrowSettingCell(
+                        label = "로그아웃"
+                    ) {
+                        appViewModel.clearToken()
+                    }
+                    GrowSettingCell(
+                        label = "회원탈퇴",
+                        labelColor = GrowTheme.colorScheme.textWarning
+                    ) {
+
+                    }
+                }
+            }
+            item {
+                Column(
                     modifier = Modifier
-                        .padding(top = 16.dp),
-                    leftIcon = R.drawable.ic_person,
-                    label = "프로필 설정"
+                        .padding(vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    navController.navigate(NavGroup.ProfileEdit.name)
+                    Text(
+                        text = "버전 ${getVersionInfo(context) ?: "-"}",
+                        style = GrowTheme.typography.labelMedium,
+                        color = GrowTheme.colorScheme.textAlt
+                    )
+                    Text(
+                        text = "개인정보 이용 약관",
+                        style = GrowTheme.typography.labelMedium,
+                        color = GrowTheme.colorScheme.textAlt,
+                        textDecoration = TextDecoration.Underline
+                    )
+                    Text(
+                        text = "서비스 정책",
+                        style = GrowTheme.typography.labelMedium,
+                        color = GrowTheme.colorScheme.textAlt,
+                        textDecoration = TextDecoration.Underline
+                    )
                 }
-                GrowSettingCell(
-                    leftIcon = R.drawable.ic_github,
-                    label = "Github 설정",
-                    description = "bestswlkh0310"
-                ) {
-                    navController.navigate(NavGroup.GithubSetting.name)
-                }
-                GrowSettingCell(
-                    leftIcon = R.drawable.ic_baekjoon,
-                    label = "백준 설정",
-                    description = "hhhello0507"
-                ) {
-                    navController.navigate(NavGroup.BaekjoonSetting.name)
-                }
-            }
-            GrowDivider()
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                GrowSettingCell(
-                    label = "알림 허용",
-                    leftIcon = R.drawable.ic_notification,
-                    content = {
-                        GrowToggle(checked = true) {
-
-                        }
-                    }
-                )
-                GrowSettingCell(
-                    label = "다크모드",
-                    leftIcon = R.drawable.ic_moon,
-                    content = {
-                        GrowToggle(checked = true) {
-
-                        }
-                    }
-                )
-            }
-            GrowDivider()
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                GrowSettingCell(
-                    label = "로그아웃"
-                ) {
-                    appViewModel.clearToken()
-                }
-                GrowSettingCell(
-                    label = "회원탈퇴",
-                    labelColor = GrowTheme.colorScheme.textWarning
-                ) {
-
-                }
-            }
-            Column(
-                modifier = Modifier
-                    .padding(vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "버전 ${getVersionInfo(context)?: "-"}",
-                    style = GrowTheme.typography.labelMedium,
-                    color = GrowTheme.colorScheme.textAlt
-                )
-                Text(
-                    text = "개인정보 이용 약관",
-                    style = GrowTheme.typography.labelMedium,
-                    color = GrowTheme.colorScheme.textAlt,
-                    textDecoration = TextDecoration.Underline
-                )
-                Text(
-                    text = "서비스 정책",
-                    style = GrowTheme.typography.labelMedium,
-                    color = GrowTheme.colorScheme.textAlt,
-                    textDecoration = TextDecoration.Underline
-                )
             }
         }
     }

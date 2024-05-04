@@ -111,7 +111,7 @@ fun GithubRankScreen(
                                     }
                                 }
                                 item {
-                                    Spacer(modifier = Modifier.height(48.dp))
+                                    Spacer(modifier = Modifier.height(64.dp))
                                 }
                             }
                         }
