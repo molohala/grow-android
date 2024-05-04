@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.legacy.shimmer
+package com.molohala.grow.designsystem.foundation.shimmer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

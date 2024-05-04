@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.comment
+package com.molohala.grow.designsystem.specific.comment
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.designsystem.legacy.shimmer.shimmerEffect
+import com.molohala.grow.designsystem.foundation.shimmer.shimmerEffect
 
 @Composable
-fun InfinityCommentCellShimmer() {
+fun GrowCommentCellShimmer() {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -50,5 +50,5 @@ fun InfinityCommentCellShimmer() {
 @Composable
 @Preview
 fun Preview() {
-    InfinityCommentCellShimmer()
+    GrowCommentCellShimmer()
 }

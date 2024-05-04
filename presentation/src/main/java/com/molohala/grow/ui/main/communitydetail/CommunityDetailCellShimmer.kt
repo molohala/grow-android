@@ -17,8 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.designsystem.comment.InfinityCommentCellShimmer
-import com.molohala.grow.designsystem.legacy.shimmer.shimmerEffect
+import com.molohala.grow.designsystem.specific.comment.GrowCommentCellShimmer
+import com.molohala.grow.designsystem.foundation.shimmer.shimmerEffect
 
 @Composable
 fun CommunityDetailCellShimmer() {
@@ -73,7 +73,7 @@ private fun Comments() {
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         repeat(3) {
-            InfinityCommentCellShimmer()
+            GrowCommentCellShimmer()
         }
     }
 }

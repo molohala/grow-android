@@ -23,7 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.molohala.grow.designsystem.extension.applyCardView
-import com.molohala.grow.designsystem.legacy.shimmer.shimmerEffect
+import com.molohala.grow.designsystem.foundation.shimmer.shimmerEffect
 
 
 @Composable

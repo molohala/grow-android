@@ -14,7 +14,7 @@ import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
-import com.molohala.grow.designsystem.legacy.shimmer.ShimmerRowBox
+import com.molohala.grow.designsystem.foundation.shimmer.ShimmerRowBox
 
 @Composable
 fun GrowRankCellShimmer(

@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.comment.response.CommentResponse
-import com.molohala.grow.designsystem.comment.InfinityCommentCell
-import com.molohala.grow.designsystem.comment.InfinityCommentCellShimmer
+import com.molohala.grow.designsystem.specific.comment.GrowCommentCell
+import com.molohala.grow.designsystem.specific.comment.GrowCommentCellShimmer
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -67,14 +67,14 @@ private fun Comments(
         when (it) {
             is FetchFlow.Failure -> Text(text = "불러오기 실패")
             is FetchFlow.Fetching -> {
-                InfinityCommentCellShimmer()
+                GrowCommentCellShimmer()
             }
             is FetchFlow.Success -> {
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     items(it.data, key = { comment -> comment.commentId }) { comment ->
-                        InfinityCommentCell(comment = comment) {
+                        GrowCommentCell(comment = comment) {
                             onClickRemoveComment(comment)
                         }
                     }

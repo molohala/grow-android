@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
-import com.molohala.grow.designsystem.legacy.shimmer.ShimmerRowBox
+import com.molohala.grow.designsystem.foundation.shimmer.ShimmerRowBox
 
 @Composable
 fun GrowStatCellShimmer(

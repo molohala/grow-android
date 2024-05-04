@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
-import com.molohala.grow.designsystem.legacy.shimmer.shimmerEffect
+import com.molohala.grow.designsystem.foundation.shimmer.shimmerEffect
 
 @Composable
 fun GrowAvatarShimmer(
