@@ -1,14 +1,11 @@
-package com.molohala.grow.designsystem.commnuity
+package com.molohala.grow.designsystem.specific.commnuity
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,15 +23,17 @@ import com.molohala.grow.R
 import com.molohala.grow.common.util.timeAgo
 import com.molohala.grow.data.community.response.CommunityResponse
 import com.molohala.grow.designsystem.color.GrowColor
+import com.molohala.grow.designsystem.component.avatar.AvatarType
+import com.molohala.grow.designsystem.component.avatar.GrowAvatar
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
 
 
 @Composable
-fun InfinityCommunityCell(
+fun GrowCommunityCell(
     modifier: Modifier = Modifier,
     community: CommunityResponse,
-    onAppear: () -> Unit,
+    onAppear: () -> Unit = {},
     onClick: () -> Unit
 ) {
     val content = community.community
@@ -54,11 +52,8 @@ fun InfinityCommunityCell(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .background(Color.LightGray)
-                    .size(36.dp)
+            GrowAvatar(
+                type = AvatarType.Medium
             )
             Column(
                 horizontalAlignment = Alignment.Start

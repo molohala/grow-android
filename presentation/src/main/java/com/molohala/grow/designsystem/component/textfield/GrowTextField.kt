@@ -132,8 +132,8 @@ fun GrowTextField(
                 contentPadding = TextFieldDefaults.contentPaddingWithoutLabel(
                     start = 12.dp,
                     end = 8.dp,
-                    top = 13.dp,
-                    bottom = 13.dp
+                    top = 14.dp,
+                    bottom = 14.dp
                 ),
                 shape = shape,
                 enabled = enabled,

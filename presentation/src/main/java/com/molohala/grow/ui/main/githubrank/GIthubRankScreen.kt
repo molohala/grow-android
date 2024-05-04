@@ -31,8 +31,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.grow.button.InfinityButton
 import com.molohala.grow.common.flow.FetchFlow
+import com.molohala.grow.designsystem.component.button.GrowCTAButton
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCell
 import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCellShimmer
@@ -162,7 +162,7 @@ fun RecommendingSettingGithub(
             style = MaterialTheme.typography.titleMedium,
             color = Color.Black
         )
-        InfinityButton(
+        GrowCTAButton(
             modifier = Modifier
                 .width(110.dp)
                 .height(40.dp)

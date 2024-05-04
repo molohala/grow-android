@@ -18,9 +18,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.molohala.grow.common.flow.IdleFlow
 import com.molohala.grow.designsystem.color.GrowColor
+import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.bounceClick
-import com.molohala.grow.designsystem.legacy.textfield.InfinityTextField
 
 @Composable
 fun CreateCommunityScreen(
@@ -65,13 +65,13 @@ fun CreateCommunityScreen(
             navController.popBackStack()
         }
     ) {
-        InfinityTextField(
+        GrowTextField(
             modifier = Modifier
                 .height(300.dp)
                 .padding(horizontal = 20.dp)
                 .padding(top = 8.dp),
             value = uiState.content,
-            placeholder = "내용을 적어주세요",
+            hint = "내용을 적어주세요",
             singleLine = false,
             onValueChange = viewModel::updateContent
         )

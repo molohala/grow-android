@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.grow.button.InfinityButton
+import com.molohala.grow.designsystem.component.button.GrowCTAButton
+import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.legacy.textfield.InfinityTextField
 
 @Composable
 fun BaekjoonSettingScreen(
@@ -39,14 +39,14 @@ fun BaekjoonSettingScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            InfinityTextField(
-                placeholder = "백준 Id를 입력해 주세요",
+            GrowTextField(
                 value = uiState.baekjoonId,
-                onValueChange = viewModel::updateBaekjoonId
+                onValueChange = viewModel::updateBaekjoonId,
+                hint = "백준 Id를 입력해 주세요",
             )
 
             Spacer(modifier = Modifier.weight(1f))
-            InfinityButton(
+            GrowCTAButton(
                 modifier = Modifier
                     .padding(bottom = 32.dp),
                 text = "완료하기",

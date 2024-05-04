@@ -36,9 +36,9 @@ import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.legacy.rank.InfinityChartCell
-import com.molohala.grow.designsystem.legacy.statcell.InfinityStatCell
-import com.molohala.grow.designsystem.legacy.statcell.InfinityStatCellShimmer
-import com.molohala.grow.designsystem.legacy.statcell.InfinityStatType
+import com.molohala.grow.designsystem.specific.statcell.GrowStatCell
+import com.molohala.grow.designsystem.specific.statcell.GrowStatCellShimmer
+import com.molohala.grow.designsystem.specific.statcell.GrowStatType
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -90,27 +90,27 @@ fun ProfileScreen(
                         uiAppState.githubFetchFlow.let {
                             when (it) {
                                 is FetchFlow.Failure -> {
-                                    InfinityStatCell(
-                                        title = "커밋 개수",
-                                        type = InfinityStatType.Baekjoon()
+                                    GrowStatCell(
+                                        label = "커밋 개수",
+                                        type = GrowStatType.Baekjoon()
                                     ) {
 
                                     }
                                 }
 
                                 is FetchFlow.Fetching -> {
-                                    InfinityStatCellShimmer(
+                                    GrowStatCellShimmer(
                                         modifier = Modifier
                                             .weight(1f)
                                     )
                                 }
 
                                 is FetchFlow.Success -> {
-                                    InfinityStatCell(
+                                    GrowStatCell(
                                         modifier = Modifier
                                             .weight(1f),
-                                        title = "커밋 개수",
-                                        type = InfinityStatType.Github(commit = it.data?.totalCommits)
+                                        label = "커밋 개수",
+                                        type = GrowStatType.Github(commit = it.data?.totalCommits)
                                     ) {
 
                                     }
@@ -120,25 +120,25 @@ fun ProfileScreen(
                         uiAppState.solvedac.let {
                             when (it) {
                                 is FetchFlow.Failure -> {
-                                    InfinityStatCell(
-                                        title = "문제 푼 개수",
-                                        type = InfinityStatType.Baekjoon()
+                                    GrowStatCell(
+                                        label = "문제 푼 개수",
+                                        type = GrowStatType.Baekjoon()
                                     ) {
 
                                     }
                                 }
                                 is FetchFlow.Fetching -> {
-                                    InfinityStatCellShimmer(
+                                    GrowStatCellShimmer(
                                         modifier = Modifier
                                             .weight(1f)
                                     )
                                 }
                                 is FetchFlow.Success -> {
-                                    InfinityStatCell(
+                                    GrowStatCell(
                                         modifier = Modifier
                                             .weight(1f),
-                                        title = "문제 푼 개수",
-                                        type = InfinityStatType.Baekjoon(solved = it.data?.totalSolves)
+                                        label = "문제 푼 개수",
+                                        type = GrowStatType.Baekjoon(solved = it.data?.totalSolves)
                                     ) {
 
                                     }

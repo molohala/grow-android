@@ -32,8 +32,8 @@ import androidx.navigation.NavController
 import com.molohala.grow.common.constant.Constant
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.color.GrowColor
-import com.molohala.grow.designsystem.commnuity.InfinityCommunityCell
-import com.molohala.grow.designsystem.commnuity.InfinityCommunityCellShimmer
+import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCell
+import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCellShimmer
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.ui.main.main.NavGroup
@@ -80,7 +80,7 @@ fun CommunityScreen(
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             repeat(4) {
-                                InfinityCommunityCellShimmer()
+                                GrowCommunityCellShimmer()
                             }
                             Spacer(modifier = Modifier.weight(1f))
                         }
@@ -94,9 +94,9 @@ fun CommunityScreen(
                             state = scrollState
                         ) {
                             itemsIndexed(it.data) { idx, community ->
-                                InfinityCommunityCell(community = community, onAppear = {
+                                GrowCommunityCell(community = community, onAppear = {
                                     it.data.firstOrNull { it.community.communityId == community.community.communityId }
-                                        ?: return@InfinityCommunityCell
+                                        ?: return@GrowCommunityCell
                                     val interval = Constant.pageInterval
                                     if (idx % interval == (interval - 1) && idx / interval == (it.data.size - 1) / interval) {
                                         communityViewModel.fetchNextCommunities()

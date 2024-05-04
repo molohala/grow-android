@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.grow.button.InfinityButton
+import com.molohala.grow.designsystem.component.button.GrowCTAButton
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 
 @Composable
@@ -41,7 +41,7 @@ fun ProfileEditScreen(
             Text(text = uiState.jobs.toString())
 
             Spacer(modifier = Modifier.weight(1f))
-            InfinityButton(
+            GrowCTAButton(
                 modifier = Modifier
                     .padding(bottom = 32.dp),
                 text = "완료하기",

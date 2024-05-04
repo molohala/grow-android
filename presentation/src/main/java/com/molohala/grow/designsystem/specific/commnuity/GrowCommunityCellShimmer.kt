@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.commnuity
+package com.molohala.grow.designsystem.specific.commnuity
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,12 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.designsystem.legacy.shimmer.shimmerEffect
 import com.molohala.grow.designsystem.extension.applyCardView
+import com.molohala.grow.designsystem.legacy.shimmer.shimmerEffect
 
 
 @Composable
-fun InfinityCommunityCellShimmer(
+fun GrowCommunityCellShimmer(
     modifier: Modifier = Modifier
 ) {
 
@@ -95,5 +95,5 @@ fun InfinityCommunityCellShimmer(
 @Preview
 @Composable
 private fun ShimmerPriview() {
-    InfinityCommunityCellShimmer()
+    GrowCommunityCellShimmer()
 }

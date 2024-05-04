@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.grow.button.InfinityButton
+import com.molohala.grow.designsystem.component.button.GrowCTAButton
+import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.legacy.textfield.InfinityTextField
 
 @Composable
 fun GithubSettingScreen(
@@ -39,14 +39,14 @@ fun GithubSettingScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            InfinityTextField(
-                placeholder = "Github Id를 입력해 주세요",
+            GrowTextField(
                 value = uiState.githubId,
-                onValueChange = viewModel::updateGithubId
+                onValueChange = viewModel::updateGithubId,
+                hint = "Github Id를 입력해 주세요",
             )
 
             Spacer(modifier = Modifier.weight(1f))
-            InfinityButton(
+            GrowCTAButton(
                 modifier = Modifier
                     .padding(bottom = 32.dp),
                 text = "완료하기",

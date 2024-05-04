@@ -1,6 +1,5 @@
 package com.molohala.grow.ui.signin
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +15,6 @@ import androidx.navigation.NavController
 import com.molohala.grow.designsystem.component.button.GrowCTAButton
 import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -43,10 +41,9 @@ fun SignInScreen(
     ) {
         Column(
             modifier = Modifier
-                .background(GrowTheme.colorScheme.background)
                 .padding(horizontal = 12.dp)
                 .padding(top = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             GrowTextField(
                 value = uiState.id,

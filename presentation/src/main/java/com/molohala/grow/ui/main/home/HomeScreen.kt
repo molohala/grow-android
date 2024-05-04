@@ -19,16 +19,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.color.GrowColor
-import com.molohala.grow.designsystem.commnuity.InfinityCommunityCell
-import com.molohala.grow.designsystem.commnuity.InfinityCommunityCellShimmer
+import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCell
+import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCellShimmer
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.legacy.baekjoon.InfinityBaekjoonRankCell
 import com.molohala.grow.designsystem.legacy.baekjoon.InfinityBaekjoonRankCellShimmer
 import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCell
 import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCellShimmer
-import com.molohala.grow.designsystem.legacy.statcell.InfinityStatCell
-import com.molohala.grow.designsystem.legacy.statcell.InfinityStatType
+import com.molohala.grow.designsystem.specific.statcell.GrowStatCell
+import com.molohala.grow.designsystem.specific.statcell.GrowStatType
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -81,17 +81,17 @@ fun HomeScreen(
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        InfinityStatCell(
+                        GrowStatCell(
                             modifier = Modifier.weight(1f),
-                            title = "오늘 한 커밋 개수",
-                            type = InfinityStatType.Github(commit = 7)
+                            label = "오늘 한 커밋 개수",
+                            type = GrowStatType.Github(commit = 7)
                         ) {
 
                         }
-                        InfinityStatCell(
+                        GrowStatCell(
                             modifier = Modifier.weight(1f),
-                            title = "오늘 푼 문제 개수",
-                            type = InfinityStatType.Baekjoon(solved = 3)
+                            label = "오늘 푼 문제 개수",
+                            type = GrowStatType.Baekjoon(solved = 3)
                         ) {
 
                         }
@@ -135,13 +135,13 @@ fun WeekCommunity(
                     is FetchFlow.Failure -> Text(text = "불러오기 실패")
                     is FetchFlow.Fetching -> {
                         repeat(3) {
-                            InfinityCommunityCellShimmer()
+                            GrowCommunityCellShimmer()
                         }
                     }
 
                     is FetchFlow.Success -> {
                         it.data.forEach {
-                            InfinityCommunityCell(
+                            GrowCommunityCell(
                                 community = it,
                                 onAppear = { /*TODO*/ }) {
 
