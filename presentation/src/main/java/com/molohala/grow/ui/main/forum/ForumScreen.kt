@@ -74,9 +74,10 @@ fun ForumScreen(
                     is FetchFlow.Fetching -> {
                         Column(
                             modifier = Modifier
-                                .padding(horizontal = 12.dp, vertical = 20.dp),
+                                .padding(horizontal = 12.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
+                            Spacer(modifier = Modifier.height(4.dp))
                             repeat(4) {
                                 GrowForumCellShimmer()
                             }
@@ -87,10 +88,13 @@ fun ForumScreen(
                     is FetchFlow.Success -> {
                         LazyColumn(
                             modifier = Modifier
-                                .padding(horizontal = 12.dp, vertical = 20.dp),
+                                .padding(horizontal = 12.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                             state = scrollState
                         ) {
+                            item {
+                                Spacer(modifier = Modifier.height(4.dp))
+                            }
                             itemsIndexed(it.data) { idx, forum ->
                                 GrowForumCell(forum = forum, onAppear = {
                                     it.data.firstOrNull { it.forum.forumId == forum.forum.forumId }
@@ -100,7 +104,7 @@ fun ForumScreen(
                                         forumViewModel.fetchNextCommunities()
                                     }
                                 }) {
-                                    navController.navigate(NavGroup.ForumDetail.name)
+                                    navController.navigate("${NavGroup.ForumDetail.name}/${forum.forum.forumId}")
                                 }
                             }
                             item {
@@ -126,7 +130,7 @@ fun ForumScreen(
                     leftIcon = R.drawable.ic_write,
                     shape = CircleShape
                 ) {
-
+                    navController.navigate(NavGroup.CreateForum.name)
                 }
                 Spacer(modifier = Modifier.height(92.dp))
             }

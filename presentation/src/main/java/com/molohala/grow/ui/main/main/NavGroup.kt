@@ -11,5 +11,7 @@ sealed class NavGroup(
     data object GithubSetting: NavGroup(name = "github_setting")
     data object BaekjoonSetting: NavGroup(name = "baekjoon_setting")
     data object CreateForum: NavGroup(name = "create_forum")
-    data object ForumDetail: NavGroup(name = "forum_detail")
+    data object ForumDetail: NavGroup(name = "forum_detail") {
+        const val FORUM_ID = "forum_id"
+    }
 }

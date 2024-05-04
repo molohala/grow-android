@@ -33,6 +33,7 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.component.button.ButtonType
 import com.molohala.grow.designsystem.component.button.GrowButton
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
+import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.specific.rank.GrowRankCell
 import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
@@ -69,14 +70,17 @@ fun GithubRankScreen(
         ) {
             Column {
                 val github = uiAppState.github as? FetchFlow.Success ?: return@Column
-//                if (github.data == null) {
-                RecommendingSettingGithub(onClickSetting = {
-                    navController.navigate(NavGroup.GithubSetting.name)
-                })
-//                }
-                Indicator(selectedTab = uiState.selectedTab, onClickTab = {
-                    viewModel.clickTab(selectedTab = it)
-                })
+                if (github.data == null) {
+                    RecommendingSettingGithub(onClickSetting = {
+                        navController.navigate(NavGroup.GithubSetting.name)
+                    })
+                }
+                Indicator(
+                    selectedTab = uiState.selectedTab,
+                    onClickTab = {
+                        viewModel.clickTab(selectedTab = it)
+                    }
+                )
                 uiState.githubRanksFetchFlow.let {
                     when (it) {
                         is FetchFlow.Failure -> {
@@ -169,6 +173,7 @@ fun Indicator(
     ) {
         GithubRankTab.entries.forEach {
             GrowButton(
+                modifier = Modifier,
                 text = it.label,
                 enabled = it == selectedTab,
                 type = ButtonType.Small,
@@ -177,7 +182,6 @@ fun Indicator(
                 onClickTab(it)
             }
         }
-
         Spacer(modifier = Modifier.weight(1f))
     }
 }
