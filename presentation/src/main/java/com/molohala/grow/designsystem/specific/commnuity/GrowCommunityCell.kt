@@ -27,7 +27,6 @@ import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 
-
 @Composable
 fun GrowCommunityCell(
     modifier: Modifier = Modifier,

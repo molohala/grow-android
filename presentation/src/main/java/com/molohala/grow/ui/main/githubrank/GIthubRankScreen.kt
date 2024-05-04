@@ -76,7 +76,7 @@ fun GithubRankScreen(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    val github = uiAppState.githubFetchFlow as? FetchFlow.Success ?: return@Column
+                    val github = uiAppState.github as? FetchFlow.Success ?: return@Column
                     if (github.data == null) {
                         RecommendingSettingGithub(onClickSetting = {
                             navController.navigate(NavGroup.GithubSetting.name)

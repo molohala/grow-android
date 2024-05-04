@@ -87,7 +87,7 @@ fun ProfileScreen(
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        uiAppState.githubFetchFlow.let {
+                        uiAppState.github.let {
                             when (it) {
                                 is FetchFlow.Failure -> {
                                     GrowStatCell(
@@ -117,7 +117,7 @@ fun ProfileScreen(
                                 }
                             }
                         }
-                        uiAppState.solvedac.let {
+                        uiAppState.baekjoon.let {
                             when (it) {
                                 is FetchFlow.Failure -> {
                                     GrowStatCell(

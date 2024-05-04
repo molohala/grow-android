@@ -1,30 +1,17 @@
 package com.molohala.grow.ui.main.main
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.molohala.grow.R
-import com.molohala.grow.designsystem.color.GrowColor
-import com.molohala.grow.designsystem.extension.bounceClick
-import com.molohala.grow.designsystem.extension.shadow
+import com.molohala.grow.designsystem.component.bottomtabbar.BottomTabItemType
+import com.molohala.grow.designsystem.component.bottomtabbar.GrowBottomTabBar
 import com.molohala.grow.ui.main.baekjoonrank.BaekjoonRankScreen
 import com.molohala.grow.ui.main.community.CommunityScreen
 import com.molohala.grow.ui.main.githubrank.GithubRankScreen
@@ -40,81 +27,52 @@ fun MainScreen(
     val uiAppState by appViewModel.uiState.collectAsState()
 
     val mainViews = arrayListOf(
-        BottomNavigationType.Home,
-        BottomNavigationType.Community,
-        BottomNavigationType.GithubRank,
-        BottomNavigationType.Baekjoon,
-        BottomNavigationType.Profile,
+        BottomTabItemType.Home,
+        BottomTabItemType.Forum,
+        BottomTabItemType.Github,
+        BottomTabItemType.Baekjoon,
+        BottomTabItemType.Profile,
     )
 
     LaunchedEffect(Unit) {
         appViewModel.fetchProfile()
     }
 
-    Scaffold(
-        bottomBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .shadow(
-                        color = Color.Black,
-                        alpha = 0.04f,
-                        offsetY = 0.dp,
-                        blur = 10.dp
-                    )
-                    .background(Color.White)
-                    .padding(vertical = 12.dp, horizontal = 12.dp)
-                    .padding(bottom = 16.dp)
-            ) {
-                mainViews.forEach { tab ->
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .bounceClick(onClick = {
-                                appViewModel.clickTab(tab)
-                            }),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Icon(
-                            modifier = Modifier
-                                .size(28.dp),
-                            painter = painterResource(id = tab.icon),
-                            contentDescription = tab.name,
-                            tint = if (uiAppState.selectedTab == tab) GrowColor.blue else Color.LightGray
-                        )
-                        Text(
-                            modifier = Modifier,
-                            text = tab.name,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = if (uiAppState.selectedTab == tab) GrowColor.blue else Color.Gray
-                        )
-                    }
-                }
-            }
+    Box {
+        when (uiAppState.selectedTab) {
+            is BottomTabItemType.Home -> HomeScreen(
+                navController = navController,
+                appViewModel = appViewModel
+            )
+
+            is BottomTabItemType.Forum -> CommunityScreen(
+                navController = navController,
+                appViewModel = appViewModel
+            )
+
+            is BottomTabItemType.Github -> GithubRankScreen(
+                navController = navController,
+                appViewModel = appViewModel
+            )
+
+            is BottomTabItemType.Baekjoon -> BaekjoonRankScreen(
+                navController = navController
+            )
+
+            is BottomTabItemType.Profile -> ProfileScreen(
+                navController = navController,
+                appViewModel = appViewModel
+            )
         }
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(it)
-        ) {
-            when (uiAppState.selectedTab) {
-                is BottomNavigationType.Home -> HomeScreen(navController = navController, appViewModel = appViewModel)
-                is BottomNavigationType.Community -> CommunityScreen(navController = navController, appViewModel = appViewModel)
-                BottomNavigationType.GithubRank -> GithubRankScreen(navController = navController, appViewModel = appViewModel)
-                BottomNavigationType.Baekjoon -> BaekjoonRankScreen(navController = navController)
-                BottomNavigationType.Profile -> ProfileScreen(navController = navController, appViewModel = appViewModel)
+        Column {
+            Spacer(modifier = Modifier.weight(1f))
+            GrowBottomTabBar(
+                modifier = Modifier
+                    .safeDrawingPadding(),
+                selected = uiAppState.selectedTab
+            ) {
+                appViewModel.clickTab(it)
             }
         }
     }
-}
-
-sealed class BottomNavigationType(
-    val name: String,
-    val icon: Int
-) {
-    data object Home : BottomNavigationType(name = "홈", icon = R.drawable.ic_home)
-    data object Community : BottomNavigationType(name = "커뮤니티", icon = R.drawable.ic_chat)
-    data object GithubRank : BottomNavigationType(name = "Github", icon = R.drawable.ic_github)
-    data object Baekjoon : BottomNavigationType(name = "백준", icon = R.drawable.ic_baekjoon)
-    data object Profile : BottomNavigationType(name = "프로필", icon = R.drawable.ic_person)
 }

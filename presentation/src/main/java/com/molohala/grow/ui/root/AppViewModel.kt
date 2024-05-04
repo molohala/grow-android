@@ -8,7 +8,7 @@ import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.info.response.GithubResponse
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.data.info.response.SolvedacResponse
-import com.molohala.grow.ui.main.main.BottomNavigationType
+import com.molohala.grow.designsystem.component.bottomtabbar.BottomTabItemType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -18,9 +18,9 @@ data class AppState(
     val accessToken: String = InfinityApp.prefs.accessToken,
     val refreshToken: String = InfinityApp.prefs.refreshToken,
     val profile: FetchFlow<ProfileResponse> = FetchFlow.Fetching(),
-    val githubFetchFlow: FetchFlow<GithubResponse?> = FetchFlow.Fetching(),
-    val solvedac: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
-    val selectedTab: BottomNavigationType = BottomNavigationType.Home
+    val github: FetchFlow<GithubResponse?> = FetchFlow.Fetching(),
+    val baekjoon: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
+    val selectedTab: BottomTabItemType = BottomTabItemType.Home
 )
 
 class AppViewModel : ViewModel() {
@@ -63,56 +63,56 @@ class AppViewModel : ViewModel() {
 
     fun fetchGithub() {
         val profile = uiState.value.profile as? FetchFlow.Success ?: run {
-            _uiState.update { it.copy(githubFetchFlow = FetchFlow.Failure()) }
+            _uiState.update { it.copy(github = FetchFlow.Failure()) }
             return
         }
         val github = profile.data.socialAccounts.firstOrNull { it.socialType == "GITHUB" } ?: run {
-            _uiState.update { it.copy(githubFetchFlow = FetchFlow.Success(null)) }
+            _uiState.update { it.copy(github = FetchFlow.Success(null)) }
             return
         }
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(githubFetchFlow = FetchFlow.Fetching()) }
+                _uiState.update { it.copy(github = FetchFlow.Fetching()) }
                 val githubResponse =
                     RetrofitClient.infoApi.getGithubInfo(name = github.socialId).data
                 _uiState.update {
                     it.copy(
-                        githubFetchFlow = FetchFlow.Success(githubResponse)
+                        github = FetchFlow.Success(githubResponse)
                     )
                 }
             } catch (e: Exception) {
-                _uiState.update { it.copy(githubFetchFlow = FetchFlow.Failure()) }
+                _uiState.update { it.copy(github = FetchFlow.Failure()) }
             }
         }
     }
 
     fun fetchSolvedac() {
         val profile = uiState.value.profile as? FetchFlow.Success ?: run {
-            _uiState.update { it.copy(solvedac = FetchFlow.Failure()) }
+            _uiState.update { it.copy(baekjoon = FetchFlow.Failure()) }
             return
         }
         val solvedac =
             profile.data.socialAccounts.firstOrNull { it.socialType == "SOLVED_AC" } ?: run {
-                _uiState.update { it.copy(solvedac = FetchFlow.Success(null)) }
+                _uiState.update { it.copy(baekjoon = FetchFlow.Success(null)) }
                 return
             }
         viewModelScope.launch {
             try {
-                _uiState.update { it.copy(solvedac = FetchFlow.Fetching()) }
+                _uiState.update { it.copy(baekjoon = FetchFlow.Fetching()) }
                 val solvedacResponse =
                     RetrofitClient.infoApi.getSolvedacInfo(name = solvedac.socialId).data
                 _uiState.update {
                     it.copy(
-                        solvedac = FetchFlow.Success(solvedacResponse)
+                        baekjoon = FetchFlow.Success(solvedacResponse)
                     )
                 }
             } catch (e: Exception) {
-                _uiState.update { it.copy(solvedac = FetchFlow.Failure()) }
+                _uiState.update { it.copy(baekjoon = FetchFlow.Failure()) }
             }
         }
     }
 
-    fun clickTab(tab: BottomNavigationType) {
+    fun clickTab(tab: BottomTabItemType) {
         _uiState.update { it.copy(selectedTab = tab) }
     }
 }

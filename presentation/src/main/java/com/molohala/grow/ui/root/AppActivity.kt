@@ -25,7 +25,7 @@ class AppActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             GrowTheme(
-                darkTheme = false
+                darkTheme = true
             ) {
                 Surface(
                     modifier = Modifier
