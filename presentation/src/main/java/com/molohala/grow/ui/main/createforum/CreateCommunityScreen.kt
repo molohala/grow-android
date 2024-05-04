@@ -17,10 +17,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.molohala.grow.common.flow.IdleFlow
-import com.molohala.grow.designsystem.color.GrowColor
 import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.bounceClick
+import com.molohala.grow.designsystem.foundation.GrowTheme
 
 @Composable
 fun CreateForumScreen(
@@ -58,7 +58,7 @@ fun CreateForumScreen(
                     ),
                 text = "완료",
                 style = MaterialTheme.typography.titleMedium,
-                color = GrowColor.blue
+                color = GrowTheme.colorScheme.textAlt
             )
         },
         onClickBackButton = {

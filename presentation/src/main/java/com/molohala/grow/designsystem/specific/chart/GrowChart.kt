@@ -1,4 +1,4 @@
-package com.molohala.grow.chart
+package com.molohala.grow.designsystem.specific.chart
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import co.yml.charts.axis.AxisConfig
@@ -26,13 +25,16 @@ import co.yml.charts.ui.linechart.model.LinePlotData
 import co.yml.charts.ui.linechart.model.LineStyle
 import co.yml.charts.ui.linechart.model.SelectionHighlightPoint
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
-import com.molohala.grow.designsystem.color.GrowColor
+import com.molohala.grow.designsystem.foundation.GrowTheme
+import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 import com.molohala.grow.designsystem.foundation.util.pxToDp
 
 @Composable
 fun GrowChart(
     modifier: Modifier = Modifier,
-    color: Color = GrowColor.orange500,
+    color: Color = Color(0xFFFF8125),
+    background: Color = GrowTheme.colorScheme.backgroundAlt,
+    labelColor: Color = GrowTheme.colorScheme.textNormal,
     points: List<Point>
 ) {
 
@@ -46,12 +48,13 @@ fun GrowChart(
         .labelData { i -> "${points[i].x}" }
         .axisStepSize(size.width.pxToDp() / pointsData.size)
         .labelAndAxisLinePadding(8.dp)
-        .backgroundColor(Color.White)
         .axisConfig(
             config = AxisConfig(
                 isAxisLineRequired = false,
             )
         )
+        .axisLabelColor(labelColor)
+        .backgroundColor(background)
         .build()
 
     val yAxisData = AxisData.Builder()
@@ -60,13 +63,14 @@ fun GrowChart(
             val yScale = 100 / steps
             (i * yScale).toString()
         }
-        .backgroundColor(Color.White)
         .labelAndAxisLinePadding(8.dp)
         .axisConfig(
             config = AxisConfig(
                 isAxisLineRequired = false
             )
         )
+        .backgroundColor(background)
+        .axisLabelColor(labelColor)
         .build()
     val lineChartData = LineChartData(
         linePlotData = LinePlotData(
@@ -101,12 +105,12 @@ fun GrowChart(
         gridLines = GridLines(
             enableVerticalLines = false
         ),
-        backgroundColor = Color.White
+        backgroundColor = background
     )
     LineChart(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(background)
             .onSizeChanged {
                 size = it
             },
@@ -125,11 +129,14 @@ val pointsData: List<Point> = listOf(
 )
 
 @Composable
-@Preview
+@GrowPreviews
 fun ChartPreview() {
-    GrowChart(
-        modifier = Modifier
-            .height(200.dp),
-        points = pointsData
-    )
+    GrowTheme {
+        GrowChart(
+            modifier = Modifier
+                .height(200.dp),
+            points = pointsData,
+            background = GrowTheme.colorScheme.backgroundAlt
+        )
+    }
 }

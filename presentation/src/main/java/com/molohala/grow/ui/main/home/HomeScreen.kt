@@ -108,7 +108,7 @@ fun Greeting(uiAppState: AppState) {
 }
 
 @Composable
-fun Stat(uiAppState: AppState) {
+private fun Stat(uiAppState: AppState) {
     Row(
         modifier = Modifier
             .padding(vertical = 20.dp),
