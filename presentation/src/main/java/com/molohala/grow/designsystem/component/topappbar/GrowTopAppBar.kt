@@ -2,7 +2,6 @@ package com.molohala.grow.designsystem.component.topappbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -46,7 +45,6 @@ fun GrowTopAppBar(
             Row(
                 modifier = Modifier
                     .padding(start = 4.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 onClickBackButton?.let {
@@ -63,6 +61,8 @@ fun GrowTopAppBar(
                     if (onClickBackButton == null) GrowTheme.typography.title2B
                     else GrowTheme.typography.headline2M
                 Text(
+                    modifier = Modifier
+                        .padding(start = 8.dp),
                     text = text,
                     style = textStyle,
                     color = GrowTheme.colorScheme.textNormal
