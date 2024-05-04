@@ -61,7 +61,7 @@ fun BaekjoonRankScreen(
     }
 
     GrowTopAppBar(
-        text = "Github 랭킹"
+        text = "백준 랭킹"
     ) {
         Box(
             modifier = Modifier

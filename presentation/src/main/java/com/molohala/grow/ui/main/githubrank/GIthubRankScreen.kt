@@ -60,7 +60,7 @@ fun GithubRankScreen(
     }
 
     GrowTopAppBar(
-        text = "백준 랭킹"
+        text = "Github 랭킹"
     ) {
         Box(
             modifier = Modifier
