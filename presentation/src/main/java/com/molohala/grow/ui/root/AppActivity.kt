@@ -3,6 +3,7 @@ package com.molohala.grow.ui.root
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
@@ -16,16 +17,19 @@ import com.molohala.grow.ui.main.main.NavigationGraph
 class AppActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         InfinityApp.prefs = PreferenceManager(applicationContext)
-
         setContent {
             val appViewModel: AppViewModel = viewModel()
             val navController = rememberNavController()
 
-            GrowTheme {
+            GrowTheme(
+                darkTheme = true
+            ) {
                 Surface(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                 ) {
                     NavigationGraph(
                         navController = navController,
