@@ -12,13 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.chart.InfinityChart
+import com.molohala.grow.chart.GrowChart
 import com.molohala.grow.chart.pointsData
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
 
 @Composable
-fun InfinityChartCell(
+fun GrowChartCell(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -48,7 +48,7 @@ fun InfinityChartCell(
             Spacer(modifier = Modifier.weight(1f))
 //            IconRightArrow()
         }
-        InfinityChart(
+        GrowChart(
             modifier = Modifier
                 .height(200.dp),
             points = pointsData

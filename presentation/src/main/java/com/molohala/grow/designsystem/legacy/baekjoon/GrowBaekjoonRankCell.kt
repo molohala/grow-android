@@ -23,11 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.molohala.grow.R
 import com.molohala.grow.data.rank.response.RankResponse
-import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.extension.applyCardView
+import com.molohala.grow.designsystem.extension.bounceClick
 
 @Composable
-fun InfinityBaekjoonRankCell(
+fun GrowBaekjoonRankCell(
     modifier: Modifier = Modifier,
     isCard: Boolean = false,
     rank: RankResponse,

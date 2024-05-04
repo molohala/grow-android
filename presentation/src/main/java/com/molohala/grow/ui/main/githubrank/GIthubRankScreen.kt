@@ -34,7 +34,7 @@ import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.component.button.GrowCTAButton
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.legacy.selector.InfinitySelector
+import com.molohala.grow.designsystem.legacy.selector.GrowSelector
 import com.molohala.grow.designsystem.specific.rank.GrowRankCell
 import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
 import com.molohala.grow.ui.main.main.NavGroup
@@ -189,7 +189,7 @@ fun Indicator(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         GithubRankTab.entries.forEach {
-            InfinitySelector(
+            GrowSelector(
                 text = it.label,
                 isSelected = selectedTab == it
             ) {

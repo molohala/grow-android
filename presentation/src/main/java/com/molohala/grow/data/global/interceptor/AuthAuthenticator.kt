@@ -1,7 +1,7 @@
 package com.molohala.grow.data.global.interceptor
 
 import android.util.Log
-import com.molohala.grow.application.InfinityApp
+import com.molohala.grow.application.GrowApp
 import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.data.auth.request.ReissueRequest
 import com.molohala.grow.data.global.RetrofitClient
@@ -29,12 +29,12 @@ class AuthAuthenticator: Authenticator {
         return runBlocking {
             Log.d(TAG, "✅ authenticate: ${response.request.url.toUrl()}")
             Log.d(TAG, "✅ authenticate: refresh 시작")
-            val refreshToken = InfinityApp.prefs.refreshToken
+            val refreshToken = GrowApp.prefs.refreshToken
             val request = ReissueRequest(refreshToken = refreshToken)
             val reissueResponse = RetrofitClient.authApi.reissue(request).data
 
             val accessToken = reissueResponse.accessToken
-            InfinityApp.prefs.accessToken = accessToken
+            GrowApp.prefs.accessToken = accessToken
             Log.d(TAG, "✅ authenticate: refresh 완료 length: ${accessToken.length}")
             response.request.newBuilder()
                 .removeHeader("authorization")

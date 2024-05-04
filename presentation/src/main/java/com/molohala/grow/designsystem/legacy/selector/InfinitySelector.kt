@@ -18,7 +18,7 @@ import com.molohala.grow.designsystem.color.GrowColor
 import com.molohala.grow.designsystem.extension.bounceClick
 
 @Composable
-fun InfinitySelector(
+fun GrowSelector(
     modifier: Modifier = Modifier,
     text: String,
     isSelected: Boolean,
@@ -61,10 +61,10 @@ private fun Preview() {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        InfinitySelector(text = "이번 주", isSelected = true) {
+        GrowSelector(text = "이번 주", isSelected = true) {
 
         }
-        InfinitySelector(text = "전체", isSelected = false) {
+        GrowSelector(text = "전체", isSelected = false) {
 
         }
     }

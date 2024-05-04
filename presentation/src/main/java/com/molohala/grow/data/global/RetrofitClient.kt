@@ -9,13 +9,13 @@ import com.molohala.grow.data.auth.api.AuthApi
 import com.molohala.grow.data.comment.api.CommentApi
 import com.molohala.grow.data.community.api.CommunityApi
 import com.molohala.grow.data.dauth.api.DAuthApi
-import com.molohala.grow.data.util.Json.isJsonArray
-import com.molohala.grow.data.util.Json.isJsonObject
 import com.molohala.grow.data.global.interceptor.AuthAuthenticator
 import com.molohala.grow.data.global.interceptor.TokenInterceptor
 import com.molohala.grow.data.info.api.InfoApi
 import com.molohala.grow.data.like.api.LikeApi
 import com.molohala.grow.data.rank.api.RankApi
+import com.molohala.grow.data.util.Json.isJsonArray
+import com.molohala.grow.data.util.Json.isJsonObject
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
@@ -77,17 +77,17 @@ object RetrofitClient {
         .client(okHttpClient)
         .build()
 
-    private val infinityRetrofit: Retrofit = Retrofit.Builder()
+    private val growRetrofit: Retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .client(okHttpClient)
         .build()
 
     val dauthApi: DAuthApi by lazy { dodamRetrofit.create(DAuthApi::class.java) }
-    val authApi: AuthApi by lazy { infinityRetrofit.create(AuthApi::class.java) }
-    val commentApi: CommentApi by lazy { infinityRetrofit.create(CommentApi::class.java) }
-    val communityApi: CommunityApi by lazy { infinityRetrofit.create(CommunityApi::class.java) }
-    val rankApi: RankApi by lazy { infinityRetrofit.create(RankApi::class.java) }
-    val infoApi: InfoApi by lazy { infinityRetrofit.create(InfoApi::class.java) }
-    val likeApi: LikeApi by lazy { infinityRetrofit.create(LikeApi::class.java) }
+    val authApi: AuthApi by lazy { growRetrofit.create(AuthApi::class.java) }
+    val commentApi: CommentApi by lazy { growRetrofit.create(CommentApi::class.java) }
+    val communityApi: CommunityApi by lazy { growRetrofit.create(CommunityApi::class.java) }
+    val rankApi: RankApi by lazy { growRetrofit.create(RankApi::class.java) }
+    val infoApi: InfoApi by lazy { growRetrofit.create(InfoApi::class.java) }
+    val likeApi: LikeApi by lazy { growRetrofit.create(LikeApi::class.java) }
 }

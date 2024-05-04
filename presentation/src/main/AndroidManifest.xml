@@ -13,14 +13,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Infinity"
+        android:theme="@style/Theme.Grow"
         tools:targetApi="31">
         <activity
             android:name=".ui.root.AppActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Infinity">
+            android:theme="@style/Theme.Grow">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

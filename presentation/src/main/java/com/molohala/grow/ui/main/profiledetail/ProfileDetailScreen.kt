@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.specific.chart.InfinityChartCell
+import com.molohala.grow.designsystem.specific.chart.GrowChartCell
 
 @Composable
 fun ProfileDetailScreen(
@@ -34,7 +34,7 @@ fun ProfileDetailScreen(
         ) {
             navController.popBackStack()
         }
-        InfinityChartCell {
+        GrowChartCell {
 
         }
     }

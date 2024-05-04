@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.molohala.grow.application.InfinityApp
+import com.molohala.grow.application.GrowApp
 import com.molohala.grow.application.PreferenceManager
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.ui.main.main.NavigationGraph
@@ -19,7 +19,7 @@ class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        InfinityApp.prefs = PreferenceManager(applicationContext)
+        GrowApp.prefs = PreferenceManager(applicationContext)
         setContent {
             val appViewModel: AppViewModel = viewModel()
             val navController = rememberNavController()

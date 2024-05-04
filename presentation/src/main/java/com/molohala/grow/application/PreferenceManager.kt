@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 class PreferenceManager(context: Context) {
     private val prefs: SharedPreferences =
-        context.getSharedPreferences(INFINITY_APP, Context.MODE_PRIVATE)
+        context.getSharedPreferences(GROW_APP, Context.MODE_PRIVATE)
 
     var accessToken: String by PreferenceDelegate(ACCESS_TOKEN, "")
     var refreshToken: String by PreferenceDelegate(REFRESH_TOKEN, "")
@@ -16,7 +16,7 @@ class PreferenceManager(context: Context) {
     }
 
     companion object {
-        private const val INFINITY_APP = "INFINITY_APP"
+        private const val GROW_APP = "GROW_APP"
         
         private const val ACCESS_TOKEN = "ACCESS_TOKEN"
         private const val REFRESH_TOKEN = "REFRESH_TOKEN"

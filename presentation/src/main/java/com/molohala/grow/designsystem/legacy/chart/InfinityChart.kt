@@ -30,7 +30,7 @@ import com.molohala.grow.designsystem.color.GrowColor
 import com.molohala.grow.designsystem.foundation.util.pxToDp
 
 @Composable
-fun InfinityChart(
+fun GrowChart(
     modifier: Modifier = Modifier,
     color: Color = GrowColor.orange500,
     points: List<Point>
@@ -127,7 +127,7 @@ val pointsData: List<Point> = listOf(
 @Composable
 @Preview
 fun ChartPreview() {
-    InfinityChart(
+    GrowChart(
         modifier = Modifier
             .height(200.dp),
         points = pointsData

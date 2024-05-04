@@ -2,7 +2,7 @@ package com.molohala.grow.ui.root
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.molohala.grow.application.InfinityApp
+import com.molohala.grow.application.GrowApp
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.info.response.GithubResponse
@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class AppState(
-    val accessToken: String = InfinityApp.prefs.accessToken,
-    val refreshToken: String = InfinityApp.prefs.refreshToken,
+    val accessToken: String = GrowApp.prefs.accessToken,
+    val refreshToken: String = GrowApp.prefs.refreshToken,
     val profile: FetchFlow<ProfileResponse> = FetchFlow.Fetching(),
     val github: FetchFlow<GithubResponse?> = FetchFlow.Fetching(),
     val baekjoon: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
@@ -29,18 +29,18 @@ class AppViewModel : ViewModel() {
     val uiState = _uiState.asStateFlow()
 
     fun updateAccessToken(token: String) {
-        InfinityApp.prefs.accessToken = token
+        GrowApp.prefs.accessToken = token
         _uiState.update { it.copy(accessToken = token) }
     }
 
     fun updateRefreshToken(token: String) {
-        InfinityApp.prefs.refreshToken = token
+        GrowApp.prefs.refreshToken = token
         _uiState.update { it.copy(refreshToken = token) }
     }
 
     fun clearToken() {
-        InfinityApp.prefs.clearToken()
-        with(InfinityApp.prefs) {
+        GrowApp.prefs.clearToken()
+        with(GrowApp.prefs) {
             updateAccessToken(accessToken)
             updateRefreshToken(refreshToken)
         }

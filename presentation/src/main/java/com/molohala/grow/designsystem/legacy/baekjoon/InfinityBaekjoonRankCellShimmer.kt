@@ -21,11 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.designsystem.foundation.shimmer.shimmerEffect
 import com.molohala.grow.designsystem.extension.applyCardView
+import com.molohala.grow.designsystem.foundation.shimmer.shimmerEffect
 
 @Composable
-fun InfinityBaekjoonRankCellShimmer(
+fun GrowBaekjoonRankCellShimmer(
     modifier: Modifier = Modifier,
     isCard: Boolean = false,
 ) {
@@ -66,5 +66,5 @@ fun InfinityBaekjoonRankCellShimmer(
 @Preview
 @Composable
 private fun Priview() {
-    InfinityBaekjoonRankCellShimmer()
+    GrowBaekjoonRankCellShimmer()
 }
