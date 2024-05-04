@@ -33,7 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.button.InfinityButton
 import com.molohala.grow.common.flow.FetchFlow
-import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCell
 import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCellShimmer
 import com.molohala.grow.designsystem.legacy.selector.InfinitySelector
@@ -60,7 +60,7 @@ fun GithubRankScreen(
         viewModel.fetchGithubRank()
     }
 
-    TopBar(
+    GrowTopAppBar(
         text = "Github 랭킹",
         backgroundColor = Color.White
     ) {

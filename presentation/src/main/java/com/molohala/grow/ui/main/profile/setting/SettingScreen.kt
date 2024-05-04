@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.grow.R
 import com.molohala.grow.designsystem.color.GrowColor
-import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.main.profile.Logout
 import com.molohala.grow.ui.main.profile.setting.component.SettingCell
@@ -24,7 +24,7 @@ fun SettingScreen(
     navController: NavController,
     appViewModel: AppViewModel
 ) {
-    TopBar(
+    GrowTopAppBar(
         text = "설정",
         backgroundColor = GrowColor.background,
         onClickBackButton = {

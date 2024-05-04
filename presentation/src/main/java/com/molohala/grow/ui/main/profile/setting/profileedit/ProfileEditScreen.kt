@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.button.InfinityButton
-import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 
 @Composable
 fun ProfileEditScreen(
@@ -25,7 +25,7 @@ fun ProfileEditScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    TopBar(
+    GrowTopAppBar(
         text = "프로필 설정",
         onClickBackButton = {
             navController.popBackStack()

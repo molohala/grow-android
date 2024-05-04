@@ -15,15 +15,15 @@ import androidx.compose.ui.unit.dp
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 
-sealed class GrowDividerThickness(val size: Dp) {
-    data object Thin: GrowDividerThickness(size = 1.dp)
-    data object Thick: GrowDividerThickness(size = 8.dp)
+sealed class DividerType(val size: Dp) {
+    data object Thin: DividerType(size = 1.dp)
+    data object Thick: DividerType(size = 8.dp)
 }
 
 @Composable
 fun GrowDivider(
     modifier: Modifier = Modifier,
-    thickness: GrowDividerThickness = GrowDividerThickness.Thin,
+    thickness: DividerType = DividerType.Thin,
     color: Color = GrowTheme.colorScheme.dividerNormal
 ) {
     Box(
@@ -45,7 +45,7 @@ private fun Preview() {
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
             GrowDivider()
-            GrowDivider(thickness = GrowDividerThickness.Thick)
+            GrowDivider(thickness = DividerType.Thick)
         }
     }
 }

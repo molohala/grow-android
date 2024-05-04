@@ -21,14 +21,14 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.color.GrowColor
 import com.molohala.grow.designsystem.commnuity.InfinityCommunityCell
 import com.molohala.grow.designsystem.commnuity.InfinityCommunityCellShimmer
-import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
+import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.legacy.baekjoon.InfinityBaekjoonRankCell
 import com.molohala.grow.designsystem.legacy.baekjoon.InfinityBaekjoonRankCellShimmer
 import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCell
 import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCellShimmer
 import com.molohala.grow.designsystem.legacy.statcell.InfinityStatCell
 import com.molohala.grow.designsystem.legacy.statcell.InfinityStatType
-import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -47,7 +47,7 @@ fun HomeScreen(
 //        viewModel.fetchWeekCommunities()
     }
 
-    TopBar(
+    GrowTopAppBar(
         modifier = Modifier,
         backgroundColor = GrowColor.background,
         text = "홈"

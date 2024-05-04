@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.legacy.rank.InfinityChartCell
 
 @Composable
@@ -29,7 +29,7 @@ fun ProfileDetailScreen(
             .verticalScroll(state = scrollState),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        TopBar(
+        GrowTopAppBar(
             text = "노영재님의 프로필"
         ) {
             navController.popBackStack()

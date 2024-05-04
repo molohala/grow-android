@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.button.InfinityButton
-import com.molohala.grow.designsystem.legacy.TopBar
+import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.legacy.textfield.InfinityTextField
 
 @Composable
@@ -26,7 +26,7 @@ fun BaekjoonSettingScreen(
 
     val uiState by viewModel.uiState.collectAsState()
 
-    TopBar(
+    GrowTopAppBar(
         text = "백준 설정",
         onClickBackButton = {
             navController.popBackStack()

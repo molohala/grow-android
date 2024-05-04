@@ -54,6 +54,8 @@ class GrowColorScheme(
         internal set
     var buttonPrimary by mutableStateOf(buttonPrimary, structuralEqualityPolicy())
         internal set
+    var buttonPrimaryPressed by mutableStateOf(buttonPrimaryPressed, structuralEqualityPolicy())
+        internal set
     var buttonPrimaryDisabled by mutableStateOf(buttonPrimaryDisabled, structuralEqualityPolicy())
         internal set
     var buttonText by mutableStateOf(buttonText, structuralEqualityPolicy())

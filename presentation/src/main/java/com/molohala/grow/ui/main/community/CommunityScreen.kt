@@ -34,8 +34,8 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.color.GrowColor
 import com.molohala.grow.designsystem.commnuity.InfinityCommunityCell
 import com.molohala.grow.designsystem.commnuity.InfinityCommunityCellShimmer
+import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.bounceClick
-import com.molohala.grow.designsystem.legacy.TopBar
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -59,7 +59,7 @@ fun CommunityScreen(
         communityViewModel.fetchCommunities()
     }
 
-    TopBar(
+    GrowTopAppBar(
         modifier = Modifier,
         backgroundColor = GrowColor.background,
         text = "포럼"

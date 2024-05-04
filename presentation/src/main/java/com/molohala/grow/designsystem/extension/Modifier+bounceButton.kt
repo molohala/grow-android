@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import com.molohala.grow.button.ButtonState
 
+enum class ButtonState { Idle, Hold }
+
 fun Modifier.bounceClick(
     onChangeButtonState: (ButtonState) -> Unit = {},
     enabled: Boolean = true,

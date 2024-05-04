@@ -19,22 +19,22 @@ import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 
-sealed class GrowAvatarType(
+sealed class AvatarType(
     val size: Dp
 ) {
-    data object ExtraSmall: GrowAvatarType(size = 16.dp)
-    data object Small: GrowAvatarType(size = 24.dp)
-    data object Medium: GrowAvatarType(size = 32.dp)
-    data object Large: GrowAvatarType(size = 36.dp)
-    data object ExtraLarge: GrowAvatarType(size = 64.dp)
-    data object XXL: GrowAvatarType(size = 128.dp)
+    data object ExtraSmall: AvatarType(size = 16.dp)
+    data object Small: AvatarType(size = 24.dp)
+    data object Medium: AvatarType(size = 32.dp)
+    data object Large: AvatarType(size = 36.dp)
+    data object ExtraLarge: AvatarType(size = 64.dp)
+    data object XXL: AvatarType(size = 128.dp)
 }
 
 @Composable
 fun GrowAvatar(
     modifier: Modifier = Modifier,
     image: String? = null,
-    type: GrowAvatarType
+    type: AvatarType
 ) {
     if (image == null) {
         Box(
@@ -72,7 +72,7 @@ private fun Preview() {
             modifier = Modifier
                 .padding(10.dp)
         ) {
-            GrowAvatar(type = GrowAvatarType.Large)
+            GrowAvatar(type = AvatarType.Large)
         }
     }
 }
