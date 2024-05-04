@@ -56,7 +56,8 @@ fun MainScreen(
             )
 
             is BottomTabItemType.Baekjoon -> BaekjoonRankScreen(
-                navController = navController
+                navController = navController,
+                appViewModel = appViewModel
             )
 
             is BottomTabItemType.Profile -> ProfileScreen(

@@ -60,7 +60,7 @@ fun GithubRankScreen(
     }
 
     GrowTopAppBar(
-        text = "Github 랭킹"
+        text = "백준 랭킹"
     ) {
         Box(
             modifier = Modifier
@@ -131,7 +131,7 @@ fun GithubRankScreen(
 }
 
 @Composable
-fun RecommendingSettingGithub(
+private fun RecommendingSettingGithub(
     onClickSetting: () -> Unit
 ) {
     Column(
@@ -163,7 +163,7 @@ fun RecommendingSettingGithub(
 }
 
 @Composable
-fun Indicator(
+private fun Indicator(
     selectedTab: GithubRankTab, onClickTab: (GithubRankTab) -> Unit
 ) {
     Row(
