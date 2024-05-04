@@ -22,7 +22,6 @@ import co.yml.charts.ui.linechart.model.Line
 import co.yml.charts.ui.linechart.model.LineChartData
 import co.yml.charts.ui.linechart.model.LinePlotData
 import co.yml.charts.ui.linechart.model.LineStyle
-import co.yml.charts.ui.linechart.model.SelectionHighlightPoint
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
 import com.molohala.grow.common.chart.GrowChartData
 import com.molohala.grow.designsystem.foundation.GrowTheme
@@ -78,9 +77,6 @@ fun GrowChart(
                 Line(
                     dataPoints = chartData.points,
                     LineStyle(
-                        color = color
-                    ),
-                    selectionHighlightPoint = SelectionHighlightPoint(
                         color = color
                     ),
                     shadowUnderLine = ShadowUnderLine(

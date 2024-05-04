@@ -30,7 +30,7 @@ fun GrowToggle(
         checkedThumbColor = GrowTheme.colorScheme.background,
         checkedTrackColor = GrowTheme.colorScheme.buttonPrimary,
         uncheckedThumbColor = GrowTheme.colorScheme.background,
-        uncheckedTrackColor = GrowTheme.colorScheme.backgroundAlt,
+        uncheckedTrackColor = GrowTheme.colorScheme.buttonTextDisabled,
         uncheckedBorderColor = Color.Transparent
     ),
     onCheckedChange: (Boolean) -> Unit

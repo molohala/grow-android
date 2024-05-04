@@ -23,7 +23,8 @@ data class AppState(
     val github: FetchFlow<GithubResponse?> = FetchFlow.Fetching(),
     val baekjoon: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
     val selectedTab: BottomTabItemType = BottomTabItemType.Home,
-    val chartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching()
+    val chartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching(),
+    val isDarkMode: Boolean = GrowApp.prefs.isDarkMode,
 )
 
 class AppViewModel : ViewModel() {
@@ -114,6 +115,11 @@ class AppViewModel : ViewModel() {
                 _uiState.update { it.copy(baekjoon = FetchFlow.Failure()) }
             }
         }
+    }
+
+    fun updateIsDarkMode(isDarkMode: Boolean) {
+        GrowApp.prefs.isDarkMode = isDarkMode
+        _uiState.update { it.copy(isDarkMode = isDarkMode) }
     }
 
     fun clickTab(tab: BottomTabItemType) {

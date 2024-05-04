@@ -1,7 +1,6 @@
 package com.molohala.grow.designsystem.component.topappbar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -19,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.molohala.grow.R
+import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
@@ -50,9 +50,9 @@ fun GrowTopAppBar(
                 onClickBackButton?.let {
                     GrowIcon(
                         modifier = Modifier
-                            .size(24.dp)
-                            .padding(4.dp)
-                            .clickable(onClick = it),
+                            .size(28.dp)
+                            .padding(2.dp)
+                            .bounceClick(onClick = it),
                         id = R.drawable.ic_expand_left,
                         color = GrowTheme.colorScheme.textNormal
                     )

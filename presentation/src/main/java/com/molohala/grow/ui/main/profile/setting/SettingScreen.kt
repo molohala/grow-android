@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -30,6 +32,7 @@ fun SettingScreen(
 ) {
 
     val context = LocalContext.current
+    val uiAppState by appViewModel.uiState.collectAsState()
 
     GrowTopAppBar(
         text = "설정",
@@ -93,9 +96,7 @@ fun SettingScreen(
                         label = "다크모드",
                         leftIcon = R.drawable.ic_moon,
                         content = {
-                            GrowToggle(checked = true) {
-
-                            }
+                            GrowToggle(checked = uiAppState.isDarkMode, onCheckedChange = appViewModel::updateIsDarkMode)
                         }
                     )
                 }

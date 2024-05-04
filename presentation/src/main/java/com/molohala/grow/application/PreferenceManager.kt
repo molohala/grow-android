@@ -9,6 +9,7 @@ class PreferenceManager(context: Context) {
 
     var accessToken: String by PreferenceDelegate(ACCESS_TOKEN, "")
     var refreshToken: String by PreferenceDelegate(REFRESH_TOKEN, "")
+    var isDarkMode: Boolean by PreferenceDelegate(IS_DARK_MODE, true)
 
     fun clearToken() {
         accessToken = ""
@@ -20,6 +21,7 @@ class PreferenceManager(context: Context) {
         
         private const val ACCESS_TOKEN = "ACCESS_TOKEN"
         private const val REFRESH_TOKEN = "REFRESH_TOKEN"
+        private const val IS_DARK_MODE = "IS_DARK_MODE"
     }
 
     private inner class PreferenceDelegate<T>(
