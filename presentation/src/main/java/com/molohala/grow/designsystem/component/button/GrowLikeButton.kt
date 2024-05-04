@@ -6,10 +6,10 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -57,56 +57,53 @@ fun GrowLikeButton(
         label = "",
     )
 
-    Box(modifier = modifier) {
-        Button(
-            onClick = onClick,
-            modifier = modifier
-                .then(modifier)
-                .graphicsLayer {
-                    scaleX = scale
-                    scaleY = scale
-                }
-                .pointerInput(buttonState) {
-                    awaitPointerEventScope {
-                        buttonState = if (buttonState == ButtonState.Hold) {
-                            waitForUpOrCancellation()
-                            ButtonState.Idle
-                        } else {
-                            awaitFirstDown(false)
-                            ButtonState.Hold
-                        }
-                    }
-                },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = animColor,
-                contentColor = GrowTheme.colorScheme.likePrimary,
-                disabledContainerColor = animColor,
-                disabledContentColor = GrowTheme.colorScheme.textDisabled,
-            ),
-            enabled = enabled,
-            shape = RoundedCornerShape(4.dp),
-            contentPadding = PaddingValues(horizontal = 6.dp, vertical = 4.dp),
-            interactionSource = interactionSource,
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val textColor = if (enabled) {
-                    GrowTheme.colorScheme.likePrimary
-                } else {
-                    GrowTheme.colorScheme.textDisabled
-                }
-                GrowIcon(
-                    id = R.drawable.ic_heart,
-                    color = textColor
-                )
-                Text(
-                    text = like.toString(),
-                    style = GrowTheme.typography.bodyMedium,
-                    color = textColor
-                )
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .defaultMinSize(minHeight = 20.dp, minWidth = 1.dp)
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
             }
+            .pointerInput(buttonState) {
+                awaitPointerEventScope {
+                    buttonState = if (buttonState == ButtonState.Hold) {
+                        waitForUpOrCancellation()
+                        ButtonState.Idle
+                    } else {
+                        awaitFirstDown(false)
+                        ButtonState.Hold
+                    }
+                }
+            },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = animColor,
+            contentColor = GrowTheme.colorScheme.likePrimary,
+            disabledContainerColor = animColor,
+            disabledContentColor = GrowTheme.colorScheme.textDisabled,
+        ),
+        shape = RoundedCornerShape(4.dp),
+        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 4.dp),
+        interactionSource = interactionSource,
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val textColor = if (enabled) {
+                GrowTheme.colorScheme.likePrimary
+            } else {
+                GrowTheme.colorScheme.textDisabled
+            }
+            GrowIcon(
+                id = R.drawable.ic_heart,
+                color = textColor
+            )
+            Text(
+                text = like.toString(),
+                style = GrowTheme.typography.bodyMedium,
+                color = textColor
+            )
         }
     }
 }
@@ -120,7 +117,7 @@ private fun Preview() {
                 .padding(4.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            GrowLikeButton(like = 312) {
+            GrowLikeButton(like = 0) {
 
             }
             GrowLikeButton(like = 311, enabled = false) {

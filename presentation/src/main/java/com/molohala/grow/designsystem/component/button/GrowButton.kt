@@ -8,7 +8,6 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -85,37 +84,35 @@ fun GrowButton(
         label = "",
     )
 
-    Box(modifier = modifier) {
-        Button(
-            onClick = onClick,
-            modifier = modifier
-                .then(modifier)
-                .graphicsLayer {
-                    scaleX = scale
-                    scaleY = scale
-                }
-                .pointerInput(buttonState) {
-                    awaitPointerEventScope {
-                        buttonState = if (buttonState == ButtonState.Hold) {
-                            waitForUpOrCancellation()
-                            ButtonState.Idle
-                        } else {
-                            awaitFirstDown(false)
-                            ButtonState.Hold
-                        }
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+            .pointerInput(buttonState) {
+                awaitPointerEventScope {
+                    buttonState = if (buttonState == ButtonState.Hold) {
+                        waitForUpOrCancellation()
+                        ButtonState.Idle
+                    } else {
+                        awaitFirstDown(false)
+                        ButtonState.Hold
                     }
-                },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = animColor,
-                contentColor = GrowTheme.colorScheme.textNormal,
-                disabledContainerColor = animColor,
-                disabledContentColor = GrowTheme.colorScheme.buttonTextDisabled,
-            ),
-            enabled = isEnabled,
-            shape = type.shape,
-            contentPadding = type.contentPadding,
-            interactionSource = interactionSource,
-        ) {
+                }
+            },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = animColor,
+            contentColor = GrowTheme.colorScheme.textNormal,
+            disabledContainerColor = animColor,
+            disabledContentColor = GrowTheme.colorScheme.buttonTextDisabled,
+        ),
+        enabled = isEnabled,
+        shape = type.shape,
+        contentPadding = type.contentPadding,
+        interactionSource = interactionSource,
+    ) {
 //            if (isLoading) {
 //                RiveAnimation(
 //                    resId = R.raw.loading_dots,
@@ -125,39 +122,38 @@ fun GrowButton(
 //                )
 //            } else {
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val textColor = if (enabled) {
-                    GrowTheme.colorScheme.buttonText
-                } else {
-                    GrowTheme.colorScheme.buttonTextDisabled
-                }
-                leftIcon?.let {
-                    GrowIcon(
-                        modifier = Modifier
-                            .size(20.dp),
-                        id = it,
-                        color = textColor
-                    )
-                }
-                Text(
-                    text = text,
-                    style = GrowTheme.typography.bodyBold,
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val textColor = if (enabled) {
+                GrowTheme.colorScheme.buttonText
+            } else {
+                GrowTheme.colorScheme.buttonTextDisabled
+            }
+            leftIcon?.let {
+                GrowIcon(
+                    modifier = Modifier
+                        .size(20.dp),
+                    id = it,
                     color = textColor
                 )
-                rightIcon?.let {
-                    GrowIcon(
-                        modifier = Modifier
-                            .size(20.dp),
-                        id = it,
-                        color = textColor
-                    )
-                }
             }
-//            }
+            Text(
+                text = text,
+                style = GrowTheme.typography.bodyBold,
+                color = textColor
+            )
+            rightIcon?.let {
+                GrowIcon(
+                    modifier = Modifier
+                        .size(20.dp),
+                    id = it,
+                    color = textColor
+                )
+            }
         }
+//            }
     }
 }
 

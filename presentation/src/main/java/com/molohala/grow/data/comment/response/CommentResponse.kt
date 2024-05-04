@@ -8,4 +8,15 @@ data class CommentResponse(
     val createdAt: LocalDateTime,
     val memberId: Int,
     val name: String
-)
+) {
+    companion object {
+        fun dummy() =
+            CommentResponse(
+                commentId = 1,
+                content = "안녕 정말 반갑습니다",
+                createdAt = LocalDateTime.now(),
+                memberId = 1,
+                name = "이강현"
+            )
+    }
+}
