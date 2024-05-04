@@ -1,4 +1,4 @@
-package com.molohala.grow.ui.main.communitydetail
+package com.molohala.grow.ui.main.forumdetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,9 +21,9 @@ import com.molohala.grow.designsystem.specific.comment.GrowCommentCellShimmer
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
-fun CommunityDetailScreen(
+fun ForumDetailScreen(
     appViewModel: AppViewModel,
-    viewModel: CommunityDetailViewModel = viewModel()
+    viewModel: ForumDetailViewModel = viewModel()
 ) {
 
     val uiAppState by appViewModel.uiState.collectAsState()
@@ -32,7 +32,7 @@ fun CommunityDetailScreen(
     Box {
         LazyColumn {
             item {
-                uiState.community.let {
+                uiState.forum.let {
                     when (it) {
                         is FetchFlow.Failure -> Text(text = "불러오기 실패")
                         is FetchFlow.Fetching -> {
@@ -60,7 +60,7 @@ private fun Info(
 
 @Composable
 private fun Comments(
-    uiState: CommunityDetailState,
+    uiState: ForumDetailState,
     onClickRemoveComment: (CommentResponse) -> Unit
 ) {
     uiState.comments.let {

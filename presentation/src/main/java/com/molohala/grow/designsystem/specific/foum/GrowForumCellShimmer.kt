@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.specific.commnuity
+package com.molohala.grow.designsystem.specific.foum
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +19,7 @@ import com.molohala.grow.designsystem.foundation.shimmer.ShimmerRowBox
 
 
 @Composable
-fun GrowCommunityCellShimmer(
+fun GrowForumCellShimmer(
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -48,5 +48,5 @@ fun GrowCommunityCellShimmer(
 @Preview
 @Composable
 private fun ShimmerPriview() {
-    GrowCommunityCellShimmer()
+    GrowForumCellShimmer()
 }

@@ -1,25 +1,28 @@
-package com.molohala.grow.data.community.response
+package com.molohala.grow.data.forum.response
 
+import com.google.gson.annotations.SerializedName
 import com.molohala.grow.data.comment.response.CommentResponse
 import java.time.LocalDateTime
 
-data class CommunityResponse(
-    val community: CommunityContentResponse,
+data class ForumResponse(
+    @SerializedName("community")
+    val forum: ForumContentResponse,
     val recentComment: CommentResponse?
 ) {
     companion object {
         fun dummy(
             liked: Boolean = true,
             recentComment: CommentResponse? = CommentResponse.dummy()
-        ) = CommunityResponse(
-            community = CommunityContentResponse.dummy(liked),
+        ) = ForumResponse(
+            forum = ForumContentResponse.dummy(liked),
             recentComment = recentComment
         )
     }
 }
 
-data class CommunityContentResponse(
-    val communityId: Int,
+data class ForumContentResponse(
+    @SerializedName("communityId")
+    val forumId: Int,
     val content: String,
     val createdAt: LocalDateTime,
     val like: Int,
@@ -30,8 +33,8 @@ data class CommunityContentResponse(
     companion object {
         fun dummy(
             liked: Boolean
-        ) = CommunityContentResponse(
-            communityId = 0,
+        ) = ForumContentResponse(
+            forumId = 0,
             content = "우와 지존입니다 ㅋ 응",
             createdAt = LocalDateTime.now(),
             like = 311,

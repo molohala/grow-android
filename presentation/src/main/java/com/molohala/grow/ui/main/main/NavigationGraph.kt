@@ -7,12 +7,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.molohala.grow.ui.main.createcommunity.CreateCommunityScreen
+import com.molohala.grow.ui.main.createforum.CreateForumScreen
 import com.molohala.grow.ui.main.profile.setting.SettingScreen
 import com.molohala.grow.ui.main.profile.setting.baekjoonsetting.BaekjoonSettingScreen
-import com.molohala.grow.ui.main.profiledetail.ProfileDetailScreen
 import com.molohala.grow.ui.main.profile.setting.githubsetting.GithubSettingScreen
 import com.molohala.grow.ui.main.profile.setting.profileedit.ProfileEditScreen
+import com.molohala.grow.ui.main.profiledetail.ProfileDetailScreen
 import com.molohala.grow.ui.root.AppViewModel
 import com.molohala.grow.ui.signin.SignInScreen
 
@@ -47,10 +47,10 @@ fun NavigationGraph(
         composable(NavGroup.BaekjoonSetting.name) {
             BaekjoonSettingScreen(navController = navController)
         }
-        composable(NavGroup.CreateCommunity.name) {
-            CreateCommunityScreen(navController = navController)
+        composable(NavGroup.CreateForum.name) {
+            CreateForumScreen(navController = navController)
         }
-        composable(NavGroup.CommunityDetail.name) {
+        composable(NavGroup.ForumDetail.name) {
 
         }
     }

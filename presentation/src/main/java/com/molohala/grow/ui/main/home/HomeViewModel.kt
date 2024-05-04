@@ -2,7 +2,7 @@ package com.molohala.grow.ui.main.home
 
 import androidx.lifecycle.ViewModel
 import com.molohala.grow.common.flow.FetchFlow
-import com.molohala.grow.data.community.response.CommunityResponse
+import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.rank.response.RankResponse
 import com.molohala.grow.ui.util.launch
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class HomeState(
-    val weekCommunities: FetchFlow<List<CommunityResponse>> = FetchFlow.Fetching(),
+    val weekCommunities: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
     val todayGithubRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
     val todayBaekjoonRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
 )
@@ -57,7 +57,7 @@ class HomeViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(weekCommunities = FetchFlow.Fetching()) }
-                val communities = RetrofitClient.communityApi.getBestCommunities().data
+                val communities = RetrofitClient.forumApi.getBestForums().data
                 _uiState.update {
                     it.copy(
                         weekCommunities = FetchFlow.Success(communities)

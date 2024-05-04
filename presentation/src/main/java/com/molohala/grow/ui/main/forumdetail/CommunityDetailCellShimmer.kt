@@ -1,4 +1,4 @@
-package com.molohala.grow.ui.main.communitydetail
+package com.molohala.grow.ui.main.forumdetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,11 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.designsystem.specific.comment.GrowCommentCellShimmer
 import com.molohala.grow.designsystem.foundation.shimmer.shimmerEffect
+import com.molohala.grow.designsystem.specific.comment.GrowCommentCellShimmer
 
 @Composable
-fun CommunityDetailCellShimmer() {
+fun ForumDetailCellShimmer() {
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp),
@@ -81,5 +81,5 @@ private fun Comments() {
 @Composable
 @Preview
 private fun Preview() {
-    CommunityDetailCellShimmer()
+    ForumDetailCellShimmer()
 }

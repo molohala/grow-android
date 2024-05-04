@@ -21,8 +21,8 @@ import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.shimmer.ShimmerRowBox
-import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCell
-import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCellShimmer
+import com.molohala.grow.designsystem.specific.foum.GrowForumCell
+import com.molohala.grow.designsystem.specific.foum.GrowForumCellShimmer
 import com.molohala.grow.designsystem.specific.rank.GrowRankCell
 import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
 import com.molohala.grow.designsystem.specific.statcell.GrowStatCell
@@ -69,7 +69,7 @@ fun HomeScreen(
                 TodayBaekjoon(uiState = uiState)
             }
             item {
-                WeekCommunity(uiState = uiState)
+                WeekForum(uiState = uiState)
             }
             item {
                 Spacer(modifier = Modifier.height(32.dp))
@@ -247,7 +247,7 @@ fun TodayBaekjoon(uiState: HomeState) {
 
 
 @Composable
-fun WeekCommunity(
+fun WeekForum(
     uiState: HomeState
 ) {
     Column(
@@ -267,13 +267,13 @@ fun WeekCommunity(
                     }
                     is FetchFlow.Fetching -> {
                         repeat(3) {
-                            GrowCommunityCellShimmer()
+                            GrowForumCellShimmer()
                         }
                     }
                     is FetchFlow.Success -> {
-                        it.data.forEach { community ->
-                            GrowCommunityCell(
-                                community = community,
+                        it.data.forEach { forum ->
+                            GrowForumCell(
+                                forum = forum,
                                 onAppear = { /*TODO*/ }) {
 
                             }

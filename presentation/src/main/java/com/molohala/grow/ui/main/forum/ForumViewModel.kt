@@ -1,4 +1,4 @@
-package com.molohala.grow.ui.main.community
+package com.molohala.grow.ui.main.forum
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -6,22 +6,22 @@ import androidx.lifecycle.viewModelScope
 import com.molohala.grow.common.constant.Constant
 import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.common.flow.FetchFlow
-import com.molohala.grow.data.community.response.CommunityResponse
+import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.RetrofitClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class CommunityState(
+data class ForumState(
     val page: Int = 1,
-    val communities: FetchFlow<List<CommunityResponse>> = FetchFlow.Fetching(),
+    val communities: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
     val isRefresh: Boolean = false
 )
 
-class CommunityViewModel : ViewModel() {
+class ForumViewModel : ViewModel() {
 
-    private val _uiState = MutableStateFlow(CommunityState())
+    private val _uiState = MutableStateFlow(ForumState())
     val uiState = _uiState.asStateFlow()
 
     fun fetchCommunities() {
@@ -29,7 +29,7 @@ class CommunityViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(communities = FetchFlow.Fetching()) }
-                val communities = RetrofitClient.communityApi.getCommunities(
+                val communities = RetrofitClient.forumApi.getForums(
                     page = nextPage,
                     size = Constant.pageInterval
                 ).data
@@ -60,7 +60,7 @@ class CommunityViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val nextPage = communities.data.size / Constant.pageInterval + 1
-                val communities = RetrofitClient.communityApi.getCommunities(
+                val communities = RetrofitClient.forumApi.getForums(
                     page = nextPage,
                     size = Constant.pageInterval
                 ).data

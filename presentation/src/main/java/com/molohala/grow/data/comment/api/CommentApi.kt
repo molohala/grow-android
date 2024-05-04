@@ -14,7 +14,7 @@ import retrofit2.http.Query
 interface CommentApi {
     @GET("/comment")
     suspend fun getComment(
-        @Query("communityId") communityId: Int
+        @Query("communityId") forumId: Int
     ): BaseResponse<List<CommentResponse>>
 
     @POST("/comment")

@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.specific.commnuity
+package com.molohala.grow.designsystem.specific.foum
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.molohala.grow.R
 import com.molohala.grow.common.util.timeAgo
-import com.molohala.grow.data.community.response.CommunityResponse
+import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatar
 import com.molohala.grow.designsystem.component.button.GrowLikeButton
@@ -28,14 +28,14 @@ import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 
 @Composable
-fun GrowCommunityCell(
+fun GrowForumCell(
     modifier: Modifier = Modifier,
-    community: CommunityResponse,
+    forum: ForumResponse,
     onAppear: () -> Unit = {},
     onClick: () -> Unit
 ) {
-    val content = community.community
-    val recentComment = community.recentComment
+    val content = forum.forum
+    val recentComment = forum.recentComment
 
     LaunchedEffect(Unit) {
         onAppear()
@@ -85,8 +85,8 @@ fun GrowCommunityCell(
             color = GrowTheme.colorScheme.textNormal
         )
         GrowLikeButton(
-            like = community.community.like,
-            enabled = community.community.liked
+            like = forum.forum.like,
+            enabled = forum.forum.liked
         ) {
 
         }
@@ -129,10 +129,10 @@ private fun Preview() {
                 .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            GrowCommunityCell(community = CommunityResponse.dummy()) {
+            GrowForumCell(forum = ForumResponse.dummy()) {
 
             }
-            GrowCommunityCell(community = CommunityResponse.dummy(recentComment = null)) {
+            GrowForumCell(forum = ForumResponse.dummy(recentComment = null)) {
 
             }
         }

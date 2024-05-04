@@ -62,6 +62,7 @@ fun GrowButton(
     isLoading: Boolean = false,
     @DrawableRes leftIcon: Int? = null,
     @DrawableRes rightIcon: Int? = null,
+    shape: Shape? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onClick: () -> Unit,
 ) {
@@ -109,7 +110,7 @@ fun GrowButton(
             disabledContentColor = GrowTheme.colorScheme.buttonTextDisabled,
         ),
         enabled = isEnabled,
-        shape = type.shape,
+        shape = shape?: type.shape,
         contentPadding = type.contentPadding,
         interactionSource = interactionSource,
     ) {

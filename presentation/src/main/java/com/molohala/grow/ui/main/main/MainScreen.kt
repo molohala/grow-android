@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import com.molohala.grow.designsystem.component.bottomtabbar.BottomTabItemType
 import com.molohala.grow.designsystem.component.bottomtabbar.GrowBottomTabBar
 import com.molohala.grow.ui.main.baekjoonrank.BaekjoonRankScreen
-import com.molohala.grow.ui.main.community.CommunityScreen
+import com.molohala.grow.ui.main.forum.ForumScreen
 import com.molohala.grow.ui.main.githubrank.GithubRankScreen
 import com.molohala.grow.ui.main.home.HomeScreen
 import com.molohala.grow.ui.main.profile.ProfileScreen
@@ -45,7 +45,7 @@ fun MainScreen(
                 appViewModel = appViewModel
             )
 
-            is BottomTabItemType.Forum -> CommunityScreen(
+            is BottomTabItemType.Forum -> ForumScreen(
                 navController = navController,
                 appViewModel = appViewModel
             )

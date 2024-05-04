@@ -24,9 +24,7 @@ class AppActivity : ComponentActivity() {
             val appViewModel: AppViewModel = viewModel()
             val navController = rememberNavController()
 
-            GrowTheme(
-                darkTheme = true
-            ) {
+            GrowTheme {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()

@@ -7,7 +7,7 @@ import com.google.gson.JsonDeserializer
 import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.data.auth.api.AuthApi
 import com.molohala.grow.data.comment.api.CommentApi
-import com.molohala.grow.data.community.api.CommunityApi
+import com.molohala.grow.data.forum.api.ForumApi
 import com.molohala.grow.data.dauth.api.DAuthApi
 import com.molohala.grow.data.global.interceptor.AuthAuthenticator
 import com.molohala.grow.data.global.interceptor.TokenInterceptor
@@ -86,7 +86,7 @@ object RetrofitClient {
     val dauthApi: DAuthApi by lazy { dodamRetrofit.create(DAuthApi::class.java) }
     val authApi: AuthApi by lazy { growRetrofit.create(AuthApi::class.java) }
     val commentApi: CommentApi by lazy { growRetrofit.create(CommentApi::class.java) }
-    val communityApi: CommunityApi by lazy { growRetrofit.create(CommunityApi::class.java) }
+    val forumApi: ForumApi by lazy { growRetrofit.create(ForumApi::class.java) }
     val rankApi: RankApi by lazy { growRetrofit.create(RankApi::class.java) }
     val infoApi: InfoApi by lazy { growRetrofit.create(InfoApi::class.java) }
     val likeApi: LikeApi by lazy { growRetrofit.create(LikeApi::class.java) }

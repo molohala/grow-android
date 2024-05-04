@@ -1,4 +1,4 @@
-package com.molohala.grow.ui.main.createcommunity
+package com.molohala.grow.ui.main.createforum
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.height
@@ -23,9 +23,9 @@ import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.bounceClick
 
 @Composable
-fun CreateCommunityScreen(
+fun CreateForumScreen(
     navController: NavController,
-    viewModel: CreateCommunityViewModel = viewModel()
+    viewModel: CreateForumViewModel = viewModel()
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
@@ -33,11 +33,11 @@ fun CreateCommunityScreen(
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect {
             when (it) {
-                CreateCommunitySideEffect.Failure -> {
+                CreateForumSideEffect.Failure -> {
                     Toast.makeText(context, "글작성 실패", Toast.LENGTH_SHORT).show()
                 }
 
-                CreateCommunitySideEffect.Success -> {
+                CreateForumSideEffect.Success -> {
                     navController.popBackStack()
                 }
             }
@@ -52,9 +52,9 @@ fun CreateCommunityScreen(
                     .padding(end = 16.dp)
                     .bounceClick(
                         onClick = {
-                            viewModel.createCommunity()
+                            viewModel.createForum()
                         },
-                        enabled = uiState.createCommunityFetchFlow == IdleFlow.Idle
+                        enabled = uiState.createForumFlow == IdleFlow.Idle
                     ),
                 text = "완료",
                 style = MaterialTheme.typography.titleMedium,
@@ -80,6 +80,6 @@ fun CreateCommunityScreen(
 
 @Preview
 @Composable
-fun CreateCommunityPreview() {
-    CreateCommunityScreen(navController = rememberNavController())
+fun CreateForumPreview() {
+    CreateForumScreen(navController = rememberNavController())
 }
