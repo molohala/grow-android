@@ -72,7 +72,7 @@ fun GrowBottomTabBar(
                 ),
                 shape = shape
             )
-            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .padding(8.dp)
 
     ) {
         bottomTabList.forEach {
