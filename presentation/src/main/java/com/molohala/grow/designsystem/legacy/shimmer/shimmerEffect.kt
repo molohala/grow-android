@@ -1,23 +1,27 @@
 package com.molohala.grow.designsystem.legacy.shimmer
 
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import com.molohala.grow.designsystem.foundation.color.GrowPallete
 
 @Composable
 fun shimmerEffect(showShimmer: Boolean = true, targetValue: Float = 1000f): Brush {
     return if (showShimmer) {
+        val darkTheme = isSystemInDarkTheme()
         // Colors for the shimmer effect
+        val color = GrowPallete.Neutral50
+        val added = if (darkTheme) 0.5f else 0f
         val shimmerColors = listOf(
-            Color.LightGray.copy(alpha = 0.6f),
-            Color.LightGray.copy(alpha = 0.2f),
-            Color.LightGray.copy(alpha = 0.6f),
+            color.copy(alpha = 0.25f + added),
+            color.copy(alpha = 0.15f + added),
+            color.copy(alpha = 0.25f + added),
         )
 
         // Start the animation transition
@@ -26,8 +30,7 @@ fun shimmerEffect(showShimmer: Boolean = true, targetValue: Float = 1000f): Brus
             initialValue = 0f,
             targetValue = targetValue,
             animationSpec = infiniteRepeatable(
-                animation = tween(800),
-                repeatMode = RepeatMode.Reverse,
+                animation = tween(3000),
             ),
             label = "",
         )
@@ -35,8 +38,8 @@ fun shimmerEffect(showShimmer: Boolean = true, targetValue: Float = 1000f): Brus
         // Return a linear gradient brush
         Brush.linearGradient(
             colors = shimmerColors,
-            start = Offset.Zero,
-            end = Offset(x = translateAnimation.value, y = translateAnimation.value),
+            start = Offset(x = translateAnimation.value - 200f, y = 0f),
+            end = Offset(x = translateAnimation.value, y = 0f),
         )
     } else {
         // If shimmer is turned off, return a transparent brush

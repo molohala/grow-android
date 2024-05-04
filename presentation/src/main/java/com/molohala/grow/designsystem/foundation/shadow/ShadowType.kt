@@ -16,23 +16,23 @@ import com.molohala.grow.designsystem.extension.shadow
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 
-sealed class GrowShadow(
+sealed class ShadowType(
     val y: Int,
     val blur: Int,
     val alpha: Float
 ) {
-    data object ElevationBlack1 : GrowShadow(y = 3, blur = 10, alpha = 0.02f)
-    data object ElevationBlack2 : GrowShadow(y = 4, blur = 12, alpha = 0.04f)
-    data object ElevationBlack3 : GrowShadow(y = 6, blur = 18, alpha = 0.06f)
+    data object ElevationBlack1 : ShadowType(y = 3, blur = 10, alpha = 0.02f)
+    data object ElevationBlack2 : ShadowType(y = 4, blur = 12, alpha = 0.04f)
+    data object ElevationBlack3 : ShadowType(y = 6, blur = 18, alpha = 0.06f)
 }
 
 @Composable
-fun Modifier.growShadow(type: GrowShadow): Modifier {
+fun Modifier.growShadow(type: ShadowType): Modifier {
 
     val color = when (type) {
-        GrowShadow.ElevationBlack1 -> GrowTheme.colorScheme.elevationBlack1
-        GrowShadow.ElevationBlack2 -> GrowTheme.colorScheme.elevationBlack2
-        GrowShadow.ElevationBlack3 -> GrowTheme.colorScheme.elevationBlack2
+        ShadowType.ElevationBlack1 -> GrowTheme.colorScheme.elevationBlack1
+        ShadowType.ElevationBlack2 -> GrowTheme.colorScheme.elevationBlack2
+        ShadowType.ElevationBlack3 -> GrowTheme.colorScheme.elevationBlack2
     }
 
     return this.shadow(
@@ -54,21 +54,21 @@ private fun Preview() {
                 Box(
                     modifier = Modifier
                         .size(40.dp)
-                        .growShadow(type = GrowShadow.ElevationBlack1)
+                        .growShadow(type = ShadowType.ElevationBlack1)
                         .clip(RoundedCornerShape(12.dp))
                         .background(GrowTheme.colorScheme.background)
                 )
                 Box(
                     modifier = Modifier
                         .size(40.dp)
-                        .growShadow(type = GrowShadow.ElevationBlack2)
+                        .growShadow(type = ShadowType.ElevationBlack2)
                         .clip(RoundedCornerShape(12.dp))
                         .background(GrowTheme.colorScheme.background)
                 )
                 Box(
                     modifier = Modifier
                         .size(40.dp)
-                        .growShadow(type = GrowShadow.ElevationBlack3)
+                        .growShadow(type = ShadowType.ElevationBlack3)
                         .clip(RoundedCornerShape(12.dp))
                         .background(GrowTheme.colorScheme.background)
                 )

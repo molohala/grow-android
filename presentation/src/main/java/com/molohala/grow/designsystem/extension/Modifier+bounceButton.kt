@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import com.molohala.grow.button.ButtonState
 
 enum class ButtonState { Idle, Hold }
 
@@ -41,12 +40,12 @@ fun Modifier.bounceClick(
         }
         .pointerInput(buttonState) {
             awaitPointerEventScope {
-                buttonState = if (buttonState == ButtonState.Hover) {
+                buttonState = if (buttonState == ButtonState.Hold) {
                     waitForUpOrCancellation()
                     ButtonState.Idle
                 } else {
                     awaitFirstDown(false)
-                    ButtonState.Hover
+                    ButtonState.Hold
                 }
                 onChangeButtonState(buttonState)
             }

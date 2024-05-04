@@ -66,8 +66,8 @@ object GrowTypographyTokens {
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
     )
-    val LabelMedium = Title1B.copy(fontWeight = FontWeight.Medium)
-    val LabelRegular = Title1B.copy(fontWeight = FontWeight.Normal)
+    val LabelMedium = LabelBold.copy(fontWeight = FontWeight.Medium)
+    val LabelRegular = LabelBold.copy(fontWeight = FontWeight.Normal)
 
     /*
     Caption Typography
@@ -76,8 +76,8 @@ object GrowTypographyTokens {
         fontWeight = FontWeight.Bold,
         fontSize = 12.sp,
     )
-    val CaptionMedium = Title1B.copy(fontWeight = FontWeight.Medium)
-    val CaptionRegular = Title1B.copy(fontWeight = FontWeight.Normal)
+    val CaptionMedium = CaptionBold.copy(fontWeight = FontWeight.Medium)
+    val CaptionRegular = CaptionBold.copy(fontWeight = FontWeight.Normal)
 }
 
 val DefaultTextStyle = TextStyle.Default.copy(
