@@ -57,11 +57,12 @@ fun SignInScreen(
                 value = uiState.pw,
                 onValueChange = viewModel::updatePw,
                 hint = "비밀번호를 입력해 주세요",
+                secured = true
             )
             Spacer(modifier = Modifier.weight(1f))
             GrowCTAButton(
                 modifier = Modifier
-                    .padding(bottom = 12.dp),
+                    .padding(bottom = 8.dp),
                 text = "도담도담 로그인"
             ) {
                 viewModel.signIn()

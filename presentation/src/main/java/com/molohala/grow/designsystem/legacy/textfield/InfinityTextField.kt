@@ -75,10 +75,10 @@ fun InfinityTextField(
         value = value,
         singleLine = singleLine,
         keyboardOptions = if (isPassword) KeyboardOptions.Default else KeyboardOptions(keyboardType = KeyboardType.Password),
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         onValueChange = onValueChange,
         cursorBrush = SolidColor(Color.LightGray),
         textStyle = MaterialTheme.typography.titleMedium,
-        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         decorationBox = @Composable { innerTextField ->
             TextFieldDefaults.DecorationBox(
                 value = value,

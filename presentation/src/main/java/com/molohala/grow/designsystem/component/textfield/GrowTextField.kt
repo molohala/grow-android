@@ -5,14 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
@@ -28,6 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.molohala.grow.R
@@ -43,6 +45,7 @@ fun GrowTextField(
     onValueChange: (String) -> Unit,
     hint: String = "",
     enabled: Boolean = true,
+    secured: Boolean = false,
     singleLine: Boolean = true,
     textStyle: TextStyle = GrowTheme.typography.bodyMedium,
     shape: Shape = RoundedCornerShape(12.dp),
@@ -59,10 +62,20 @@ fun GrowTextField(
     ),
 ) {
     var isFocused by remember { mutableStateOf(false) }
+    var showText by remember { mutableStateOf(false) }
     val animBorderColor by animateColorAsState(
         targetValue = if (isFocused) GrowTheme.colorScheme.textFieldPrimary else GrowTheme.colorScheme.textFieldSecondary,
         label = "",
     )
+    val icon = if (!secured) {
+        R.drawable.ic_close_fill
+    } else if (showText) {
+        R.drawable.ic_show
+    } else {
+        R.drawable.ic_hide
+    }
+
+    val isSecured = secured && !showText
 
     BasicTextField(
         value = value,
@@ -84,6 +97,8 @@ fun GrowTextField(
         enabled = enabled,
         textStyle = textStyle.copy(color = GrowTheme.colorScheme.textNormal),
         singleLine = singleLine,
+        keyboardOptions = if (isSecured) KeyboardOptions.Default else KeyboardOptions(keyboardType = KeyboardType.Password),
+        visualTransformation = if (isSecured) PasswordVisualTransformation() else VisualTransformation.None,
         cursorBrush = SolidColor(GrowTheme.colorScheme.textFieldPrimary),
         decorationBox = @Composable { innerTextField ->
             TextFieldDefaults.DecorationBox(
@@ -102,8 +117,14 @@ fun GrowTextField(
                         GrowIcon(
                             modifier = Modifier
                                 .size(24.dp)
-                                .clickable(onClick = { onValueChange("") }),
-                            id = R.drawable.ic_close_fill,
+                                .clickable(onClick = {
+                                    if (!secured) {
+                                        onValueChange("")
+                                    } else {
+                                        showText = !showText
+                                    }
+                                }),
+                            id = icon,
                             color = GrowTheme.colorScheme.textAlt
                         )
                     }
@@ -132,7 +153,8 @@ private fun Preview() {
         Column(
             modifier = Modifier
                 .background(GrowTheme.colorScheme.background)
-                .padding(10.dp)
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             var value by remember { mutableStateOf("야삐") }
             GrowTextField(
@@ -142,13 +164,21 @@ private fun Preview() {
                     value = it
                 }
             )
-            Spacer(modifier = Modifier.height(10.dp))
             GrowTextField(
                 value = value,
                 hint = "야삐",
                 onValueChange = {
                     value = it
                 },
+                enabled = false,
+            )
+            GrowTextField(
+                value = value,
+                hint = "야삐",
+                onValueChange = {
+                    value = it
+                },
+                secured = true,
                 enabled = false,
             )
         }
