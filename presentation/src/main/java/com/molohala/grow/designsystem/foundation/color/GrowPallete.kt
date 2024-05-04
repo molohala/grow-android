@@ -14,8 +14,8 @@ object GrowPallete {
     val Neutral50 = Color(0xFFA4A4B0)
     val Neutral60 = Color(0xFF72727E)
     val Neutral70 = Color(0xFF2E2E32)
-    val Neutral80 = Color(0xFF141415)
-    val Neutral90 = Color(0xFF0F0F0F)
+    val Neutral80 = Color(0xFF202022)
+    val Neutral90 = Color(0xFF141415)
     val Neutral100 = Color(0xFF000000)
 
     /*

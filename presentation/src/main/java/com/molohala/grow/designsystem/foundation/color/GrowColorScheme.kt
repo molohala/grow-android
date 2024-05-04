@@ -15,6 +15,7 @@ class GrowColorScheme(
     textAlt: Color,
     textInverse: Color,
     textDisabled: Color,
+    textWarning: Color,
     buttonPrimary: Color,
     buttonPrimaryPressed: Color,
     buttonPrimaryDisabled: Color,
@@ -51,6 +52,8 @@ class GrowColorScheme(
     var textInverse by mutableStateOf(textInverse, structuralEqualityPolicy())
         internal set
     var textDisabled by mutableStateOf(textDisabled, structuralEqualityPolicy())
+        internal set
+    var textWarning by mutableStateOf(textWarning, structuralEqualityPolicy())
         internal set
     var buttonPrimary by mutableStateOf(buttonPrimary, structuralEqualityPolicy())
         internal set

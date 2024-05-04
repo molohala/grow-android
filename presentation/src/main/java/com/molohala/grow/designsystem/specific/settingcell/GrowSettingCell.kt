@@ -26,14 +26,16 @@ import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 fun GrowSettingCell(
     modifier: Modifier = Modifier,
     label: String,
-    leftIcon: Int,
+    labelColor: Color = GrowTheme.colorScheme.textNormal,
+    leftIcon: Int? = null,
+    leftIconColor: Color = GrowTheme.colorScheme.textAlt,
     description: String? = null,
     content: @Composable () -> Unit = {},
-    onClick: () -> Unit
+    onClick: (() -> Unit)? = null
 ) {
     Row(
         modifier = modifier
-            .bounceClick(onClick = onClick)
+            .then(if (onClick == null) Modifier else Modifier.bounceClick(onClick = onClick))
             .applyCardView()
             .padding(horizontal = 12.dp)
             .height(60.dp),
@@ -43,16 +45,18 @@ fun GrowSettingCell(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            GrowIcon(
-                modifier = Modifier
-                    .size(24.dp),
-                id = leftIcon,
-                color = GrowTheme.colorScheme.textAlt
-            )
+            leftIcon?.let {
+                GrowIcon(
+                    modifier = Modifier
+                        .size(24.dp),
+                    id = it,
+                    color = leftIconColor
+                )
+            }
             Text(
                 text = label,
                 style = GrowTheme.typography.bodyBold,
-                color = GrowTheme.colorScheme.textNormal
+                color = labelColor
             )
         }
 
