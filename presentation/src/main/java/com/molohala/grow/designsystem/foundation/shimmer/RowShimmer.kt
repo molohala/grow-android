@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ShimmerRowBox(
+fun RowShimmer(
     modifier: Modifier = Modifier,
     width: Dp,
     height: Dp = 20.dp

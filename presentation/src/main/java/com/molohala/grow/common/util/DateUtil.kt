@@ -1,5 +1,6 @@
 package com.molohala.grow.common.util
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -35,8 +36,21 @@ val LocalDateTime.timeAgo: String
         return "방금 전"
     }
 
-val LocalDateTime.monthPerDay: String
+val LocalDate.monthPerDay: String
     get() {
         val dateFormatter = DateTimeFormatter.ofPattern("MM/dd")
         return this.format(dateFormatter)
+    }
+
+
+val datesForWeek: List<LocalDate>
+    get() {
+        val datesInWeek: MutableList<LocalDate> = ArrayList()
+        val currentDate = LocalDate.now()
+        var startDate = currentDate
+        repeat(7) {
+            datesInWeek.add(startDate)
+            startDate = startDate.minus(1, ChronoUnit.DAYS)
+        }
+        return datesInWeek.reversed()
     }

@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import co.yml.charts.axis.AxisConfig
 import co.yml.charts.axis.AxisData
-import co.yml.charts.common.model.Point
 import co.yml.charts.ui.linechart.LineChart
 import co.yml.charts.ui.linechart.model.GridLines
 import co.yml.charts.ui.linechart.model.Line
@@ -25,6 +24,7 @@ import co.yml.charts.ui.linechart.model.LinePlotData
 import co.yml.charts.ui.linechart.model.LineStyle
 import co.yml.charts.ui.linechart.model.SelectionHighlightPoint
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
+import com.molohala.grow.common.chart.GrowChartData
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 import com.molohala.grow.designsystem.foundation.util.pxToDp
@@ -35,7 +35,7 @@ fun GrowChart(
     color: Color = Color(0xFFFF8125),
     background: Color = GrowTheme.colorScheme.backgroundAlt,
     labelColor: Color = GrowTheme.colorScheme.textNormal,
-    points: List<Point>
+    chartData: GrowChartData
 ) {
 
     var size by remember {
@@ -44,9 +44,9 @@ fun GrowChart(
 
     val steps = 3
     val xAxisData = AxisData.Builder()
-        .steps(pointsData.size - 1)
-        .labelData { i -> "${points[i].x}" }
-        .axisStepSize(size.width.pxToDp() / pointsData.size)
+        .steps(chartData.points.size - 1)
+        .labelData { i -> chartData.points[i].description }
+        .axisStepSize(size.width.pxToDp() / chartData.points.size)
         .labelAndAxisLinePadding(8.dp)
         .axisConfig(
             config = AxisConfig(
@@ -76,7 +76,7 @@ fun GrowChart(
         linePlotData = LinePlotData(
             lines = listOf(
                 Line(
-                    dataPoints = pointsData,
+                    dataPoints = chartData.points,
                     LineStyle(
                         color = color
                     ),
@@ -118,16 +118,6 @@ fun GrowChart(
     )
 }
 
-val pointsData: List<Point> = listOf(
-    Point(1f, 90f),
-    Point(2f, 30f),
-    Point(3f, 60f),
-    Point(4f, 10f),
-    Point(5f, 13f),
-    Point(6f, 11f),
-    Point(7f, 40f),
-)
-
 @Composable
 @GrowPreviews
 fun ChartPreview() {
@@ -135,7 +125,7 @@ fun ChartPreview() {
         GrowChart(
             modifier = Modifier
                 .height(200.dp),
-            points = pointsData,
+            chartData = GrowChartData.dummy,
             background = GrowTheme.colorScheme.backgroundAlt
         )
     }

@@ -34,8 +34,9 @@ import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
-import com.molohala.grow.designsystem.foundation.shimmer.ShimmerRowBox
+import com.molohala.grow.designsystem.foundation.shimmer.RowShimmer
 import com.molohala.grow.designsystem.specific.chart.GrowChartCell
+import com.molohala.grow.designsystem.specific.chart.GrowChartCellShimmer
 import com.molohala.grow.designsystem.specific.statcell.GrowStatCell
 import com.molohala.grow.designsystem.specific.statcell.GrowStatCellShimmer
 import com.molohala.grow.designsystem.specific.statcell.GrowStatType
@@ -87,11 +88,9 @@ fun ProfileScreen(
                     Stats(uiAppState = uiAppState)
                 }
                 item {
-                    GrowChartCell {
-
-                    }
+                    Chart(uiAppState = uiAppState)
                 }
-                item { 
+                item {
                     Spacer(modifier = Modifier.height(64.dp))
                 }
             }
@@ -125,10 +124,12 @@ private fun Info(
                     is FetchFlow.Failure -> {
                         Text(text = "불러오기 실패")
                     }
+
                     is FetchFlow.Fetching -> {
                         GrowAvatarShimmer(type = AvatarType.Large)
-                        ShimmerRowBox(width = 40.dp)
+                        RowShimmer(width = 40.dp)
                     }
+
                     is FetchFlow.Success -> {
                         GrowAvatar(type = AvatarType.Large)
                         Text(
@@ -209,6 +210,27 @@ private fun Stats(
                     ) {
 
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun Chart(
+    uiAppState: AppState
+) {
+    uiAppState.chartInfo.let {
+        when (it) {
+            is FetchFlow.Failure -> {
+                Text(text = "불러오기 실패")
+            }
+            is FetchFlow.Fetching -> {
+                GrowChartCellShimmer()
+            }
+            is FetchFlow.Success -> {
+                GrowChartCell(chartInfo = it.data) {
+
                 }
             }
         }

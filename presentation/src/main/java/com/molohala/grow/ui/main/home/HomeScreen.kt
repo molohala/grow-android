@@ -20,7 +20,7 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.foundation.GrowTheme
-import com.molohala.grow.designsystem.foundation.shimmer.ShimmerRowBox
+import com.molohala.grow.designsystem.foundation.shimmer.RowShimmer
 import com.molohala.grow.designsystem.specific.foum.GrowForumCell
 import com.molohala.grow.designsystem.specific.foum.GrowForumCellShimmer
 import com.molohala.grow.designsystem.specific.rank.GrowRankCell
@@ -89,8 +89,8 @@ fun Greeting(uiAppState: AppState) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        ShimmerRowBox(width = 80.dp)
-                        ShimmerRowBox(width = 130.dp)
+                        RowShimmer(width = 80.dp)
+                        RowShimmer(width = 130.dp)
                     }
                 }
                 is FetchFlow.Failure -> {

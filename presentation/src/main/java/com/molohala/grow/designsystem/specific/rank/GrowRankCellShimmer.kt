@@ -14,7 +14,7 @@ import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
-import com.molohala.grow.designsystem.foundation.shimmer.ShimmerRowBox
+import com.molohala.grow.designsystem.foundation.shimmer.RowShimmer
 
 @Composable
 fun GrowRankCellShimmer(
@@ -31,10 +31,10 @@ fun GrowRankCellShimmer(
         ) {
 
             GrowAvatarShimmer(type = AvatarType.Large)
-            ShimmerRowBox(width = 100.dp)
+            RowShimmer(width = 100.dp)
         }
         Spacer(modifier = Modifier.weight(1f))
-        ShimmerRowBox(width = 40.dp)
+        RowShimmer(width = 40.dp)
     }
 }
 

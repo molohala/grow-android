@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.specific.chart.GrowChartCell
 
 @Composable
 fun ProfileDetailScreen(
@@ -33,9 +32,6 @@ fun ProfileDetailScreen(
             text = "노영재님의 프로필"
         ) {
             navController.popBackStack()
-        }
-        GrowChartCell {
-
         }
     }
 }

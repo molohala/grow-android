@@ -1,6 +1,7 @@
 package com.molohala.grow.ui.main.profile
 
 import androidx.lifecycle.ViewModel
+import com.molohala.grow.designsystem.specific.chart.GrowChartInfo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

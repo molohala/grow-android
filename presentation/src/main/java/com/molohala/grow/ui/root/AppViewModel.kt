@@ -3,12 +3,14 @@ package com.molohala.grow.ui.root
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.molohala.grow.application.GrowApp
+import com.molohala.grow.common.chart.githubWeekChartInfo
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.info.response.GithubResponse
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.data.info.response.SolvedacResponse
 import com.molohala.grow.designsystem.component.bottomtabbar.BottomTabItemType
+import com.molohala.grow.designsystem.specific.chart.GrowChartInfo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -20,7 +22,8 @@ data class AppState(
     val profile: FetchFlow<ProfileResponse> = FetchFlow.Fetching(),
     val github: FetchFlow<GithubResponse?> = FetchFlow.Fetching(),
     val baekjoon: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
-    val selectedTab: BottomTabItemType = BottomTabItemType.Home
+    val selectedTab: BottomTabItemType = BottomTabItemType.Home,
+    val chartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching()
 )
 
 class AppViewModel : ViewModel() {
@@ -77,7 +80,8 @@ class AppViewModel : ViewModel() {
                     RetrofitClient.infoApi.getGithubInfo(name = github.socialId).data
                 _uiState.update {
                     it.copy(
-                        github = FetchFlow.Success(githubResponse)
+                        github = FetchFlow.Success(githubResponse),
+                        chartInfo = FetchFlow.Success(githubResponse.weekCommits.githubWeekChartInfo)
                     )
                 }
             } catch (e: Exception) {

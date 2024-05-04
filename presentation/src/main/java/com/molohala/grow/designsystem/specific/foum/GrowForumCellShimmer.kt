@@ -15,7 +15,7 @@ import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.foundation.GrowTheme
-import com.molohala.grow.designsystem.foundation.shimmer.ShimmerRowBox
+import com.molohala.grow.designsystem.foundation.shimmer.RowShimmer
 
 
 @Composable
@@ -34,14 +34,14 @@ fun GrowForumCellShimmer(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             GrowAvatarShimmer(type = AvatarType.Medium)
-            ShimmerRowBox(width = 50.dp)
+            RowShimmer(width = 50.dp)
             Spacer(modifier = Modifier.weight(1f))
         }
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            ShimmerRowBox(width = 100.dp)
-            ShimmerRowBox(width = 240.dp)
+            RowShimmer(width = 100.dp)
+            RowShimmer(width = 240.dp)
         }
     }
 }
