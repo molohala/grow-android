@@ -1,9 +1,7 @@
 package com.molohala.grow.designsystem.component.button
 
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -12,10 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
@@ -36,22 +31,18 @@ import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 
+
 @Composable
-fun GrowCTAButton(
+fun GrowLikeButton(
     modifier: Modifier = Modifier,
-    text: String,
+    like: Int,
     enabled: Boolean = true,
-    isLoading: Boolean = false,
-    @DrawableRes leftIcon: Int? = null,
-    @DrawableRes rightIcon: Int? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onClick: () -> Unit,
 ) {
-    val isEnabled = enabled && !isLoading
-
     var buttonState by remember { mutableStateOf(ButtonState.Idle) }
     val color =
-        if (enabled) GrowTheme.colorScheme.buttonPrimary
+        if (enabled) GrowTheme.colorScheme.likeSecondary
         else GrowTheme.colorScheme.buttonPrimaryDisabled
     val scale by animateFloatAsState(
         targetValue = if (buttonState == ButtonState.Idle) 1f else 0.96f,
@@ -71,8 +62,6 @@ fun GrowCTAButton(
             onClick = onClick,
             modifier = modifier
                 .then(modifier)
-                .fillMaxWidth()
-                .height(56.dp)
                 .graphicsLayer {
                     scaleX = scale
                     scaleY = scale
@@ -90,53 +79,33 @@ fun GrowCTAButton(
                 },
             colors = ButtonDefaults.buttonColors(
                 containerColor = animColor,
-                contentColor = GrowTheme.colorScheme.textNormal,
+                contentColor = GrowTheme.colorScheme.likePrimary,
                 disabledContainerColor = animColor,
-                disabledContentColor = GrowTheme.colorScheme.buttonTextDisabled,
+                disabledContentColor = GrowTheme.colorScheme.textDisabled,
             ),
-            enabled = isEnabled,
-            shape = RoundedCornerShape(12.dp),
-            contentPadding = PaddingValues(0.dp),
+            enabled = enabled,
+            shape = RoundedCornerShape(4.dp),
+            contentPadding = PaddingValues(horizontal = 6.dp, vertical = 4.dp),
             interactionSource = interactionSource,
         ) {
-//            if (isLoading) {
-//                RiveAnimation(
-//                    resId = R.raw.loading_dots,
-//                    contentDescription = "loading gif",
-//                    autoplay = true,
-//                    animationName = type.animName,
-//                )
-//            } else {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                horizontalArrangement = Arrangement.spacedBy(2.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val textColor = if (enabled) {
-                    GrowTheme.colorScheme.buttonText
+                    GrowTheme.colorScheme.likePrimary
                 } else {
-                    GrowTheme.colorScheme.buttonTextDisabled
+                    GrowTheme.colorScheme.textDisabled
                 }
-                leftIcon?.let {
-                    GrowIcon(
-                        modifier = Modifier
-                            .size(20.dp),
-                        id = it,
-                        color = textColor
-                    )
-                }
-                Text(
-                    text = text,
-                    style = GrowTheme.typography.bodyBold,
+                GrowIcon(
+                    id = R.drawable.ic_heart,
                     color = textColor
                 )
-                rightIcon?.let {
-                    GrowIcon(
-                        modifier = Modifier
-                            .size(20.dp),
-                        id = it,
-                        color = textColor
-                    )
-                }
+                Text(
+                    text = like.toString(),
+                    style = GrowTheme.typography.bodyMedium,
+                    color = textColor
+                )
             }
         }
     }
@@ -148,30 +117,13 @@ private fun Preview() {
     GrowTheme {
         Column(
             modifier = Modifier
-                .background(GrowTheme.colorScheme.background)
-                .padding(10.dp),
+                .padding(4.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            GrowCTAButton(
-                text = "시작하기",
-                leftIcon = R.drawable.ic_check
-            ) {
+            GrowLikeButton(like = 312) {
 
             }
-
-            GrowCTAButton(
-                text = "시작하기",
-                leftIcon = R.drawable.ic_check,
-                isLoading = true
-            ) {
-
-            }
-
-            GrowCTAButton(
-                text = "시작하기",
-                leftIcon = R.drawable.ic_check,
-                enabled = false
-            ) {
+            GrowLikeButton(like = 311, enabled = false) {
 
             }
         }

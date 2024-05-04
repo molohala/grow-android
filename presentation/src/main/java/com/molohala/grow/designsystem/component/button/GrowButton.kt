@@ -29,7 +29,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.button.ButtonState
+import com.molohala.grow.designsystem.extension.ButtonState
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
@@ -96,12 +96,12 @@ fun GrowButton(
                 }
                 .pointerInput(buttonState) {
                     awaitPointerEventScope {
-                        buttonState = if (buttonState == ButtonState.Hover) {
+                        buttonState = if (buttonState == ButtonState.Hold) {
                             waitForUpOrCancellation()
                             ButtonState.Idle
                         } else {
                             awaitFirstDown(false)
-                            ButtonState.Hover
+                            ButtonState.Hold
                         }
                     }
                 },
