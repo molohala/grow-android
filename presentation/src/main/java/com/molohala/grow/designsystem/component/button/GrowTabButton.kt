@@ -8,6 +8,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -18,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
@@ -28,20 +31,17 @@ import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 
 @Composable
-fun GrowTextButton(
+fun GrowTabButton(
     modifier: Modifier = Modifier,
     text: String,
-    type: ButtonType,
-    enabled: Boolean = true,
-    isLoading: Boolean = false,
+    type: ButtonType = ButtonType.Small,
+    selected: Boolean = true,
     @DrawableRes leftIcon: Int? = null,
     @DrawableRes rightIcon: Int? = null,
-    shape: Shape? = null,
+    shape: Shape = RoundedCornerShape(8.dp),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onClick: () -> Unit,
 ) {
-    val isEnabled = enabled && !isLoading
-
     var buttonState by remember { mutableStateOf(ButtonState.Idle) }
     val scale by animateFloatAsState(
         targetValue = if (buttonState == ButtonState.Idle) 1f else 0.96f,
@@ -55,9 +55,24 @@ fun GrowTextButton(
         disabledContentColor = GrowTheme.colorScheme.buttonTextDisabled,
     )
 
+    val indicatorColor = GrowTheme.colorScheme.buttonPrimary
+
     Button(
         onClick = onClick,
         modifier = modifier
+            .drawBehind {
+                if (!selected) {
+                    return@drawBehind
+                }
+                val borderSize = 1.dp.toPx()
+                val y = size.height - borderSize / 2
+                drawLine(
+                    color = indicatorColor,
+                    start = Offset(0f, y),
+                    end = Offset(size.width, y),
+                    strokeWidth = borderSize
+                )
+            }
             .graphicsLayer {
                 scaleX = scale
                 scaleY = scale
@@ -74,8 +89,7 @@ fun GrowTextButton(
                 }
             },
         colors = colors,
-        enabled = isEnabled,
-        shape = shape ?: type.shape,
+        shape = shape,
         contentPadding = type.contentPadding,
         interactionSource = interactionSource,
     ) {
@@ -92,7 +106,7 @@ fun GrowTextButton(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val textColor = if (enabled) {
+            val textColor = if (selected) {
                 GrowTheme.colorScheme.buttonPrimary
             } else {
                 GrowTheme.colorScheme.buttonTextDisabled

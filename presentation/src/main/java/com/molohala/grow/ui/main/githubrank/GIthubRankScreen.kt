@@ -32,8 +32,8 @@ import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.component.button.ButtonType
 import com.molohala.grow.designsystem.component.button.GrowButton
+import com.molohala.grow.designsystem.component.button.GrowTabButton
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.specific.rank.GrowRankCell
 import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
@@ -172,10 +172,10 @@ fun Indicator(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         GithubRankTab.entries.forEach {
-            GrowButton(
+            GrowTabButton(
                 modifier = Modifier,
                 text = it.label,
-                enabled = it == selectedTab,
+                selected = it == selectedTab,
                 type = ButtonType.Small,
                 shape = CircleShape
             ) {
