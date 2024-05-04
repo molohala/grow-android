@@ -35,7 +35,7 @@ import com.molohala.grow.designsystem.color.GrowColor
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
-import com.molohala.grow.designsystem.legacy.rank.InfinityChartCell
+import com.molohala.grow.designsystem.specific.chart.InfinityChartCell
 import com.molohala.grow.designsystem.specific.statcell.GrowStatCell
 import com.molohala.grow.designsystem.specific.statcell.GrowStatCellShimmer
 import com.molohala.grow.designsystem.specific.statcell.GrowStatType

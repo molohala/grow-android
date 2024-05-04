@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.legacy.rank.InfinityChartCell
+import com.molohala.grow.designsystem.specific.chart.InfinityChartCell
 
 @Composable
 fun ProfileDetailScreen(

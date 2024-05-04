@@ -19,14 +19,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.color.GrowColor
-import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCell
-import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCellShimmer
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.legacy.baekjoon.InfinityBaekjoonRankCell
 import com.molohala.grow.designsystem.legacy.baekjoon.InfinityBaekjoonRankCellShimmer
-import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCell
-import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCellShimmer
+import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCell
+import com.molohala.grow.designsystem.specific.commnuity.GrowCommunityCellShimmer
+import com.molohala.grow.designsystem.specific.rank.GrowRankCell
+import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
 import com.molohala.grow.designsystem.specific.statcell.GrowStatCell
 import com.molohala.grow.designsystem.specific.statcell.GrowStatType
 import com.molohala.grow.ui.root.AppViewModel
@@ -172,14 +172,17 @@ fun TodayGithub(uiState: HomeState) {
                     is FetchFlow.Failure -> Text(text = "불러오기 실패")
                     is FetchFlow.Fetching -> {
                         repeat(3) {
-                            InfinityGithubRankCellShimmer()
+                            GrowRankCellShimmer()
                         }
                     }
 
                     is FetchFlow.Success -> {
-                        it.data.forEach {
-                            InfinityGithubRankCell(
-                                rank = it
+                        it.data.forEach { rank ->
+                            GrowRankCell(
+                                name = rank.memberName,
+                                socialId = rank.socialId,
+                                rank = rank.rank,
+                                label = "${rank.count} 커밋"
                             ) {
 
                             }
@@ -212,6 +215,7 @@ fun TodayBaekjoon(uiState: HomeState) {
                             InfinityBaekjoonRankCellShimmer()
                         }
                     }
+
                     is FetchFlow.Success -> {
                         it.data.forEach {
                             InfinityBaekjoonRankCell(rank = it) {

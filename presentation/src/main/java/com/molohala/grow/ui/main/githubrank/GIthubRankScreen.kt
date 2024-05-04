@@ -34,9 +34,9 @@ import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.component.button.GrowCTAButton
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCell
-import com.molohala.grow.designsystem.legacy.rank.InfinityGithubRankCellShimmer
 import com.molohala.grow.designsystem.legacy.selector.InfinitySelector
+import com.molohala.grow.designsystem.specific.rank.GrowRankCell
+import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -76,7 +76,7 @@ fun GithubRankScreen(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    val github = uiAppState.githubFetchFlow as? FetchFlow.Success?: return@Column
+                    val github = uiAppState.githubFetchFlow as? FetchFlow.Success ?: return@Column
                     if (github.data == null) {
                         RecommendingSettingGithub(onClickSetting = {
                             navController.navigate(NavGroup.GithubSetting.name)
@@ -91,16 +91,18 @@ fun GithubRankScreen(
                         is FetchFlow.Failure -> {
                             Text(text = "불러오기 실패")
                         }
+
                         is FetchFlow.Fetching -> {
                             Column {
                                 repeat(4) {
-                                    InfinityGithubRankCellShimmer(
+                                    GrowRankCellShimmer(
                                         modifier = Modifier
                                             .padding(horizontal = 20.dp)
                                     )
                                 }
                             }
                         }
+
                         is FetchFlow.Success -> {
                             LazyColumn(
                                 modifier = Modifier
@@ -108,11 +110,12 @@ fun GithubRankScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 state = scrollState
                             ) {
-                                items(it.data) {
-                                    InfinityGithubRankCell(
-                                        modifier = Modifier
-                                            .padding(horizontal = 20.dp),
-                                        rank = it
+                                items(it.data) { rank ->
+                                    GrowRankCell(
+                                        name = rank.memberName,
+                                        socialId = rank.socialId,
+                                        rank = rank.rank,
+                                        label = "${rank.count} 문제"
                                     ) {
                                         navController.navigate("profile_detail")
                                     }

@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.legacy.rank
+package com.molohala.grow.designsystem.specific.chart
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
