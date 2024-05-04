@@ -44,11 +44,13 @@ fun GrowTextField(
     value: String,
     onValueChange: (String) -> Unit,
     hint: String = "",
+    includeIcon: Boolean = true,
     enabled: Boolean = true,
     secured: Boolean = false,
     singleLine: Boolean = true,
     textStyle: TextStyle = GrowTheme.typography.bodyMedium,
     shape: Shape = RoundedCornerShape(12.dp),
+    trailingIcon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors = TextFieldDefaults.colors(
         focusedTextColor = GrowTheme.colorScheme.textNormal,
         focusedContainerColor = Color.Transparent,
@@ -113,7 +115,9 @@ fun GrowTextField(
                 },
                 label = null,
                 trailingIcon = {
-                    if (value.isNotEmpty()) {
+                    if (trailingIcon != null) {
+                        trailingIcon()
+                    } else if (value.isNotEmpty() && includeIcon) {
                         GrowIcon(
                             modifier = Modifier
                                 .size(24.dp)
