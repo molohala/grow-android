@@ -145,7 +145,7 @@ fun RecommendingSettingGithub(
     ) {
         Text(
             modifier = Modifier,
-            text = "아직 Github Id를 설정하지 않았어요",
+            text = "아직 Github ID를 설정하지 않았어요",
             color = GrowTheme.colorScheme.textNormal,
             style = GrowTheme.typography.bodyMedium
         )
