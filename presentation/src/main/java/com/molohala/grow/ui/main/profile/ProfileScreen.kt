@@ -32,9 +32,9 @@ import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.designsystem.color.GrowColor
+import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
-import com.molohala.grow.designsystem.legacy.TopBar
 import com.molohala.grow.designsystem.legacy.rank.InfinityChartCell
 import com.molohala.grow.designsystem.legacy.statcell.InfinityStatCell
 import com.molohala.grow.designsystem.legacy.statcell.InfinityStatCellShimmer
@@ -61,7 +61,7 @@ fun ProfileScreen(
         }
     )
 
-    TopBar(
+    GrowTopAppBar(
         backgroundColor = GrowColor.background,
         text = "프로필"
     ) {
