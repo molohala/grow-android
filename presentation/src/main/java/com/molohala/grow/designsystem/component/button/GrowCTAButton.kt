@@ -75,6 +75,7 @@ fun GrowCTAButton(
                 scaleY = scale
             }
             .pointerInput(buttonState) {
+                if (!isEnabled) return@pointerInput
                 awaitPointerEventScope {
                     buttonState = if (buttonState == ButtonState.Hold) {
                         waitForUpOrCancellation()
