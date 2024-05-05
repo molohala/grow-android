@@ -19,9 +19,9 @@ fun shimmerEffect(showShimmer: Boolean = true, targetValue: Float = 1000f): Brus
         val color = GrowPallete.Neutral50
         val added = if (darkTheme) 0.5f else 0f
         val shimmerColors = listOf(
-            color.copy(alpha = 0.25f + added),
             color.copy(alpha = 0.15f + added),
-            color.copy(alpha = 0.25f + added),
+            color.copy(alpha = 0.05f + added),
+            color.copy(alpha = 0.15f + added),
         )
 
         // Start the animation transition
