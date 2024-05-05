@@ -37,7 +37,6 @@ import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.specific.rank.GrowRankCell
 import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
-import com.molohala.grow.ui.main.githubrank.GithubRankTab
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -110,7 +109,7 @@ fun BaekjoonRankScreen(
                                         name = rank.memberName,
                                         socialId = rank.socialId,
                                         rank = rank.rank,
-                                        label = "${rank.count} 커밋"
+                                        label = "${rank.count} 문제"
                                     ) {
                                         navController.navigate(NavGroup.ProfileDetail.name)
                                     }
@@ -165,14 +164,14 @@ private fun RecommendingSettingBaekjoon(
 
 @Composable
 private fun Indicator(
-    selectedTab: GithubRankTab, onClickTab: (GithubRankTab) -> Unit
+    selectedTab: BaekjoonRankTab, onClickTab: (BaekjoonRankTab) -> Unit
 ) {
     Row(
         modifier = Modifier
             .padding(start = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        GithubRankTab.entries.forEach {
+        BaekjoonRankTab.entries.forEach {
             GrowTabButton(
                 modifier = Modifier,
                 text = it.label,

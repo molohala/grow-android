@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.rank.response.RankResponse
-import com.molohala.grow.ui.main.githubrank.GithubRankTab
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -20,7 +19,7 @@ enum class BaekjoonRankTab(
 
 data class BaekjoonRankState(
     val githubRanksFetchFlow: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
-    val selectedTab: GithubRankTab = GithubRankTab.WEEK,
+    val selectedTab: BaekjoonRankTab = BaekjoonRankTab.WEEK,
     val isRefresh: Boolean = false
 )
 
@@ -34,8 +33,8 @@ class BaekjoonRankViewModel : ViewModel() {
             try {
                 _uiState.update { it.copy(githubRanksFetchFlow = FetchFlow.Fetching()) }
                 val response = when (_uiState.value.selectedTab) {
-                    GithubRankTab.WEEK -> RetrofitClient.rankApi.getWeekGithubRank()
-                    GithubRankTab.TOTAL -> RetrofitClient.rankApi.getTotalGithubRank()
+                    BaekjoonRankTab.WEEK -> RetrofitClient.rankApi.getWeekSolvedacRank()
+                    BaekjoonRankTab.TOTAL -> RetrofitClient.rankApi.getTotalSolvedacRank()
                 }.data?: return@launch
                 _uiState.update {
                     it.copy(
@@ -48,7 +47,7 @@ class BaekjoonRankViewModel : ViewModel() {
         }
     }
 
-    fun clickTab(selectedTab: GithubRankTab) {
+    fun clickTab(selectedTab: BaekjoonRankTab) {
         _uiState.update { it.copy(selectedTab = selectedTab) }
         fetchBaekjoonRank()
     }
