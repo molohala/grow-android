@@ -54,7 +54,7 @@ class AppViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(profile = FetchFlow.Fetching()) }
-                val profile = RetrofitClient.infoApi.getProfile().data
+                val profile = RetrofitClient.infoApi.getProfile().data?: return@launch
                 _uiState.update { it.copy(profile = FetchFlow.Success(profile)) }
                 fetchGithub()
                 fetchSolvedac()
@@ -78,7 +78,7 @@ class AppViewModel : ViewModel() {
             try {
                 _uiState.update { it.copy(github = FetchFlow.Fetching()) }
                 val githubResponse =
-                    RetrofitClient.infoApi.getGithubInfo(name = github.socialId).data
+                    RetrofitClient.infoApi.getGithubInfo(name = github.socialId).data?: return@launch
                 _uiState.update {
                     it.copy(
                         github = FetchFlow.Success(githubResponse),

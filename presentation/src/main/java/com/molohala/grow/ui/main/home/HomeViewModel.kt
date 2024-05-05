@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class HomeState(
-    val weekCommunities: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
+    val weekForums: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
     val todayGithubRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
     val todayBaekjoonRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
 )
@@ -25,7 +25,7 @@ class HomeViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(todayGithubRanks = FetchFlow.Fetching()) }
-                val ranks = RetrofitClient.rankApi.getTodayGithubRank().data
+                val ranks = RetrofitClient.rankApi.getTodayGithubRank().data?: return@launch
                 _uiState.update {
                     it.copy(
                         todayGithubRanks = FetchFlow.Success(ranks)
@@ -41,7 +41,7 @@ class HomeViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Fetching()) }
-                val ranks = RetrofitClient.rankApi.getTodaySolvedacRank().data
+                val ranks = RetrofitClient.rankApi.getTodaySolvedacRank().data?: return@launch
                 _uiState.update {
                     it.copy(
                         todayBaekjoonRanks = FetchFlow.Success(ranks)
@@ -56,16 +56,33 @@ class HomeViewModel : ViewModel() {
     fun fetchWeekCommunities() {
         launch {
             try {
-                _uiState.update { it.copy(weekCommunities = FetchFlow.Fetching()) }
-                val communities = RetrofitClient.forumApi.getBestForums().data
+                _uiState.update { it.copy(weekForums = FetchFlow.Fetching()) }
+                val communities = RetrofitClient.forumApi.getBestForums().data?: return@launch
                 _uiState.update {
                     it.copy(
-                        weekCommunities = FetchFlow.Success(communities)
+                        weekForums = FetchFlow.Success(communities)
                     )
                 }
             } catch (e: Exception) {
-                _uiState.update { it.copy(weekCommunities = FetchFlow.Failure()) }
+                _uiState.update { it.copy(weekForums = FetchFlow.Failure()) }
             }
+        }
+    }
+
+    fun patchLike(forumId: Int) {
+        val forums = ((_uiState.value.weekForums as? FetchFlow.Success)?.data?: return).toMutableList()
+        launch {
+            try {
+                RetrofitClient.likeApi.patchLike(forumId)
+                forums.forEachIndexed { idx, i ->
+                    if (i.forum.forumId == forumId) {
+                        val forum = forums[idx]
+                        val added = if (forum.forum.liked) -1 else 1
+                        forums[idx] = forum.copy(forum = forum.forum.copy(like = forum.forum.like + added, liked = !forum.forum.liked))
+                    }
+                }
+                _uiState.update { it.copy(weekForums = FetchFlow.Success(forums)) }
+            } catch (e: Exception) {}
         }
     }
 }

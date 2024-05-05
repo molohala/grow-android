@@ -81,6 +81,9 @@ fun HomeScreen(
                     uiAppState = uiAppState,
                     onClick = {
                         navController.navigate("${NavGroup.ForumDetail.name}/${it}")
+                    },
+                    onClickLike = {
+                        viewModel.patchLike(it)
                     }
                 )
             }
@@ -273,6 +276,7 @@ fun WeekForum(
     uiAppState: AppState,
     onRemoveForum: (forumId: Int) -> Unit,
     onEditForum: (forumId: Int) -> Unit,
+    onClickLike: (forumId: Int) -> Unit,
     onClick: (forumId: Int) -> Unit
 ) {
     Column(
@@ -285,7 +289,7 @@ fun WeekForum(
                 .padding(vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            uiState.weekCommunities.let {
+            uiState.weekForums.let {
                 when (it) {
                     is FetchFlow.Failure -> {
                         Text(text = "불러오기 실패")
@@ -299,17 +303,21 @@ fun WeekForum(
 
                     is FetchFlow.Success -> {
                         it.data.forEach { forum ->
+                            val forumId = forum.forum.forumId
                             val profile = uiAppState.profile as? FetchFlow.Success?: return@forEach
                             GrowForumCell(
                                 forum = forum,
                                 onAppear = { /*TODO*/ },
                                 onRemove = {
-                                    onRemoveForum(forum.forum.forumId)
+                                    onRemoveForum(forumId)
                                 },
                                 onEdit = {
-                                    onEditForum(forum.forum.forumId)
+                                    onEditForum(forumId)
                                 },
-                                profileId = profile.data.id
+                                profileId = profile.data.id,
+                                onClickLike = {
+                                    onClickLike(forumId)
+                                }
                             ) {
                                 onClick(forum.forum.forumId)
                             }

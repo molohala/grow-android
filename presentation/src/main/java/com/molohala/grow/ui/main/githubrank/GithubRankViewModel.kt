@@ -35,7 +35,7 @@ class GithubRankViewModel : ViewModel() {
                 val response = when (_uiState.value.selectedTab) {
                     GithubRankTab.WEEK -> RetrofitClient.rankApi.getWeekGithubRank()
                     GithubRankTab.TOTAL -> RetrofitClient.rankApi.getTotalGithubRank()
-                }.data
+                }.data?: return@launch
                 _uiState.update {
                     it.copy(
                         githubRanksFetchFlow = FetchFlow.Success(response)

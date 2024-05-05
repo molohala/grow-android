@@ -7,7 +7,7 @@ import retrofit2.http.Path
 interface LikeApi {
 
     @PATCH("/like/{id}")
-    fun patchLike(
+    suspend fun patchLike(
         @Path("id") id: Int
     ): BaseVoidResponse
 

@@ -22,8 +22,8 @@ data class ForumState(
 )
 
 sealed interface ForumSideEffect {
-    data object RemoveSuccess: ForumSideEffect
-    data object RemoveFailure: ForumSideEffect
+    data object RemoveForumSuccess: ForumSideEffect
+    data object RemoveForumFailure: ForumSideEffect
 }
 
 class ForumViewModel : ViewModel() {
@@ -42,7 +42,7 @@ class ForumViewModel : ViewModel() {
                 val communities = RetrofitClient.forumApi.getForums(
                     page = nextPage,
                     size = Constant.pageInterval
-                ).data
+                ).data?: return@launch
                 if (communities.isNotEmpty()) {
                     _uiState.update {
                         it.copy(
@@ -73,7 +73,7 @@ class ForumViewModel : ViewModel() {
                 val communities = RetrofitClient.forumApi.getForums(
                     page = nextPage,
                     size = Constant.pageInterval
-                ).data
+                ).data?: return@launch
                 val oldCommunities = communities.toMutableList()
                 oldCommunities.addAll(communities)
                 _uiState.update {
@@ -93,14 +93,33 @@ class ForumViewModel : ViewModel() {
         }
     }
 
+    fun patchLike(forumId: Int) {
+        val forums = ((_uiState.value.forums as? FetchFlow.Success)?.data?: return).toMutableList()
+        launch {
+            try {
+                RetrofitClient.likeApi.patchLike(forumId)
+                forums.forEachIndexed { idx, i ->
+                    if (i.forum.forumId == forumId) {
+                        val forum = forums[idx]
+                        val added = if (forum.forum.liked) -1 else 1
+                        forums[idx] = forum.copy(forum = forum.forum.copy(like = forum.forum.like + added, liked = !forum.forum.liked))
+                    }
+                }
+                _uiState.update { it.copy(forums = FetchFlow.Success(forums)) }
+            } catch (e: Exception) {
+                Log.e(TAG, "patchLike: $e")
+            }
+        }
+    }
+
     fun removeForum(forumId: Int) {
         launch {
             try {
                 RetrofitClient.forumApi.removeForum(forumId)
                 fetchCommunities()
-                _uiEffect.emit(ForumSideEffect.RemoveSuccess)
+                _uiEffect.emit(ForumSideEffect.RemoveForumSuccess)
             } catch (e: Exception) {
-                _uiEffect.emit(ForumSideEffect.RemoveFailure)
+                _uiEffect.emit(ForumSideEffect.RemoveForumFailure)
             }
         }
     }

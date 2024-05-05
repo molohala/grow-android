@@ -32,7 +32,7 @@ class EditForumViewModel: ViewModel() {
     fun fetchForum(forumId: Int) {
         launch {
             try {
-                val forum = RetrofitClient.forumApi.getForum(id = forumId).data
+                val forum = RetrofitClient.forumApi.getForum(id = forumId).data?: return@launch
                 _uiState.update { it.copy(content = forum.content) }
             } catch (e: Exception) {
             }

@@ -65,11 +65,11 @@ fun ForumScreen(
         viewModel.fetchCommunities()
         viewModel.uiEffect.collect {
             when (it) {
-                ForumSideEffect.RemoveFailure -> {
+                ForumSideEffect.RemoveForumFailure -> {
                     showRemoveFailureDialog = true
                 }
 
-                ForumSideEffect.RemoveSuccess -> {
+                ForumSideEffect.RemoveForumSuccess -> {
                     showRemoveSuccessDialog = true
                 }
             }
@@ -135,7 +135,10 @@ fun ForumScreen(
                                     onEdit = {
                                         navController.navigate("${NavGroup.EditForum.name}/${forum.forum.forumId}")
                                     },
-                                    profileId = profile.data.id
+                                    profileId = profile.data.id,
+                                    onClickLike = {
+                                        viewModel.patchLike(forum.forum.forumId)
+                                    }
                                 ) {
                                     navController.navigate("${NavGroup.ForumDetail.name}/${forum.forum.forumId}")
                                 }

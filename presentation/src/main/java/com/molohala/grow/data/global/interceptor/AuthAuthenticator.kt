@@ -33,7 +33,7 @@ class AuthAuthenticator: Authenticator {
             val request = ReissueRequest(refreshToken = refreshToken)
             val reissueResponse = RetrofitClient.authApi.reissue(request).data
 
-            val accessToken = reissueResponse.accessToken
+            val accessToken = reissueResponse?.accessToken?: ""
             GrowApp.prefs.accessToken = accessToken
             Log.d(TAG, "✅ authenticate: refresh 완료 length: ${accessToken.length}")
             response.request.newBuilder()

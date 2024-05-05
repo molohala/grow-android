@@ -7,22 +7,32 @@ import com.molohala.grow.data.comment.response.CommentResponse
 import com.molohala.grow.data.forum.response.ForumContentResponse
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.ui.util.launch
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class ForumDetailState(
     val forum: FetchFlow<ForumContentResponse> = FetchFlow.Fetching(),
     val comments: FetchFlow<List<CommentResponse>> = FetchFlow.Fetching(),
-    val createCommentFlow: FetchFlow<Boolean> = FetchFlow.Fetching(),
-    val removeForumFlow: FetchFlow<Boolean> = FetchFlow.Fetching(),
-    val removeCommentFlow: FetchFlow<Boolean> = FetchFlow.Fetching(),
-    val selectedRemoveComment: CommentResponse? = null,
     val currentComment: String = "",
     val isRefresh: Boolean = false
 )
 
+sealed interface ForumDetailSideEffect {
+    data object RemoveForumSuccess: ForumDetailSideEffect
+    data object RemoveForumFailure: ForumDetailSideEffect
+    data object RemoveCommentSuccess: ForumDetailSideEffect
+    data object RemoveCommentFailure: ForumDetailSideEffect
+    data object CreateCommentSuccess: ForumDetailSideEffect
+    data object CreateCommentFailure: ForumDetailSideEffect
+}
+
 class ForumDetailViewModel : ViewModel() {
+
+    private val _uiEffect = MutableSharedFlow<ForumDetailSideEffect>()
+    val uiEffect = _uiEffect.asSharedFlow()
 
     private val _uiState = MutableStateFlow(ForumDetailState())
     val uiState = _uiState.asStateFlow()
@@ -31,7 +41,7 @@ class ForumDetailViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(forum = FetchFlow.Fetching()) }
-                val forum = RetrofitClient.forumApi.getForum(forumId).data
+                val forum = RetrofitClient.forumApi.getForum(forumId).data?: return@launch
                 _uiState.update { it.copy(forum = FetchFlow.Success(forum)) }
             } catch (e: Exception) {
                 _uiState.update { it.copy(forum = FetchFlow.Failure()) }
@@ -42,7 +52,7 @@ class ForumDetailViewModel : ViewModel() {
     fun fetchComments(forumId: Int) {
         launch {
             try {
-                val comments = RetrofitClient.commentApi.getComment(forumId).data
+                val comments = RetrofitClient.commentApi.getComment(forumId).data?: return@launch
                 _uiState.update { it.copy(comments = FetchFlow.Success(comments)) }
             } catch (e: Exception) {
                 _uiState.update { it.copy(comments = FetchFlow.Failure()) }
@@ -53,19 +63,18 @@ class ForumDetailViewModel : ViewModel() {
     fun createComment(forumId: Int) {
         launch {
             try {
-                _uiState.update { it.copy(createCommentFlow = FetchFlow.Fetching()) }
                 val request =
                     CreateCommentRequest(content = _uiState.value.currentComment, forum = forumId)
                 RetrofitClient.commentApi.createComment(request)
                 fetchComments(forumId)
                 _uiState.update {
                     it.copy(
-                        createCommentFlow = FetchFlow.Success(true),
                         currentComment = ""
                     )
                 }
+                _uiEffect.emit(ForumDetailSideEffect.CreateCommentSuccess)
             } catch (e: Exception) {
-                _uiState.update { it.copy(createCommentFlow = FetchFlow.Failure()) }
+                _uiEffect.emit(ForumDetailSideEffect.CreateCommentFailure)
             }
         }
     }
@@ -76,7 +85,7 @@ class ForumDetailViewModel : ViewModel() {
                 RetrofitClient.likeApi.patchLike(forumId)
                 val forum = (_uiState.value.forum as? FetchFlow.Success)?.data ?: return@launch
                 val added = if (forum.liked) -1 else 1
-                val newForum = forum.copy(like = forum.like + added)
+                val newForum = forum.copy(like = forum.like + added, liked = !forum.liked)
                 _uiState.update { it.copy(forum = FetchFlow.Success(newForum)) }
             } catch (e: Exception) {
             }
@@ -87,9 +96,9 @@ class ForumDetailViewModel : ViewModel() {
         launch {
             try {
                 RetrofitClient.forumApi.removeForum(forumId)
-                _uiState.update { it.copy(removeForumFlow = FetchFlow.Success(true)) }
+                _uiEffect.emit(ForumDetailSideEffect.RemoveForumSuccess)
             } catch (e: Exception) {
-                _uiState.update { it.copy(removeForumFlow = FetchFlow.Failure()) }
+                _uiEffect.emit(ForumDetailSideEffect.RemoveForumFailure)
             }
         }
     }
@@ -97,18 +106,13 @@ class ForumDetailViewModel : ViewModel() {
     fun removeComment(forumId: Int) {
         launch {
             try {
-                _uiState.update { it.copy(removeCommentFlow = FetchFlow.Fetching()) }
                 RetrofitClient.commentApi.removeComment(forumId)
                 fetchComments(forumId)
-                _uiState.update { it.copy(removeCommentFlow = FetchFlow.Success(true)) }
+                _uiEffect.emit(ForumDetailSideEffect.RemoveCommentSuccess)
             } catch (e: Exception) {
-                _uiState.update { it.copy(removeCommentFlow = FetchFlow.Failure()) }
+                _uiEffect.emit(ForumDetailSideEffect.RemoveCommentFailure)
             }
         }
-    }
-
-    fun onClickRemoveComment(comment: CommentResponse) {
-        _uiState.update { it.copy(selectedRemoveComment = comment) }
     }
 
     fun updateCurrentComment(comment: String) {

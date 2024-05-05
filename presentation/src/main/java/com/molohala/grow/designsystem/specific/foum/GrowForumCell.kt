@@ -40,15 +40,14 @@ fun GrowForumCell(
     forum: ForumResponse,
     profileId: Int,
     onAppear: () -> Unit = {},
+    onClickLike: () -> Unit,
     onRemove: () -> Unit,
     onEdit: () -> Unit,
     onClick: () -> Unit
 ) {
     val content = forum.forum
     val recentComment = forum.recentComment
-    var isMenuExpanded by remember {
-        mutableStateOf(false)
-    }
+    var isMenuExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         onAppear()
@@ -109,11 +108,7 @@ fun GrowForumCell(
             maxLines = 5,
             color = GrowTheme.colorScheme.textNormal
         )
-        GrowLikeButton(
-            like = forum.forum.like, enabled = forum.forum.liked
-        ) {
-
-        }
+        GrowLikeButton(like = forum.forum.like, enabled = forum.forum.liked, onClick = onClickLike)
         recentComment?.let {
             GrowDivider()
             Row(
@@ -159,6 +154,7 @@ private fun Preview() {
                 onEdit = {
 
                 },
+                onClickLike = {},
                 profileId = 1
             ) {
 
@@ -167,6 +163,7 @@ private fun Preview() {
                 forum = ForumResponse.dummy(recentComment = null),
                 onRemove = {},
                 onEdit = {},
+                onClickLike = {},
                 profileId = 1
             ) {
 

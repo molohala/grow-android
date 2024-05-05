@@ -43,10 +43,10 @@ class SignInViewModel: ViewModel() {
                     clientId = Secret.CLIENT_ID,
                     redirectUrl = Secret.REDIRECT_URL
                 )
-                val dAuthResponse = RetrofitClient.dauthApi.signIn(dAuthRequest).data
+                val dAuthResponse = RetrofitClient.dauthApi.signIn(dAuthRequest).data?: return@launch
 
                 val code = dAuthResponse.location.split("[=&]".toRegex())[1]
-                val response = RetrofitClient.authApi.signIn(code = code).data
+                val response = RetrofitClient.authApi.signIn(code = code).data?: return@launch
                 val effect = SignInSideEffect.LoginSuccess(accessToken = response.accessToken, refreshToken = response.refreshToken)
                 _uiEffect.emit(effect)
             } catch (e: Exception) {
