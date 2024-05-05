@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.molohala.grow.R
+import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.common.util.getVersionInfo
 import com.molohala.grow.designsystem.component.button.GrowToggle
 import com.molohala.grow.designsystem.component.divider.GrowDivider
@@ -51,26 +52,29 @@ fun SettingScreen(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
+                    val profile = uiAppState.profile as? FetchFlow.Success
                     GrowSettingCell(
                         modifier = Modifier
                             .padding(top = 16.dp),
                         leftIcon = R.drawable.ic_person,
                         label = "프로필 설정",
-                        description = "이강현"
+                        description = profile?.data?.name?: ""
                     ) {
                         navController.navigate(NavGroup.ProfileEdit.name)
                     }
+                    val github = profile?.data?.socialAccounts?.firstOrNull { it.socialType == "GITHUB" }
                     GrowSettingCell(
                         leftIcon = R.drawable.ic_github,
                         label = "Github 설정",
-                        description = "bestswlkh0310"
+                        description = github?.socialId?: ""
                     ) {
                         navController.navigate(NavGroup.GithubSetting.name)
                     }
+                    val baekjoon = profile?.data?.socialAccounts?.firstOrNull { it.socialType == "SOLVED_AC" }
                     GrowSettingCell(
                         leftIcon = R.drawable.ic_baekjoon,
                         label = "백준 설정",
-                        description = "hhhello0507"
+                        description = baekjoon?.socialId?: ""
                     ) {
                         navController.navigate(NavGroup.BaekjoonSetting.name)
                     }

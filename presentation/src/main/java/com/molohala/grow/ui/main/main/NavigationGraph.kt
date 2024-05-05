@@ -46,10 +46,10 @@ fun NavigationGraph(
             ProfileEditScreen(navController = navController)
         }
         composable(NavGroup.GithubSetting.name) {
-            GithubSettingScreen(navController = navController)
+            GithubSettingScreen(navController = navController, appViewModel = appViewModel)
         }
         composable(NavGroup.BaekjoonSetting.name) {
-            BaekjoonSettingScreen(navController = navController)
+            BaekjoonSettingScreen(navController = navController, appViewModel = appViewModel)
         }
         composable(NavGroup.CreateForum.name) {
             CreateForumScreen(navController = navController)
