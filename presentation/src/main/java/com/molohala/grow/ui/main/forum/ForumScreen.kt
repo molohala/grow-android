@@ -19,6 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -29,6 +32,7 @@ import com.molohala.grow.common.constant.Constant
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.component.button.ButtonType
 import com.molohala.grow.designsystem.component.button.GrowButton
+import com.molohala.grow.designsystem.component.dialog.GrowDialog
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.specific.foum.GrowForumCell
@@ -41,20 +45,35 @@ import com.molohala.grow.ui.root.AppViewModel
 fun ForumScreen(
     navController: NavController,
     appViewModel: AppViewModel,
-    forumViewModel: ForumViewModel = viewModel()
+    viewModel: ForumViewModel = viewModel()
 ) {
-    val uiState by forumViewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     val uiAppState by appViewModel.uiState.collectAsState()
     val scrollState = rememberLazyListState()
     val pullRefreshState = rememberPullRefreshState(
         refreshing = uiState.isRefresh,
         onRefresh = {
-            forumViewModel.refresh()
+            viewModel.refresh()
         }
     )
+    var showRemoveDialog by remember { mutableStateOf(false) }
+    var showRemoveSuccessDialog by remember { mutableStateOf(false) }
+    var showRemoveFailureDialog by remember { mutableStateOf(false) }
+    var selectedForum by remember { mutableStateOf<Int?>(null) }
 
     LaunchedEffect(Unit) {
-        forumViewModel.fetchCommunities()
+        viewModel.fetchCommunities()
+        viewModel.uiEffect.collect {
+            when (it) {
+                ForumSideEffect.RemoveFailure -> {
+                    showRemoveFailureDialog = true
+                }
+
+                ForumSideEffect.RemoveSuccess -> {
+                    showRemoveSuccessDialog = true
+                }
+            }
+        }
     }
 
     GrowTopAppBar(
@@ -106,11 +125,12 @@ fun ForumScreen(
                                             ?: return@GrowForumCell
                                         val interval = Constant.pageInterval
                                         if (idx % interval == (interval - 1) && idx / interval == (it.data.size - 1) / interval) {
-                                            forumViewModel.fetchNextCommunities()
+                                            viewModel.fetchNextCommunities()
                                         }
                                     },
                                     onRemove = {
-
+                                        selectedForum = forum.forum.forumId
+                                        showRemoveDialog = true
                                     },
                                     onEdit = {
                                         navController.navigate("${NavGroup.EditForum.name}/${forum.forum.forumId}")
@@ -148,5 +168,42 @@ fun ForumScreen(
                 Spacer(modifier = Modifier.height(92.dp))
             }
         }
+    }
+
+    if (showRemoveDialog) {
+        GrowDialog(
+            title = "정말 게시글을 삭제하시겠습니까?",
+            successText = "삭제하기",
+            cancelText = "아니요",
+            onCancelRequest = {
+                showRemoveDialog = false
+            },
+            onDismissRequest = {
+                showRemoveDialog = false
+            },
+            onSuccessRequest = {
+                showRemoveDialog = false
+                val selectedForum = selectedForum ?: return@GrowDialog
+                viewModel.removeForum(forumId = selectedForum)
+            }
+        )
+    }
+
+    if (showRemoveSuccessDialog) {
+        GrowDialog(
+            title = "게시글 삭제 성공",
+            onDismissRequest = {
+                showRemoveSuccessDialog = false
+            },
+        )
+    }
+
+    if (showRemoveFailureDialog) {
+        GrowDialog(
+            title = "게시글 삭제 실패",
+            onDismissRequest = {
+                showRemoveFailureDialog = false
+            },
+        )
     }
 }

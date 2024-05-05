@@ -8,19 +8,28 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.ui.util.launch
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class ForumState(
     val page: Int = 1,
     val forums: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
-    val removeForumFlow: FetchFlow<Boolean> = FetchFlow.Fetching(),
     val editForumFlow: FetchFlow<Boolean> = FetchFlow.Fetching(),
     val isRefresh: Boolean = false
 )
 
+sealed interface ForumSideEffect {
+    data object RemoveSuccess: ForumSideEffect
+    data object RemoveFailure: ForumSideEffect
+}
+
 class ForumViewModel : ViewModel() {
+
+    private val _uiEffect = MutableSharedFlow<ForumSideEffect>()
+    val uiEffect = _uiEffect.asSharedFlow()
 
     private val _uiState = MutableStateFlow(ForumState())
     val uiState = _uiState.asStateFlow()
@@ -88,9 +97,10 @@ class ForumViewModel : ViewModel() {
         launch {
             try {
                 RetrofitClient.forumApi.removeForum(forumId)
-                _uiState.update { it.copy(removeForumFlow = FetchFlow.Success(true)) }
+                fetchCommunities()
+                _uiEffect.emit(ForumSideEffect.RemoveSuccess)
             } catch (e: Exception) {
-                _uiState.update { it.copy(removeForumFlow = FetchFlow.Failure()) }
+                _uiEffect.emit(ForumSideEffect.RemoveFailure)
             }
         }
     }
