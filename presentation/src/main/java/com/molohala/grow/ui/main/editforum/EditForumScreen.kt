@@ -1,4 +1,4 @@
-package com.molohala.grow.ui.main.createforum
+package com.molohala.grow.ui.main.editforum
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.defaultMinSize
@@ -19,25 +19,28 @@ import com.molohala.grow.designsystem.component.button.ButtonType
 import com.molohala.grow.designsystem.component.button.GrowTextButton
 import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.ui.main.editforum.CreateForumSideEffect
-import com.molohala.grow.ui.main.editforum.CreateForumViewModel
+import com.molohala.grow.ui.main.createforum.CreateForumScreen
+import com.molohala.grow.ui.main.createforum.EditForumSideEffect
+import com.molohala.grow.ui.main.createforum.EditForumViewModel
 
 @Composable
-fun CreateForumScreen(
+fun EditForumScreen(
     navController: NavController,
-    viewModel: CreateForumViewModel = viewModel()
+    viewModel: EditForumViewModel = viewModel(),
+    forumId: Int
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
+        viewModel.fetchForum(forumId)
         viewModel.uiEffect.collect {
             when (it) {
-                CreateForumSideEffect.Failure -> {
+                EditForumSideEffect.Failure -> {
                     Toast.makeText(context, "글작성 실패", Toast.LENGTH_SHORT).show()
                 }
 
-                CreateForumSideEffect.Success -> {
+                EditForumSideEffect.Success -> {
                     navController.popBackStack()
                 }
             }
@@ -45,14 +48,14 @@ fun CreateForumScreen(
     }
 
     GrowTopAppBar(
-        text = "글쓰기",
+        text = "글 수정",
         trailingContent = {
             GrowTextButton(
-                text = "완료",
+                text = "수정",
                 type = ButtonType.Small,
-                enabled = uiState.patchForumFlow == IdleFlow.Idle && uiState.content.isNotEmpty(),
+                enabled = uiState.editForumFlow == IdleFlow.Idle && uiState.content.isNotEmpty(),
             ) {
-                viewModel.createForum()
+                viewModel.editForum(forumId)
             }
         },
         onClickBackButton = {

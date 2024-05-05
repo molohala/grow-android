@@ -2,20 +2,21 @@ package com.molohala.grow.ui.main.forum
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.molohala.grow.common.constant.Constant
 import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.RetrofitClient
+import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 data class ForumState(
     val page: Int = 1,
-    val communities: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
+    val forums: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
+    val removeForumFlow: FetchFlow<Boolean> = FetchFlow.Fetching(),
+    val editForumFlow: FetchFlow<Boolean> = FetchFlow.Fetching(),
     val isRefresh: Boolean = false
 )
 
@@ -26,9 +27,9 @@ class ForumViewModel : ViewModel() {
 
     fun fetchCommunities() {
         val nextPage = 1
-        viewModelScope.launch {
+        launch {
             try {
-                _uiState.update { it.copy(communities = FetchFlow.Fetching()) }
+                _uiState.update { it.copy(forums = FetchFlow.Fetching()) }
                 val communities = RetrofitClient.forumApi.getForums(
                     page = nextPage,
                     size = Constant.pageInterval
@@ -36,7 +37,7 @@ class ForumViewModel : ViewModel() {
                 if (communities.isNotEmpty()) {
                     _uiState.update {
                         it.copy(
-                            communities = FetchFlow.Success(communities)
+                            forums = FetchFlow.Success(communities)
                         )
                     }
                 }
@@ -44,7 +45,7 @@ class ForumViewModel : ViewModel() {
                 _uiState.update {
                     it.copy(
                         page = 1,
-                        communities = FetchFlow.Failure()
+                        forums = FetchFlow.Failure()
                     )
                 }
                 Log.d(TAG, "fetchCommunities: $e")
@@ -53,11 +54,11 @@ class ForumViewModel : ViewModel() {
     }
 
     fun fetchNextCommunities() {
-        val communities = _uiState.value.communities as? FetchFlow.Success?: run {
-            _uiState.update { it.copy(communities = FetchFlow.Failure()) }
+        val communities = _uiState.value.forums as? FetchFlow.Success?: run {
+            _uiState.update { it.copy(forums = FetchFlow.Failure()) }
             return
         }
-        viewModelScope.launch {
+        launch {
             try {
                 val nextPage = communities.data.size / Constant.pageInterval + 1
                 val communities = RetrofitClient.forumApi.getForums(
@@ -68,17 +69,28 @@ class ForumViewModel : ViewModel() {
                 oldCommunities.addAll(communities)
                 _uiState.update {
                     it.copy(
-                        communities = FetchFlow.Success(oldCommunities)
+                        forums = FetchFlow.Success(oldCommunities)
                     )
                 }
             } catch (e: Exception) {
                 _uiState.update {
                     it.copy(
-                        communities = FetchFlow.Failure(),
+                        forums = FetchFlow.Failure(),
                         page = 1
                     )
                 }
                 Log.d(TAG, "fetchCommunities: $e")
+            }
+        }
+    }
+
+    fun removeForum(forumId: Int) {
+        launch {
+            try {
+                RetrofitClient.forumApi.removeForum(forumId)
+                _uiState.update { it.copy(removeForumFlow = FetchFlow.Success(true)) }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(removeForumFlow = FetchFlow.Failure()) }
             }
         }
     }

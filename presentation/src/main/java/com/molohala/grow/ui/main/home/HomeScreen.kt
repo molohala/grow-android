@@ -29,6 +29,7 @@ import com.molohala.grow.designsystem.specific.statcell.GrowStatCell
 import com.molohala.grow.designsystem.specific.statcell.GrowStatCellShimmer
 import com.molohala.grow.designsystem.specific.statcell.GrowStatType
 import com.molohala.grow.designsystem.specific.text.Headline
+import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -69,7 +70,19 @@ fun HomeScreen(
                 TodayBaekjoon(uiState = uiState)
             }
             item {
-                WeekForum(uiState = uiState)
+                WeekForum(
+                    uiState = uiState,
+                    onRemoveForum = {
+//                        viewModel
+                    },
+                    onEditForum = {
+                        navController.navigate("${NavGroup.EditForum.name}/${it}")
+                    },
+                    uiAppState = uiAppState,
+                    onClick = {
+                        navController.navigate("${NavGroup.ForumDetail.name}/${it}")
+                    }
+                )
             }
             item {
                 Spacer(modifier = Modifier.height(64.dp))
@@ -93,9 +106,11 @@ fun Greeting(uiAppState: AppState) {
                         RowShimmer(width = 130.dp)
                     }
                 }
+
                 is FetchFlow.Failure -> {
                     Text(text = "불러오기 실패")
                 }
+
                 is FetchFlow.Success -> {
                     Column {
                         Headline(text = "iOS 개발자")
@@ -119,11 +134,13 @@ private fun Stat(uiAppState: AppState) {
                 is FetchFlow.Failure -> {
                     Text(text = "불러오기 실패")
                 }
+
                 is FetchFlow.Fetching -> {
                     GrowStatCellShimmer(
                         modifier = Modifier.weight(1f)
                     )
                 }
+
                 is FetchFlow.Success -> {
                     GrowStatCell(
                         modifier = Modifier.weight(1f),
@@ -140,11 +157,13 @@ private fun Stat(uiAppState: AppState) {
                 is FetchFlow.Failure -> {
                     Text(text = "불러오기 실패")
                 }
+
                 is FetchFlow.Fetching -> {
                     GrowStatCellShimmer(
                         modifier = Modifier.weight(1f)
                     )
                 }
+
                 is FetchFlow.Success -> {
                     GrowStatCell(
                         modifier = Modifier.weight(1f),
@@ -178,6 +197,7 @@ fun TodayGithub(uiState: HomeState) {
                     is FetchFlow.Failure -> {
                         Text(text = "불러오기 실패")
                     }
+
                     is FetchFlow.Fetching -> {
                         repeat(3) {
                             GrowRankCellShimmer()
@@ -221,6 +241,7 @@ fun TodayBaekjoon(uiState: HomeState) {
                     is FetchFlow.Failure -> {
                         Text(text = "불러오기 실패")
                     }
+
                     is FetchFlow.Fetching -> {
                         repeat(3) {
                             GrowRankCellShimmer()
@@ -248,7 +269,11 @@ fun TodayBaekjoon(uiState: HomeState) {
 
 @Composable
 fun WeekForum(
-    uiState: HomeState
+    uiState: HomeState,
+    uiAppState: AppState,
+    onRemoveForum: (forumId: Int) -> Unit,
+    onEditForum: (forumId: Int) -> Unit,
+    onClick: (forumId: Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -265,17 +290,28 @@ fun WeekForum(
                     is FetchFlow.Failure -> {
                         Text(text = "불러오기 실패")
                     }
+
                     is FetchFlow.Fetching -> {
                         repeat(3) {
                             GrowForumCellShimmer()
                         }
                     }
+
                     is FetchFlow.Success -> {
                         it.data.forEach { forum ->
+                            val profile = uiAppState.profile as? FetchFlow.Success?: return@forEach
                             GrowForumCell(
                                 forum = forum,
-                                onAppear = { /*TODO*/ }) {
-
+                                onAppear = { /*TODO*/ },
+                                onRemove = {
+                                    onRemoveForum(forum.forum.forumId)
+                                },
+                                onEdit = {
+                                    onEditForum(forum.forum.forumId)
+                                },
+                                profileId = profile.data.id
+                            ) {
+                                onClick(forum.forum.forumId)
                             }
                         }
                     }

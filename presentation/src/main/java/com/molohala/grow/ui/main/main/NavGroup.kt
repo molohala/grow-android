@@ -14,4 +14,7 @@ sealed class NavGroup(
     data object ForumDetail: NavGroup(name = "forum_detail") {
         const val FORUM_ID = "forum_id"
     }
+    data object EditForum : NavGroup(name = "edit_forum") {
+        const val FORUM_ID = "forum_id"
+    }
 }

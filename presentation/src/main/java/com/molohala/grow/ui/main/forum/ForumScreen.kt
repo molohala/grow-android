@@ -44,6 +44,7 @@ fun ForumScreen(
     forumViewModel: ForumViewModel = viewModel()
 ) {
     val uiState by forumViewModel.uiState.collectAsState()
+    val uiAppState by appViewModel.uiState.collectAsState()
     val scrollState = rememberLazyListState()
     val pullRefreshState = rememberPullRefreshState(
         refreshing = uiState.isRefresh,
@@ -65,7 +66,7 @@ fun ForumScreen(
                 .pullRefresh(pullRefreshState),
             contentAlignment = Alignment.TopCenter
         ) {
-            uiState.communities.let {
+            uiState.forums.let {
                 when (it) {
                     is FetchFlow.Failure -> {
                         Text(text = "불러오기 실패")
@@ -96,14 +97,26 @@ fun ForumScreen(
                                 Spacer(modifier = Modifier.height(4.dp))
                             }
                             itemsIndexed(it.data) { idx, forum ->
-                                GrowForumCell(forum = forum, onAppear = {
-                                    it.data.firstOrNull { it.forum.forumId == forum.forum.forumId }
-                                        ?: return@GrowForumCell
-                                    val interval = Constant.pageInterval
-                                    if (idx % interval == (interval - 1) && idx / interval == (it.data.size - 1) / interval) {
-                                        forumViewModel.fetchNextCommunities()
-                                    }
-                                }) {
+                                val profile =
+                                    uiAppState.profile as? FetchFlow.Success ?: return@itemsIndexed
+                                GrowForumCell(
+                                    forum = forum,
+                                    onAppear = {
+                                        it.data.firstOrNull { it.forum.forumId == forum.forum.forumId }
+                                            ?: return@GrowForumCell
+                                        val interval = Constant.pageInterval
+                                        if (idx % interval == (interval - 1) && idx / interval == (it.data.size - 1) / interval) {
+                                            forumViewModel.fetchNextCommunities()
+                                        }
+                                    },
+                                    onRemove = {
+
+                                    },
+                                    onEdit = {
+                                        navController.navigate("${NavGroup.EditForum.name}/${forum.forum.forumId}")
+                                    },
+                                    profileId = profile.data.id
+                                ) {
                                     navController.navigate("${NavGroup.ForumDetail.name}/${forum.forum.forumId}")
                                 }
                             }

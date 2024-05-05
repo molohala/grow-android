@@ -1,46 +1,55 @@
 package com.molohala.grow.ui.main.createforum
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.molohala.grow.common.flow.IdleFlow
-import com.molohala.grow.data.forum.request.CreateForumRequest
+import com.molohala.grow.data.forum.request.PatchForumRequest
 import com.molohala.grow.data.global.RetrofitClient
+import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
-data class CreateForumState(
+data class EditForumState(
     val content: String = "",
-    val createForumFlow: IdleFlow = IdleFlow.Idle
+    val editForumFlow: IdleFlow = IdleFlow.Idle
 )
 
-sealed interface CreateForumSideEffect {
-    data object Success: CreateForumSideEffect
-    data object Failure: CreateForumSideEffect
+sealed interface EditForumSideEffect {
+    data object Success: EditForumSideEffect
+    data object Failure: EditForumSideEffect
 }
 
-class CreateForumViewModel: ViewModel() {
+class EditForumViewModel: ViewModel() {
 
-    private val _uiEffect = MutableSharedFlow<CreateForumSideEffect>()
+    private val _uiEffect = MutableSharedFlow<EditForumSideEffect>()
     val uiEffect = _uiEffect.asSharedFlow()
 
-    private val _uiState = MutableStateFlow(CreateForumState())
+    private val _uiState = MutableStateFlow(EditForumState())
     val uiState = _uiState.asStateFlow()
 
-    fun createForum() {
-        viewModelScope.launch {
+    fun fetchForum(forumId: Int) {
+        launch {
             try {
-                _uiState.update { it.copy(createForumFlow = IdleFlow.Fetching) }
-                val request = CreateForumRequest(content = _uiState.value.content)
-                RetrofitClient.forumApi.createForum(request)
-                _uiState.update { it.copy(createForumFlow = IdleFlow.Success) }
-                _uiEffect.emit(CreateForumSideEffect.Success)
+                val forum = RetrofitClient.forumApi.getForum(id = forumId).data
+                _uiState.update { it.copy(content = forum.content) }
             } catch (e: Exception) {
-                _uiState.update { it.copy(createForumFlow = IdleFlow.Failure) }
-                _uiEffect.emit(CreateForumSideEffect.Failure)
+            }
+        }
+    }
+
+    fun editForum(forumId: Int) {
+        launch {
+            try {
+                _uiState.update { it.copy(editForumFlow = IdleFlow.Fetching) }
+                val request = PatchForumRequest(content = _uiState.value.content, id = forumId)
+                RetrofitClient.forumApi.patchForum(request)
+                _uiState.update { it.copy(editForumFlow = IdleFlow.Success) }
+                _uiEffect.emit(EditForumSideEffect.Success)
+            } catch (e: Exception) {
+                _uiState.update { it.copy(editForumFlow = IdleFlow.Failure) }
+                _uiEffect.emit(EditForumSideEffect.Failure)
             }
         }
     }

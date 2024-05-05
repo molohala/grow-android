@@ -10,6 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -21,6 +25,9 @@ import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatar
 import com.molohala.grow.designsystem.component.button.GrowLikeButton
 import com.molohala.grow.designsystem.component.divider.GrowDivider
+import com.molohala.grow.designsystem.component.menu.GrowMenu
+import com.molohala.grow.designsystem.component.menu.GrowMenuData
+import com.molohala.grow.designsystem.component.menu.MenuType
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
@@ -31,11 +38,17 @@ import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 fun GrowForumCell(
     modifier: Modifier = Modifier,
     forum: ForumResponse,
+    profileId: Int,
     onAppear: () -> Unit = {},
+    onRemove: () -> Unit,
+    onEdit: () -> Unit,
     onClick: () -> Unit
 ) {
     val content = forum.forum
     val recentComment = forum.recentComment
+    var isMenuExpanded by remember {
+        mutableStateOf(false)
+    }
 
     LaunchedEffect(Unit) {
         onAppear()
@@ -69,13 +82,25 @@ fun GrowForumCell(
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            GrowIcon(
-                modifier = Modifier.bounceClick(onClick = {
 
-                }),
-                id = R.drawable.ic_detail_vertical,
-                color = GrowTheme.colorScheme.textAlt
-            )
+            Column {
+                GrowIcon(
+                    modifier = Modifier
+                        .bounceClick(onClick = {
+                            isMenuExpanded = true
+                        }),
+                    id = R.drawable.ic_detail_vertical,
+                    color = GrowTheme.colorScheme.textAlt
+                )
+                GrowMenu(
+                    expanded = isMenuExpanded,
+                    menuList = listOf(
+                        GrowMenuData("수정하기", onClick = onEdit),
+                        GrowMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                    ),
+                    onDismissRequest = { isMenuExpanded = false }
+                )
+            }
         }
         Text(
             text = content.content,
@@ -85,8 +110,7 @@ fun GrowForumCell(
             color = GrowTheme.colorScheme.textNormal
         )
         GrowLikeButton(
-            like = forum.forum.like,
-            enabled = forum.forum.liked
+            like = forum.forum.like, enabled = forum.forum.liked
         ) {
 
         }
@@ -129,10 +153,22 @@ private fun Preview() {
                 .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            GrowForumCell(forum = ForumResponse.dummy()) {
+            GrowForumCell(
+                forum = ForumResponse.dummy(),
+                onRemove = {},
+                onEdit = {
+
+                },
+                profileId = 1
+            ) {
 
             }
-            GrowForumCell(forum = ForumResponse.dummy(recentComment = null)) {
+            GrowForumCell(
+                forum = ForumResponse.dummy(recentComment = null),
+                onRemove = {},
+                onEdit = {},
+                profileId = 1
+            ) {
 
             }
         }

@@ -1,6 +1,5 @@
 package com.molohala.grow.ui.main.main
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,8 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.ui.main.createforum.CreateForumScreen
+import com.molohala.grow.ui.main.editforum.EditForumScreen
 import com.molohala.grow.ui.main.forumdetail.ForumDetailScreen
 import com.molohala.grow.ui.main.profile.setting.SettingScreen
 import com.molohala.grow.ui.main.profile.setting.baekjoonsetting.BaekjoonSettingScreen
@@ -63,12 +62,21 @@ fun NavigationGraph(
             })
         ) { entry ->
             val forumId = entry.arguments?.getInt(NavGroup.ForumDetail.FORUM_ID, 0)?: 0
-            Log.d(TAG, "NavigationGraph: $forumId")
             ForumDetailScreen(
                 navController = navController,
                 appViewModel = appViewModel,
                 forumId = forumId
             )
+        }
+        composable(
+            route = "${NavGroup.EditForum.name}/{${NavGroup.EditForum.FORUM_ID}}",
+            arguments = listOf(navArgument(NavGroup.EditForum.FORUM_ID) {
+                type = NavType.IntType
+                nullable = false
+            })
+        ) { entry ->
+            val forumId = entry.arguments?.getInt(NavGroup.ForumDetail.FORUM_ID, 0)?: 0
+            EditForumScreen(navController = navController, forumId = forumId)
         }
     }
 }
