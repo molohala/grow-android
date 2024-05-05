@@ -35,7 +35,6 @@ import androidx.navigation.NavController
 import com.molohala.grow.R
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.common.util.timeAgo
-import com.molohala.grow.data.comment.response.CommentResponse
 import com.molohala.grow.data.forum.response.ForumContentResponse
 import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatar
@@ -53,6 +52,7 @@ import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.specific.comment.GrowCommentCell
 import com.molohala.grow.designsystem.specific.comment.GrowCommentCellShimmer
 import com.molohala.grow.ui.main.main.NavGroup
+import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -75,9 +75,11 @@ fun ForumDetailScreen(
     var showRemoveForumDialog by remember { mutableStateOf(false) }
     var showRemoveForumSuccessDialog by remember { mutableStateOf(false) }
     var showRemoveForumFailureDialog by remember { mutableStateOf(false) }
+    var showRemoveCommentDialog by remember { mutableStateOf(false) }
     var showRemoveCommentSuccessDialog by remember { mutableStateOf(false) }
     var showRemoveCommentFailureDialog by remember { mutableStateOf(false) }
     var isMenuExpanded by remember { mutableStateOf(false) }
+    var selectedCommentId by remember { mutableStateOf<Int?>(null) }
 
     LaunchedEffect(Unit) {
         viewModel.fetchForum(forumId)
@@ -89,12 +91,15 @@ fun ForumDetailScreen(
                 ForumDetailSideEffect.RemoveCommentFailure -> {
                     showRemoveCommentFailureDialog = true
                 }
+
                 ForumDetailSideEffect.RemoveCommentSuccess -> {
                     showRemoveCommentSuccessDialog = true
                 }
+
                 ForumDetailSideEffect.RemoveForumFailure -> {
                     showRemoveForumFailureDialog = true
                 }
+
                 ForumDetailSideEffect.RemoveForumSuccess -> {
                     showRemoveForumSuccessDialog = true
                 }
@@ -147,9 +152,14 @@ fun ForumDetailScreen(
                                         }
                                     )
                                     GrowDivider(modifier = Modifier.padding(horizontal = 12.dp))
-                                    Comments(uiState = uiState) {
-
-                                    }
+                                    Comments(
+                                        uiState = uiState,
+                                        uiAppState = uiAppState,
+                                        onRemove = {
+                                            selectedCommentId = it
+                                            showRemoveCommentDialog = true
+                                        }
+                                    )
                                     Spacer(modifier = Modifier.height(64.dp))
                                 }
                             }
@@ -246,6 +256,25 @@ fun ForumDetailScreen(
         )
     }
 
+    if (showRemoveCommentDialog) {
+        GrowDialog(
+            title = "정말 댓글을 삭제하시겠습니까?",
+            successText = "삭제하기",
+            cancelText = "아니요",
+            onCancelRequest = {
+                showRemoveCommentDialog = false
+            },
+            onDismissRequest = {
+                showRemoveCommentDialog = false
+            },
+            onSuccessRequest = {
+                showRemoveCommentDialog = false
+                val selectedCommentId = selectedCommentId?: return@GrowDialog
+                viewModel.removeComment(forumId = forumId, commentId = selectedCommentId)
+            }
+        )
+    }
+
     if (showRemoveCommentSuccessDialog) {
         GrowDialog(
             title = "댓글 삭제 성공",
@@ -334,7 +363,8 @@ private fun Forum(
 @Composable
 private fun Comments(
     uiState: ForumDetailState,
-    onClickRemoveComment: (CommentResponse) -> Unit
+    uiAppState: AppState,
+    onRemove: (Int) -> Unit
 ) {
     uiState.comments.let {
         when (it) {
@@ -349,9 +379,14 @@ private fun Comments(
             is FetchFlow.Success -> {
                 Column {
                     it.data.forEach { comment ->
-                        GrowCommentCell(comment = comment) {
-                            onClickRemoveComment(comment)
-                        }
+                        val profile = (uiAppState.profile as? FetchFlow.Success)?.data?: return@forEach
+                        GrowCommentCell(
+                            comment = comment,
+                            profileId = profile.id,
+                            onRemove = {
+                                onRemove(comment.commentId)
+                            }
+                        )
                     }
                 }
             }

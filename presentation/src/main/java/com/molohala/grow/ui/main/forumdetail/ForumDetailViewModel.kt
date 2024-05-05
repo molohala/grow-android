@@ -103,10 +103,10 @@ class ForumDetailViewModel : ViewModel() {
         }
     }
 
-    fun removeComment(forumId: Int) {
+    fun removeComment(forumId: Int, commentId: Int) {
         launch {
             try {
-                RetrofitClient.commentApi.removeComment(forumId)
+                RetrofitClient.commentApi.removeComment(commentId)
                 fetchComments(forumId)
                 _uiEffect.emit(ForumDetailSideEffect.RemoveCommentSuccess)
             } catch (e: Exception) {

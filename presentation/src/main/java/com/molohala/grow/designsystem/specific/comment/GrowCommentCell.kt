@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,6 +21,10 @@ import com.molohala.grow.common.util.timeAgo
 import com.molohala.grow.data.comment.response.CommentResponse
 import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatar
+import com.molohala.grow.designsystem.component.menu.GrowMenu
+import com.molohala.grow.designsystem.component.menu.GrowMenuData
+import com.molohala.grow.designsystem.component.menu.MenuType
+import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
@@ -24,8 +32,11 @@ import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 @Composable
 fun GrowCommentCell(
     comment: CommentResponse,
-    onClickRemove: () -> Unit
+    profileId: Int,
+    onRemove: () -> Unit
 ) {
+    var isMenuExpanded by remember { mutableStateOf(false) }
+
     Row(
         modifier = Modifier
             .padding(12.dp),
@@ -60,12 +71,26 @@ fun GrowCommentCell(
             }
         }
         Spacer(modifier = Modifier.weight(1f))
-        GrowIcon(
-            modifier = Modifier
-                .size(24.dp),
-            id = R.drawable.ic_detail_vertical,
-            color = GrowTheme.colorScheme.textAlt
-        )
+        if (profileId == comment.memberId) {
+            Column {
+                GrowIcon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .bounceClick(onClick = {
+                            isMenuExpanded = true
+                        }),
+                    id = R.drawable.ic_detail_vertical,
+                    color = GrowTheme.colorScheme.textAlt
+                )
+                GrowMenu(
+                    expanded = isMenuExpanded,
+                    menuList = listOf(
+                        GrowMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                    ),
+                    onDismissRequest = { isMenuExpanded = false }
+                )
+            }
+        }
     }
 }
 
@@ -79,7 +104,10 @@ private fun CommentCellPreview() {
                 .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            GrowCommentCell(comment = CommentResponse.dummy()) {}
+            GrowCommentCell(
+                comment = CommentResponse.dummy(),
+                profileId = 1
+            ) {}
         }
     }
 }

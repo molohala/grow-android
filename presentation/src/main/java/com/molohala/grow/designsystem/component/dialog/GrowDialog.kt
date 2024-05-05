@@ -12,10 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.molohala.grow.designsystem.component.button.ButtonType
 import com.molohala.grow.designsystem.component.button.GrowCTAButton
 import com.molohala.grow.designsystem.component.button.GrowTextButton
@@ -65,6 +65,7 @@ fun GrowDialog(
                 Spacer(modifier = Modifier.height(18.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Spacer(modifier = Modifier.weight(1f))
                     GrowTextButton(
@@ -123,6 +124,7 @@ fun GrowDialog(
                 Spacer(modifier = Modifier.height(18.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     GrowTextButton(
                         modifier = Modifier

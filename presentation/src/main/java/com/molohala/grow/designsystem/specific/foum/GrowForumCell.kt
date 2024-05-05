@@ -81,24 +81,25 @@ fun GrowForumCell(
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-
-            Column {
-                GrowIcon(
-                    modifier = Modifier
-                        .bounceClick(onClick = {
-                            isMenuExpanded = true
-                        }),
-                    id = R.drawable.ic_detail_vertical,
-                    color = GrowTheme.colorScheme.textAlt
-                )
-                GrowMenu(
-                    expanded = isMenuExpanded,
-                    menuList = listOf(
-                        GrowMenuData("수정하기", onClick = onEdit),
-                        GrowMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
-                    ),
-                    onDismissRequest = { isMenuExpanded = false }
-                )
+            if (profileId == forum.forum.writerId) {
+                Column {
+                    GrowIcon(
+                        modifier = Modifier
+                            .bounceClick(onClick = {
+                                isMenuExpanded = true
+                            }),
+                        id = R.drawable.ic_detail_vertical,
+                        color = GrowTheme.colorScheme.textAlt
+                    )
+                    GrowMenu(
+                        expanded = isMenuExpanded,
+                        menuList = listOf(
+                            GrowMenuData("수정하기", onClick = onEdit),
+                            GrowMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                        ),
+                        onDismissRequest = { isMenuExpanded = false }
+                    )
+                }
             }
         }
         Text(
