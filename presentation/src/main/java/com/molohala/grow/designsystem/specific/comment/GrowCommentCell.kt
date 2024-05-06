@@ -100,8 +100,7 @@ private fun CommentCellPreview() {
     GrowTheme {
         Column(
             modifier = Modifier
-                .background(GrowTheme.colorScheme.background)
-                .padding(10.dp),
+                .background(GrowTheme.colorScheme.background),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             GrowCommentCell(

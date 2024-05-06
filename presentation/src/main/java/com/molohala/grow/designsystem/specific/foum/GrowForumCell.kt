@@ -57,7 +57,6 @@ fun GrowForumCell(
         modifier = modifier
             .bounceClick(onClick = onClick)
             .applyCardView()
-            .background(GrowTheme.colorScheme.background)
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {

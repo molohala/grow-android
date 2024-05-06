@@ -63,22 +63,22 @@ class ForumViewModel : ViewModel() {
     }
 
     fun fetchNextCommunities() {
-        val communities = _uiState.value.forums as? FetchFlow.Success?: run {
+        val forums = _uiState.value.forums as? FetchFlow.Success?: run {
             _uiState.update { it.copy(forums = FetchFlow.Failure()) }
             return
         }
         launch {
             try {
-                val nextPage = communities.data.size / Constant.pageInterval + 1
-                val communities = RetrofitClient.forumApi.getForums(
+                val nextPage = forums.data.size / Constant.pageInterval + 1
+                val newForums = RetrofitClient.forumApi.getForums(
                     page = nextPage,
                     size = Constant.pageInterval
                 ).data?: return@launch
-                val oldCommunities = communities.toMutableList()
-                oldCommunities.addAll(communities)
+                val oldForums = forums.data.toMutableList()
+                oldForums.addAll(newForums)
                 _uiState.update {
                     it.copy(
-                        forums = FetchFlow.Success(oldCommunities)
+                        forums = FetchFlow.Success(oldForums)
                     )
                 }
             } catch (e: Exception) {

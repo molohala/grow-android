@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
 import com.molohala.grow.designsystem.foundation.GrowTheme
-import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 import com.molohala.grow.designsystem.foundation.shimmer.RowShimmer
+import com.molohala.grow.designsystem.foundation.util.GrowPreviews
 
 @Composable
 fun GrowRankCellShimmer(
@@ -29,7 +29,6 @@ fun GrowRankCellShimmer(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             GrowAvatarShimmer(type = AvatarType.Large)
             RowShimmer(width = 100.dp)
         }

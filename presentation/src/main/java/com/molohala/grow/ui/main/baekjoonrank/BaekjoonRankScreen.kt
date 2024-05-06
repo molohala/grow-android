@@ -173,7 +173,6 @@ private fun Indicator(
     ) {
         BaekjoonRankTab.entries.forEach {
             GrowTabButton(
-                modifier = Modifier,
                 text = it.label,
                 selected = it == selectedTab,
                 type = ButtonType.Small,
