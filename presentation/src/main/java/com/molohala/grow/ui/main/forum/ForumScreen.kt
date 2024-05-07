@@ -14,7 +14,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -87,14 +86,12 @@ fun ForumScreen(
         ) {
             uiState.forums.let {
                 when (it) {
-                    is FetchFlow.Failure -> {
-                        Text(text = "불러오기 실패")
-                    }
+                    is FetchFlow.Failure -> {}
 
                     is FetchFlow.Fetching -> {
                         Column(
                             modifier = Modifier
-                                .padding(horizontal = 12.dp),
+                                .padding(horizontal = 16.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Spacer(modifier = Modifier.height(4.dp))
@@ -108,7 +105,7 @@ fun ForumScreen(
                     is FetchFlow.Success -> {
                         LazyColumn(
                             modifier = Modifier
-                                .padding(horizontal = 12.dp),
+                                .padding(horizontal = 16.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                             state = scrollState
                         ) {

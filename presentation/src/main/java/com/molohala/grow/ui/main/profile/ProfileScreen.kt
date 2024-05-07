@@ -76,7 +76,7 @@ fun ProfileScreen(
             LazyColumn(
                 modifier = Modifier
                     .padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
                 state = scrollState
             ) {
                 item {
@@ -121,9 +121,7 @@ private fun Info(
         ) {
             uiAppState.profile.let {
                 when (it) {
-                    is FetchFlow.Failure -> {
-                        Text(text = "불러오기 실패")
-                    }
+                    is FetchFlow.Failure -> {}
 
                     is FetchFlow.Fetching -> {
                         GrowAvatarShimmer(type = AvatarType.Large)
@@ -159,56 +157,47 @@ private fun Stats(
     Row(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        uiAppState.github.let {
-            when (it) {
-                is FetchFlow.Failure -> {
-                    GrowStatCell(
-                        label = "커밋 개수",
-                        type = GrowStatType.Baekjoon()
-                    ) {
+        val profile = uiAppState.profile as? FetchFlow.Success
+        profile?.let {
+            uiAppState.github.let {
+                when (it) {
+                    is FetchFlow.Failure -> {}
 
+                    is FetchFlow.Fetching -> {
+                        GrowStatCellShimmer(modifier = Modifier.weight(1f))
                     }
-                }
 
-                is FetchFlow.Fetching -> {
-                    GrowStatCellShimmer(modifier = Modifier.weight(1f))
-                }
+                    is FetchFlow.Success -> {
+                        GrowStatCell(
+                            modifier = Modifier
+                                .weight(1f),
+                            label = "커밋 개수",
+                            socialId = profile.data.getGithubId(),
+                            type = GrowStatType.Github(commit = it.data?.totalCommits)
+                        ) {
 
-                is FetchFlow.Success -> {
-                    GrowStatCell(
-                        modifier = Modifier
-                            .weight(1f),
-                        label = "커밋 개수",
-                        type = GrowStatType.Github(commit = it.data?.totalCommits)
-                    ) {
-
+                        }
                     }
                 }
             }
-        }
-        uiAppState.baekjoon.let {
-            when (it) {
-                is FetchFlow.Failure -> {
-                    GrowStatCell(
-                        label = "문제 푼 개수",
-                        type = GrowStatType.Baekjoon()
-                    ) {
+            uiAppState.baekjoon.let {
+                when (it) {
+                    is FetchFlow.Failure -> {}
 
+                    is FetchFlow.Fetching -> {
+                        GrowStatCellShimmer(modifier = Modifier.weight(1f))
                     }
-                }
 
-                is FetchFlow.Fetching -> {
-                    GrowStatCellShimmer(modifier = Modifier.weight(1f))
-                }
+                    is FetchFlow.Success -> {
+                        GrowStatCell(
+                            modifier = Modifier
+                                .weight(1f),
+                            label = "문제 푼 개수",
+                            socialId = profile.data.getBaekjoonId(),
+                            type = GrowStatType.Baekjoon(solved = it.data?.totalSolves)
+                        ) {
 
-                is FetchFlow.Success -> {
-                    GrowStatCell(
-                        modifier = Modifier
-                            .weight(1f),
-                        label = "문제 푼 개수",
-                        type = GrowStatType.Baekjoon(solved = it.data?.totalSolves)
-                    ) {
-
+                        }
                     }
                 }
             }
@@ -222,9 +211,7 @@ private fun Chart(
 ) {
     uiAppState.chartInfo.let {
         when (it) {
-            is FetchFlow.Failure -> {
-                Text(text = "불러오기 실패")
-            }
+            is FetchFlow.Failure -> {}
             is FetchFlow.Fetching -> {
                 GrowChartCellShimmer()
             }

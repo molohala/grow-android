@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
@@ -23,9 +24,10 @@ fun GrowStatCell(
     modifier: Modifier = Modifier,
     label: String,
     type: GrowStatType,
+    socialId: String? = null,
     onClick: () -> Unit
 ) {
-
+    val uriHandler = LocalUriHandler.current
     val iconColor = when (type) {
         is GrowStatType.Baekjoon -> GrowTheme.colorScheme.baekjoon
         is GrowStatType.Github -> GrowTheme.colorScheme.github
@@ -33,7 +35,16 @@ fun GrowStatCell(
 
     Column(
         modifier = modifier
-            .bounceClick(onClick = onClick)
+            .bounceClick(onClick = {
+                socialId?.let {
+                    val uri = when (type) {
+                        is GrowStatType.Baekjoon -> "https://acmicpc.net/user/${it}"
+                        is GrowStatType.Github -> "http://github.com/${it}"
+                    }
+                    uriHandler.openUri(uri)
+                }
+                onClick()
+            })
             .applyCardView()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)

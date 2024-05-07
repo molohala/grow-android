@@ -83,9 +83,7 @@ fun BaekjoonRankScreen(
                 )
                 uiState.githubRanksFetchFlow.let {
                     when (it) {
-                        is FetchFlow.Failure -> {
-                            Text(text = "불러오기 실패")
-                        }
+                        is FetchFlow.Failure -> {}
 
                         is FetchFlow.Fetching -> {
                             Column {

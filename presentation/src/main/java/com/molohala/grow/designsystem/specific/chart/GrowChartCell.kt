@@ -69,12 +69,14 @@ fun GrowChartCell(
 @Composable
 private fun Preview() {
     GrowTheme {
-        GrowChartCell(chartInfo = GrowChartInfo(
-            label = "77",
-            description = "이번주에 한 커밋",
-            type = GrowChartType.Baekjoon,
-            chartData = GrowChartData.dummy
-        )) {
+        GrowChartCell(
+            chartInfo = GrowChartInfo(
+                label = "77",
+                description = "이번주에 한 커밋",
+                type = GrowChartType.Baekjoon,
+                chartData = GrowChartData.dummy
+            )
+        ) {
 
         }
     }

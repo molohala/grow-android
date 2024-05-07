@@ -8,4 +8,12 @@ data class ProfileResponse(
     val name: String,
     val createdAt: LocalDateTime,
     val socialAccounts: List<SocialAccountResponse>
-)
+) {
+    fun getGithubId(): String? {
+        return socialAccounts.firstOrNull { it.socialType == "GITHUB" }?.socialId
+    }
+
+    fun getBaekjoonId(): String? {
+        return socialAccounts.firstOrNull { it.socialType == "SOLVED_AC" }?.socialId
+    }
+}

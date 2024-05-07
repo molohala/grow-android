@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -55,7 +54,7 @@ fun HomeScreen(
     ) {
         LazyColumn(
             modifier = Modifier
-                .padding(horizontal = 12.dp)
+                .padding(horizontal = 16.dp)
         ) {
             item {
                 Greeting(uiAppState = uiAppState)
@@ -110,9 +109,7 @@ fun Greeting(uiAppState: AppState) {
                     }
                 }
 
-                is FetchFlow.Failure -> {
-                    Text(text = "불러오기 실패")
-                }
+                is FetchFlow.Failure -> {}
 
                 is FetchFlow.Success -> {
                     Column {
@@ -132,48 +129,50 @@ private fun Stat(uiAppState: AppState) {
             .padding(vertical = 20.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        uiAppState.github.let {
-            when (it) {
-                is FetchFlow.Failure -> {
-                    Text(text = "불러오기 실패")
-                }
+        val profile = uiAppState.profile as? FetchFlow.Success
+        profile?.let { profile ->
+            uiAppState.github.let {
+                when (it) {
+                    is FetchFlow.Failure -> {}
 
-                is FetchFlow.Fetching -> {
-                    GrowStatCellShimmer(
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+                    is FetchFlow.Fetching -> {
+                        GrowStatCellShimmer(
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
 
-                is FetchFlow.Success -> {
-                    GrowStatCell(
-                        modifier = Modifier.weight(1f),
-                        label = "오늘 한 커밋 개수",
-                        type = GrowStatType.Github(commit = it.data?.todayCommits?.contributionCount)
-                    ) {
+                    is FetchFlow.Success -> {
+                        GrowStatCell(
+                            modifier = Modifier.weight(1f),
+                            label = "오늘 한 커밋 개수",
+                            socialId = profile.data.getGithubId(),
+                            type = GrowStatType.Github(commit = it.data?.todayCommits?.contributionCount),
 
+                        ) {
+
+                        }
                     }
                 }
             }
-        }
-        uiAppState.baekjoon.let {
-            when (it) {
-                is FetchFlow.Failure -> {
-                    Text(text = "불러오기 실패")
-                }
+            uiAppState.baekjoon.let {
+                when (it) {
+                    is FetchFlow.Failure -> {}
 
-                is FetchFlow.Fetching -> {
-                    GrowStatCellShimmer(
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+                    is FetchFlow.Fetching -> {
+                        GrowStatCellShimmer(
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
 
-                is FetchFlow.Success -> {
-                    GrowStatCell(
-                        modifier = Modifier.weight(1f),
-                        label = "오늘 푼 문제 개수",
-                        type = GrowStatType.Baekjoon(it.data?.todaySolves?.solvedCount)
-                    ) {
+                    is FetchFlow.Success -> {
+                        GrowStatCell(
+                            modifier = Modifier.weight(1f),
+                            label = "오늘 푼 문제 개수",
+                            socialId = profile.data.getGithubId(),
+                            type = GrowStatType.Baekjoon(it.data?.todaySolves?.solvedCount)
+                        ) {
 
+                        }
                     }
                 }
             }
@@ -197,9 +196,7 @@ fun TodayGithub(uiState: HomeState) {
         ) {
             uiState.todayGithubRanks.let {
                 when (it) {
-                    is FetchFlow.Failure -> {
-                        Text(text = "불러오기 실패")
-                    }
+                    is FetchFlow.Failure -> {}
 
                     is FetchFlow.Fetching -> {
                         repeat(3) {
@@ -241,9 +238,7 @@ fun TodayBaekjoon(uiState: HomeState) {
         ) {
             uiState.todayBaekjoonRanks.let {
                 when (it) {
-                    is FetchFlow.Failure -> {
-                        Text(text = "불러오기 실패")
-                    }
+                    is FetchFlow.Failure -> {}
 
                     is FetchFlow.Fetching -> {
                         repeat(3) {
@@ -291,9 +286,7 @@ fun WeekForum(
         ) {
             uiState.weekForums.let {
                 when (it) {
-                    is FetchFlow.Failure -> {
-                        Text(text = "불러오기 실패")
-                    }
+                    is FetchFlow.Failure -> {}
 
                     is FetchFlow.Fetching -> {
                         repeat(3) {
@@ -304,7 +297,7 @@ fun WeekForum(
                     is FetchFlow.Success -> {
                         it.data.forEach { forum ->
                             val forumId = forum.forum.forumId
-                            val profile = uiAppState.profile as? FetchFlow.Success?: return@forEach
+                            val profile = uiAppState.profile as? FetchFlow.Success ?: return@forEach
                             GrowForumCell(
                                 forum = forum,
                                 onAppear = { /*TODO*/ },

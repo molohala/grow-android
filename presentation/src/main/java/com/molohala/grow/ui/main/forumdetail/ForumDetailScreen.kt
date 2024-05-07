@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -122,9 +123,7 @@ fun ForumDetailScreen(
                 item {
                     uiState.forum.let {
                         when (it) {
-                            is FetchFlow.Failure -> {
-                                Text(text = "불러오기 실패")
-                            }
+                            is FetchFlow.Failure -> {}
 
                             is FetchFlow.Fetching -> {
                                 ForumDetailCellShimmer()
@@ -186,7 +185,8 @@ fun ForumDetailScreen(
                     modifier = Modifier
                         .clip(shape)
                         .background(GrowTheme.colorScheme.background)
-                        .weight(1f),
+                        .weight(1f)
+                        .heightIn(0.dp, 200.dp),
                     value = uiState.currentComment,
                     onValueChange = viewModel::updateCurrentComment,
                     shape = shape,
@@ -269,7 +269,7 @@ fun ForumDetailScreen(
             },
             onSuccessRequest = {
                 showRemoveCommentDialog = false
-                val selectedCommentId = selectedCommentId?: return@GrowDialog
+                val selectedCommentId = selectedCommentId ?: return@GrowDialog
                 viewModel.removeComment(forumId = forumId, commentId = selectedCommentId)
             }
         )
@@ -368,18 +368,19 @@ private fun Comments(
 ) {
     uiState.comments.let {
         when (it) {
-            is FetchFlow.Failure -> {
-                Text(text = "불러오기 실패")
-            }
+            is FetchFlow.Failure -> {}
 
             is FetchFlow.Fetching -> {
                 GrowCommentCellShimmer()
             }
 
             is FetchFlow.Success -> {
-                Column {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
                     it.data.forEach { comment ->
-                        val profile = (uiAppState.profile as? FetchFlow.Success)?.data?: return@forEach
+                        val profile =
+                            (uiAppState.profile as? FetchFlow.Success)?.data ?: return@forEach
                         GrowCommentCell(
                             comment = comment,
                             profileId = profile.id,
