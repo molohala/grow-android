@@ -2,6 +2,7 @@ package com.molohala.grow.ui.main.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -30,7 +31,6 @@ import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatar
 import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
@@ -110,42 +110,44 @@ private fun Info(
     uiAppState: AppState,
     onClick: () -> Unit
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .applyCardView()
-            .padding(12.dp),
-        horizontalArrangement = Arrangement.spacedBy(0.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+    Box {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             uiAppState.profile.let {
                 when (it) {
                     is FetchFlow.Failure -> {}
 
                     is FetchFlow.Fetching -> {
-                        GrowAvatarShimmer(type = AvatarType.Large)
+                        GrowAvatarShimmer(type = AvatarType.ExtraLarge)
                         RowShimmer(width = 40.dp)
+                        RowShimmer(width = 100.dp)
                     }
 
                     is FetchFlow.Success -> {
-                        GrowAvatar(type = AvatarType.Large)
+                        GrowAvatar(type = AvatarType.ExtraLarge)
                         Text(
                             text = it.data.name,
                             color = GrowTheme.colorScheme.textNormal,
                             style = GrowTheme.typography.bodyBold
                         )
+                        Text(
+                            text = "\"응아잇 안드로이드\"",
+                            color = GrowTheme.colorScheme.textAlt,
+                            style = GrowTheme.typography.labelMedium
+                        )
                     }
                 }
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
         GrowIcon(
             modifier = Modifier
                 .size(32.dp)
+                .align(Alignment.TopEnd)
                 .bounceClick(onClick = onClick),
             id = R.drawable.ic_setting,
             color = GrowTheme.colorScheme.textAlt
@@ -218,6 +220,7 @@ private fun GithubChart(
             is FetchFlow.Fetching -> {
                 GrowChartCellShimmer()
             }
+
             is FetchFlow.Success -> {
                 GrowChartCell(chartInfo = it.data) {
 
@@ -237,6 +240,7 @@ private fun BaekjoonChart(
             is FetchFlow.Fetching -> {
                 GrowChartCellShimmer()
             }
+
             is FetchFlow.Success -> {
                 GrowChartCell(chartInfo = it.data) {
 
