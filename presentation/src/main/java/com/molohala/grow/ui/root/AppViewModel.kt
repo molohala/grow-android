@@ -62,7 +62,6 @@ class AppViewModel : ViewModel() {
                 fetchBaekjoon()
             } catch (e: Exception) {
                 _uiState.update { it.copy(profile = FetchFlow.Failure()) }
-                clearToken()
             }
         }
     }

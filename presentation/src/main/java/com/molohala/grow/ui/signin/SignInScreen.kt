@@ -41,7 +41,7 @@ fun SignInScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 12.dp)
+                .padding(horizontal = 16.dp)
                 .padding(top = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
