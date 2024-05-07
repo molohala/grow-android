@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.molohala.grow.common.chart.GrowChartData
 import com.molohala.grow.designsystem.extension.applyCardView
-import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.foundation.util.GrowPreviews
+import com.molohala.grow.designsystem.specific.motivation.GrowMotivationCell
 
 @Composable
 fun GrowChartCell(
@@ -26,7 +26,6 @@ fun GrowChartCell(
 ) {
     Column(
         modifier = modifier
-            .bounceClick(onClick = onClick)
             .applyCardView()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,12 +55,16 @@ fun GrowChartCell(
             }
             GrowIcon(id = chartInfo.type.icon, color = color)
         }
-        GrowChart(
-            modifier = Modifier
-                .height(200.dp),
-            chartData = chartInfo.chartData,
-            background = GrowTheme.colorScheme.background
-        )
+        if (chartInfo.chartData.getSum() > 0) {
+            GrowChart(
+                modifier = Modifier
+                    .height(200.dp),
+                chartData = chartInfo.chartData,
+                background = GrowTheme.colorScheme.background
+            )
+        } else {
+            GrowMotivationCell()
+        }
     }
 }
 

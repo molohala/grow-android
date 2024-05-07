@@ -26,6 +26,10 @@ data class GrowChartData(
             color = Color.Green
         )
     }
+
+    fun getSum(): Int {
+        return points.sumOf { it.y.toInt() }
+    }
 }
 
 val List<CommitResponse>.githubWeekChartInfo: GrowChartInfo
