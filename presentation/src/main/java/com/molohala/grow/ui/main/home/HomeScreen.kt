@@ -63,10 +63,14 @@ fun HomeScreen(
                 Stat(uiAppState = uiAppState)
             }
             item {
-                TodayGithub(uiState = uiState)
+                TodayGithub(uiState = uiState) {
+                    navController.navigate("${NavGroup.ProfileDetail.name}/${it}")
+                }
             }
             item {
-                TodayBaekjoon(uiState = uiState)
+                TodayBaekjoon(uiState = uiState) {
+                    navController.navigate("${NavGroup.ProfileDetail.name}/${it}")
+                }
             }
             item {
                 WeekForum(
@@ -123,7 +127,9 @@ fun Greeting(uiAppState: AppState) {
 }
 
 @Composable
-private fun Stat(uiAppState: AppState) {
+private fun Stat(
+    uiAppState: AppState
+) {
     Row(
         modifier = Modifier
             .padding(vertical = 20.dp),
@@ -148,7 +154,7 @@ private fun Stat(uiAppState: AppState) {
                             socialId = profile.data.getGithubId(),
                             type = GrowStatType.Github(commit = it.data?.todayCommits?.contributionCount),
 
-                        ) {
+                            ) {
 
                         }
                     }
@@ -181,7 +187,10 @@ private fun Stat(uiAppState: AppState) {
 }
 
 @Composable
-fun TodayGithub(uiState: HomeState) {
+fun TodayGithub(
+    uiState: HomeState,
+    onClickMember: (memberId: Int) -> Unit
+) {
     Column(
         modifier = Modifier
             .padding(vertical = 8.dp)
@@ -212,7 +221,7 @@ fun TodayGithub(uiState: HomeState) {
                                 rank = rank.rank,
                                 label = "${rank.count} 커밋"
                             ) {
-
+                                onClickMember(rank.memberId)
                             }
                         }
                     }
@@ -223,7 +232,10 @@ fun TodayGithub(uiState: HomeState) {
 }
 
 @Composable
-fun TodayBaekjoon(uiState: HomeState) {
+fun TodayBaekjoon(
+    uiState: HomeState,
+    onClickMember: (memberId: Int) -> Unit
+) {
     Column(
         modifier = Modifier
             .padding(vertical = 8.dp)
@@ -254,7 +266,7 @@ fun TodayBaekjoon(uiState: HomeState) {
                                 rank = rank.rank,
                                 label = "${rank.count} 문제"
                             ) {
-
+                                onClickMember(rank.memberId)
                             }
                         }
                     }

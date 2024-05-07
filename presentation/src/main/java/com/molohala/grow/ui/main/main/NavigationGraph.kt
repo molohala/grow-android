@@ -36,8 +36,18 @@ fun NavigationGraph(
         composable(NavGroup.Main.name) {
             MainScreen(navController = navController, appViewModel = appViewModel)
         }
-        composable(NavGroup.ProfileDetail.name) {
-            ProfileDetailScreen(navController = navController)
+        composable(
+            route = "${NavGroup.ProfileDetail.name}/{${NavGroup.ProfileDetail.MEMBER_ID}}",
+            arguments = listOf(navArgument(NavGroup.ProfileDetail.MEMBER_ID) {
+                type = NavType.IntType
+                nullable = false
+            })
+        ) { entry ->
+            val memberId = entry.arguments?.getInt(NavGroup.ProfileDetail.MEMBER_ID, 0) ?: 0
+            ProfileDetailScreen(
+                navController = navController,
+                memberId = memberId
+            )
         }
         composable(NavGroup.Setting.name) {
             SettingScreen(navController = navController, appViewModel = appViewModel)
@@ -61,7 +71,7 @@ fun NavigationGraph(
                 nullable = false
             })
         ) { entry ->
-            val forumId = entry.arguments?.getInt(NavGroup.ForumDetail.FORUM_ID, 0)?: 0
+            val forumId = entry.arguments?.getInt(NavGroup.ForumDetail.FORUM_ID, 0) ?: 0
             ForumDetailScreen(
                 navController = navController,
                 appViewModel = appViewModel,
@@ -75,7 +85,7 @@ fun NavigationGraph(
                 nullable = false
             })
         ) { entry ->
-            val forumId = entry.arguments?.getInt(NavGroup.ForumDetail.FORUM_ID, 0)?: 0
+            val forumId = entry.arguments?.getInt(NavGroup.ForumDetail.FORUM_ID, 0) ?: 0
             EditForumScreen(navController = navController, forumId = forumId)
         }
     }

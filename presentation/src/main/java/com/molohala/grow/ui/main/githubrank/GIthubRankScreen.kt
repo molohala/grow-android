@@ -109,7 +109,7 @@ fun GithubRankScreen(
                                         rank = rank.rank,
                                         label = "${rank.count} 커밋"
                                     ) {
-                                        navController.navigate(NavGroup.ProfileDetail.name)
+                                        navController.navigate("${NavGroup.ProfileDetail.name}/${rank.memberId}")
                                     }
                                 }
                                 item {
