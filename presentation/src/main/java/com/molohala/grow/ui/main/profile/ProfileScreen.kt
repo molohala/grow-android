@@ -75,8 +75,8 @@ fun ProfileScreen(
         ) {
             LazyColumn(
                 modifier = Modifier
-                    .padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
                 state = scrollState
             ) {
                 item {
@@ -88,7 +88,10 @@ fun ProfileScreen(
                     Stats(uiAppState = uiAppState)
                 }
                 item {
-                    Chart(uiAppState = uiAppState)
+                    GithubChart(uiAppState = uiAppState)
+                }
+                item {
+                    BaekjoonChart(uiAppState = uiAppState)
                 }
                 item {
                     Spacer(modifier = Modifier.height(64.dp))
@@ -206,10 +209,29 @@ private fun Stats(
 }
 
 @Composable
-private fun Chart(
+private fun GithubChart(
     uiAppState: AppState
 ) {
-    uiAppState.chartInfo.let {
+    uiAppState.githubChartInfo.let {
+        when (it) {
+            is FetchFlow.Failure -> {}
+            is FetchFlow.Fetching -> {
+                GrowChartCellShimmer()
+            }
+            is FetchFlow.Success -> {
+                GrowChartCell(chartInfo = it.data) {
+
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun BaekjoonChart(
+    uiAppState: AppState
+) {
+    uiAppState.baekjoonChartInfo.let {
         when (it) {
             is FetchFlow.Failure -> {}
             is FetchFlow.Fetching -> {

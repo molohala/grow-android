@@ -48,6 +48,7 @@ import com.molohala.grow.designsystem.component.menu.MenuType
 import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.bounceClick
+import com.molohala.grow.designsystem.extension.`if`
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
 import com.molohala.grow.designsystem.specific.comment.GrowCommentCell
@@ -119,7 +120,9 @@ fun ForumDetailScreen(
                 .fillMaxHeight()
                 .pullRefresh(pullRefreshState)
         ) {
-            LazyColumn {
+            LazyColumn(
+                horizontalAlignment = Alignment.Start
+            ) {
                 item {
                     uiState.forum.let {
                         when (it) {
@@ -200,9 +203,11 @@ fun ForumDetailScreen(
                     GrowIcon(
                         modifier = Modifier
                             .size(32.dp)
-                            .bounceClick(onClick = {
-                                viewModel.createComment(forumId)
-                            }),
+                            .`if`(isIconEnable) {
+                                it.bounceClick(onClick = {
+                                    viewModel.createComment(forumId)
+                                })
+                            },
                         id = R.drawable.ic_send,
                         color = iconColor
                     )

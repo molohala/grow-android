@@ -3,6 +3,7 @@ package com.molohala.grow.ui.root
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.molohala.grow.application.GrowApp
+import com.molohala.grow.common.chart.baekjoonWeekChartInfo
 import com.molohala.grow.common.chart.githubWeekChartInfo
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.global.RetrofitClient
@@ -23,7 +24,8 @@ data class AppState(
     val github: FetchFlow<GithubResponse?> = FetchFlow.Fetching(),
     val baekjoon: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
     val selectedTab: BottomTabItemType = BottomTabItemType.Home,
-    val chartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching(),
+    val githubChartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching(),
+    val baekjoonChartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching(),
     val isDarkMode: Boolean = GrowApp.prefs.isDarkMode,
 )
 
@@ -54,10 +56,10 @@ class AppViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _uiState.update { it.copy(profile = FetchFlow.Fetching()) }
-                val profile = RetrofitClient.infoApi.getProfile().data?: return@launch
+                val profile = RetrofitClient.infoApi.getProfile().data ?: return@launch
                 _uiState.update { it.copy(profile = FetchFlow.Success(profile)) }
                 fetchGithub()
-                fetchSolvedac()
+                fetchBaekjoon()
             } catch (e: Exception) {
                 _uiState.update { it.copy(profile = FetchFlow.Failure()) }
                 clearToken()
@@ -78,11 +80,12 @@ class AppViewModel : ViewModel() {
             try {
                 _uiState.update { it.copy(github = FetchFlow.Fetching()) }
                 val githubResponse =
-                    RetrofitClient.infoApi.getGithubInfo(name = github.socialId).data?: return@launch
+                    RetrofitClient.infoApi.getGithubInfo(name = github.socialId).data
+                        ?: return@launch
                 _uiState.update {
                     it.copy(
                         github = FetchFlow.Success(githubResponse),
-                        chartInfo = FetchFlow.Success(githubResponse.weekCommits.githubWeekChartInfo)
+                        githubChartInfo = FetchFlow.Success(githubResponse.weekCommits.githubWeekChartInfo)
                     )
                 }
             } catch (e: Exception) {
@@ -91,7 +94,7 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    fun fetchSolvedac() {
+    fun fetchBaekjoon() {
         val profile = uiState.value.profile as? FetchFlow.Success ?: run {
             _uiState.update { it.copy(baekjoon = FetchFlow.Failure()) }
             return
@@ -106,9 +109,11 @@ class AppViewModel : ViewModel() {
                 _uiState.update { it.copy(baekjoon = FetchFlow.Fetching()) }
                 val solvedacResponse =
                     RetrofitClient.infoApi.getSolvedacInfo(name = solvedac.socialId).data
+                        ?: return@launch
                 _uiState.update {
                     it.copy(
-                        baekjoon = FetchFlow.Success(solvedacResponse)
+                        baekjoon = FetchFlow.Success(solvedacResponse),
+                        baekjoonChartInfo = FetchFlow.Success(solvedacResponse.weekSolves.baekjoonWeekChartInfo)
                     )
                 }
             } catch (e: Exception) {

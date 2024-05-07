@@ -5,6 +5,7 @@ import co.yml.charts.common.model.Point
 import com.molohala.grow.common.util.datesForWeek
 import com.molohala.grow.common.util.monthPerDay
 import com.molohala.grow.data.info.response.CommitResponse
+import com.molohala.grow.data.info.response.SolveResponse
 import com.molohala.grow.designsystem.specific.chart.GrowChartInfo
 import com.molohala.grow.designsystem.specific.chart.GrowChartType
 import kotlin.random.Random.Default.nextInt
@@ -22,7 +23,7 @@ data class GrowChartData(
                     description = it.monthPerDay
                 )
             },
-            color = Color.Red
+            color = Color.Green
         )
     }
 }
@@ -33,7 +34,30 @@ val List<CommitResponse>.githubWeekChartInfo: GrowChartInfo
         description = "이번주에 한 커밋",
         type = GrowChartType.Github,
         chartData = GrowChartData(
-            points = this.mapIndexed { idx, it -> Point(x = idx.toFloat(), y = it.contributionCount.toFloat(), it.date.monthPerDay) },
-            color = Color.Red
+            points = this.mapIndexed { idx, it ->
+                Point(
+                    x = idx.toFloat(),
+                    y = it.contributionCount.toFloat(),
+                    it.date.monthPerDay
+                )
+            },
+            color = Color.Blue
+        )
+    )
+
+val List<SolveResponse>.baekjoonWeekChartInfo: GrowChartInfo
+    get() = GrowChartInfo(
+        label = this.sumOf { it.solvedCount }.toString(),
+        description = "이번주에 한 커밋",
+        type = GrowChartType.Github,
+        chartData = GrowChartData(
+            points = this.mapIndexed { idx, it ->
+                Point(
+                    x = idx.toFloat(),
+                    y = it.solvedCount.toFloat(),
+                    it.date.monthPerDay
+                )
+            },
+            color = Color.Blue
         )
     )
