@@ -7,11 +7,12 @@ import com.google.gson.JsonDeserializer
 import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.data.auth.api.AuthApi
 import com.molohala.grow.data.comment.api.CommentApi
-import com.molohala.grow.data.forum.api.ForumApi
 import com.molohala.grow.data.dauth.api.DAuthApi
+import com.molohala.grow.data.forum.api.ForumApi
 import com.molohala.grow.data.global.interceptor.AuthAuthenticator
 import com.molohala.grow.data.global.interceptor.TokenInterceptor
 import com.molohala.grow.data.info.api.InfoApi
+import com.molohala.grow.data.language.api.LanguageApi
 import com.molohala.grow.data.like.api.LikeApi
 import com.molohala.grow.data.rank.api.RankApi
 import com.molohala.grow.data.util.Json.isJsonArray
@@ -90,4 +91,5 @@ object RetrofitClient {
     val rankApi: RankApi by lazy { growRetrofit.create(RankApi::class.java) }
     val infoApi: InfoApi by lazy { growRetrofit.create(InfoApi::class.java) }
     val likeApi: LikeApi by lazy { growRetrofit.create(LikeApi::class.java) }
+    val languageApi: LanguageApi by lazy { growRetrofit.create(LanguageApi::class.java) }
 }

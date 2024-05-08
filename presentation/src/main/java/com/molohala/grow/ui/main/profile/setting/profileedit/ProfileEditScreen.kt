@@ -42,7 +42,7 @@ fun ProfileEditScreen(
                     .padding(top = 20.dp),
                 value = "",
                 onValueChange = {},
-                hint = "상태메세지"
+                hint = ""
             )
 
             Spacer(modifier = Modifier.weight(1f))
