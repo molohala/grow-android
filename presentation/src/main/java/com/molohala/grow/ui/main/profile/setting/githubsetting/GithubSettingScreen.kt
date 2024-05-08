@@ -1,6 +1,8 @@
 package com.molohala.grow.ui.main.profile.setting.githubsetting
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import com.molohala.grow.designsystem.component.dialog.GrowDialog
 import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.foundation.GrowTheme
+import com.molohala.grow.designsystem.specific.text.Headline
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -62,15 +65,22 @@ fun GithubSettingScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            Row {
+                Headline(
+                    modifier = Modifier
+                        .padding(top = 20.dp, start = 4.dp),
+                    text = "Github ID"
+                )
+                Spacer(modifier = Modifier.weight(1f))
+            }
             GrowTextField(
-                modifier = Modifier
-                    .padding(top = 20.dp),
                 value = uiState.githubId,
                 onValueChange = viewModel::updateGithubId,
-                hint = "Github ID",
+                hint = "",
             )
             Spacer(modifier = Modifier.weight(1f))
             GrowCTAButton(

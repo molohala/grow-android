@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,6 +38,7 @@ import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.specific.rank.GrowRankCell
 import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
+import com.molohala.grow.ui.error.ErrorScreen
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -83,7 +85,12 @@ fun GithubRankScreen(
                 )
                 uiState.githubRanksFetchFlow.let {
                     when (it) {
-                        is FetchFlow.Failure -> {}
+                        is FetchFlow.Failure -> {
+                            ErrorScreen(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            )
+                        }
 
                         is FetchFlow.Fetching -> {
                             Column(

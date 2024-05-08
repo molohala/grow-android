@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -36,6 +37,7 @@ import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.specific.foum.GrowForumCell
 import com.molohala.grow.designsystem.specific.foum.GrowForumCellShimmer
+import com.molohala.grow.ui.error.ErrorScreen
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -86,7 +88,12 @@ fun ForumScreen(
         ) {
             uiState.forums.let {
                 when (it) {
-                    is FetchFlow.Failure -> {}
+                    is FetchFlow.Failure -> {
+                        ErrorScreen(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+                    }
 
                     is FetchFlow.Fetching -> {
                         Column(

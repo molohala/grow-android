@@ -1,6 +1,8 @@
 package com.molohala.grow.ui.main.profile.setting.baekjoonsetting
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import com.molohala.grow.designsystem.component.dialog.GrowDialog
 import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.foundation.GrowTheme
+import com.molohala.grow.designsystem.specific.text.Headline
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -39,12 +42,13 @@ fun BaekjoonSettingScreen(
     LaunchedEffect(Unit) {
         val profile = uiAppState.profile as? FetchFlow.Success
         val baekjoon = profile?.data?.socialAccounts?.firstOrNull { it.socialType == "SOLVED_AC" }
-        viewModel.updateBaekjoonId(id = baekjoon?.socialId?: "")
+        viewModel.updateBaekjoonId(id = baekjoon?.socialId ?: "")
         viewModel.uiEffect.collect {
             when (it) {
                 BaekjoonSettingSideEffect.PatchBaekjoonSettingFailure -> {
                     showPatchBaekjoonSettingFailureDialog = true
                 }
+
                 BaekjoonSettingSideEffect.PatchBaekjoonSettingSuccess -> {
                     showPatchBaekjoonSettingSuccessDialog = true
                 }
@@ -61,13 +65,22 @@ fun BaekjoonSettingScreen(
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            Row {
+                Headline(
+                    modifier = Modifier
+                        .padding(top = 20.dp, start = 4.dp),
+                    text = "백준 ID"
+                )
+                Spacer(modifier = Modifier.weight(1f))
+            }
             GrowTextField(
                 value = uiState.baekjoonId,
                 onValueChange = viewModel::updateBaekjoonId,
-                hint = "백준 Id를 입력해 주세요",
+                hint = "",
             )
             Spacer(modifier = Modifier.weight(1f))
             GrowCTAButton(
