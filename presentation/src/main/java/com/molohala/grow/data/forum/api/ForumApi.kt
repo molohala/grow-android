@@ -42,5 +42,7 @@ interface ForumApi {
     ): BaseVoidResponse
 
     @GET("/community/best")
-    suspend fun getBestForums(): BaseResponse<List<ForumResponse>>
+    suspend fun getBestForums(
+        @Query("count") count: Int = 3
+    ): BaseResponse<List<ForumResponse>>
 }

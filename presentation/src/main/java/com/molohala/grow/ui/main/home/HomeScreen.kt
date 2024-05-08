@@ -45,7 +45,7 @@ fun HomeScreen(
     LaunchedEffect(Unit) {
         viewModel.fetchTodayGithubRank()
         viewModel.fetchTodayBaekjoonRank()
-//        viewModel.fetchWeekCommunities()
+        viewModel.fetchWeekCommunities()
     }
 
     GrowTopAppBar(

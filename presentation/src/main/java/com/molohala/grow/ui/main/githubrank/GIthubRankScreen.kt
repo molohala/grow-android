@@ -86,11 +86,11 @@ fun GithubRankScreen(
                         is FetchFlow.Failure -> {}
 
                         is FetchFlow.Fetching -> {
-                            Column {
+                            Column(
+                                modifier = Modifier.padding(12.dp)
+                            ) {
                                 repeat(4) {
-                                    GrowRankCellShimmer(
-                                        modifier = Modifier.padding(horizontal = 20.dp)
-                                    )
+                                    GrowRankCellShimmer()
                                 }
                             }
                         }
