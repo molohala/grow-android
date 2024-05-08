@@ -22,6 +22,7 @@ import co.yml.charts.ui.linechart.model.Line
 import co.yml.charts.ui.linechart.model.LineChartData
 import co.yml.charts.ui.linechart.model.LinePlotData
 import co.yml.charts.ui.linechart.model.LineStyle
+import co.yml.charts.ui.linechart.model.LineType
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
 import com.molohala.grow.common.chart.GrowChartData
 import com.molohala.grow.designsystem.foundation.GrowTheme
@@ -31,7 +32,6 @@ import com.molohala.grow.designsystem.foundation.util.pxToDp
 @Composable
 fun GrowChart(
     modifier: Modifier = Modifier,
-    color: Color = Color(0xFFFF8125),
     background: Color = GrowTheme.colorScheme.backgroundAlt,
     labelColor: Color = GrowTheme.colorScheme.textNormal,
     chartData: GrowChartData
@@ -41,10 +41,18 @@ fun GrowChart(
         mutableStateOf(IntSize.Zero)
     }
 
+    val max = chartData.points.sumOf { it.y.toInt() }
+
     val steps = 3
     val xAxisData = AxisData.Builder()
         .steps(chartData.points.size - 1)
-        .labelData { i -> chartData.points[i].description }
+        .labelData { i ->
+            return@labelData if (i == 0 || i == 3 || i == 6) {
+                chartData.points[i].description
+            } else {
+                ""
+            }
+        }
         .axisStepSize(size.width.pxToDp() / chartData.points.size)
         .labelAndAxisLinePadding(8.dp)
         .axisConfig(
@@ -59,10 +67,10 @@ fun GrowChart(
     val yAxisData = AxisData.Builder()
         .steps(steps)
         .labelData { i ->
-            val yScale = 100 / steps
-            (i * yScale).toString()
+            (i * max).toString()
         }
         .labelAndAxisLinePadding(8.dp)
+        .axisLineColor(GrowTheme.colorScheme.textAlt)
         .axisConfig(
             config = AxisConfig(
                 isAxisLineRequired = false
@@ -76,14 +84,15 @@ fun GrowChart(
             lines = listOf(
                 Line(
                     dataPoints = chartData.points,
-                    LineStyle(
-                        color = color
+                    lineStyle = LineStyle(
+                        lineType = LineType.SmoothCurve(intervals = floatArrayOf(0f, 10f)),
+                        color = chartData.color
                     ),
                     shadowUnderLine = ShadowUnderLine(
                         brush = Brush.verticalGradient(
                             colors = listOf(
-                                color.copy(alpha = 0.4f),
-                                color.copy(alpha = 0f)
+                                chartData.color.copy(alpha = 0.4f),
+                                chartData.color.copy(alpha = 0f)
                             )
                         ),
                         alpha = 1f
@@ -99,6 +108,7 @@ fun GrowChart(
         xAxisData = xAxisData,
         yAxisData = yAxisData,
         gridLines = GridLines(
+            color = GrowTheme.colorScheme.chartAxis,
             enableVerticalLines = false
         ),
         backgroundColor = background

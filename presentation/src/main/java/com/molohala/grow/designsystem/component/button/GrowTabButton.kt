@@ -55,7 +55,7 @@ fun GrowTabButton(
         disabledContentColor = GrowTheme.colorScheme.buttonTextDisabled,
     )
 
-    val indicatorColor = GrowTheme.colorScheme.buttonPrimary
+    val indicatorColor = GrowTheme.colorScheme.tabButtonPrimary
 
     Button(
         onClick = onClick,
@@ -107,7 +107,7 @@ fun GrowTabButton(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val textColor = if (selected) {
-                GrowTheme.colorScheme.buttonPrimary
+                GrowTheme.colorScheme.tabButtonPrimary
             } else {
                 GrowTheme.colorScheme.buttonTextDisabled
             }

@@ -21,6 +21,11 @@ class GrowColorScheme(
     buttonPrimaryDisabled: Color,
     buttonText: Color,
     buttonTextDisabled: Color,
+    tabButtonPrimary: Color,
+    radioButtonPrimary: Color,
+    radioButtonPrimaryDisabled: Color,
+    radioButtonSecondary: Color,
+    radioButtonSecondaryDisabled: Color,
     background: Color,
     backgroundAlt: Color,
     backgroundInverse: Color,
@@ -41,7 +46,8 @@ class GrowColorScheme(
     bottomTabPrimaryDisabled: Color,
     bottomTabSecondary: Color,
     likePrimary: Color,
-    likeSecondary: Color
+    likeSecondary: Color,
+    chartAxis: Color
 ) {
     var textNormal by mutableStateOf(textNormal, structuralEqualityPolicy())
         internal set
@@ -64,6 +70,16 @@ class GrowColorScheme(
     var buttonText by mutableStateOf(buttonText, structuralEqualityPolicy())
         internal set
     var buttonTextDisabled by mutableStateOf(buttonTextDisabled, structuralEqualityPolicy())
+        internal set
+    var tabButtonPrimary by mutableStateOf(tabButtonPrimary, structuralEqualityPolicy())
+        internal set
+    var radioButtonPrimary by mutableStateOf(radioButtonPrimary, structuralEqualityPolicy())
+        internal set
+    var radioButtonPrimaryDisabled by mutableStateOf(radioButtonPrimaryDisabled, structuralEqualityPolicy())
+        internal set
+    var radioButtonSecondary by mutableStateOf(radioButtonSecondary, structuralEqualityPolicy())
+        internal set
+    var radioButtonSecondaryDisabled by mutableStateOf(radioButtonSecondaryDisabled, structuralEqualityPolicy())
         internal set
     var background by mutableStateOf(background, structuralEqualityPolicy())
         internal set
@@ -106,6 +122,8 @@ class GrowColorScheme(
     var likePrimary by mutableStateOf(likePrimary, structuralEqualityPolicy())
         internal set
     var likeSecondary by mutableStateOf(likeSecondary, structuralEqualityPolicy())
+        internal set
+    var chartAxis by mutableStateOf(chartAxis, structuralEqualityPolicy())
         internal set
 }
 

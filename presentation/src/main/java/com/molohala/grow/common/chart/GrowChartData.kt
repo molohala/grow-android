@@ -45,7 +45,7 @@ val List<CommitResponse>.githubWeekChartInfo: GrowChartInfo
                     it.date.monthPerDay
                 )
             },
-            color = Color.Blue
+            color = Color(red = 0, green = 122, blue = 255)
         )
     )
 
@@ -62,6 +62,6 @@ val List<SolveResponse>.baekjoonWeekChartInfo: GrowChartInfo
                     it.date.monthPerDay
                 )
             },
-            color = Color.Blue
+            color = Color(red = 52, green = 199, blue = 89)
         )
     )
