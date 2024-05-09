@@ -2,16 +2,15 @@ package com.molohala.grow.ui.signin
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.global.Secret
+import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 data class SignInState(
     val id: String = "",
@@ -35,7 +34,7 @@ class SignInViewModel: ViewModel() {
         val id = _uiState.value.id
         val pw = _uiState.value.pw
 
-        viewModelScope.launch {
+        launch {
             try {
                 val dAuthRequest = com.molohala.grow.data.dauth.request.DAuthSignInRequest(
                     id = id,

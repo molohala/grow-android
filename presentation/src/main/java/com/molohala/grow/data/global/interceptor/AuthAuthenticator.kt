@@ -17,7 +17,8 @@ class AuthAuthenticator: Authenticator {
 
     companion object {
         val noTokenPath = arrayListOf(
-            baseUrl + "auth/reissue"
+            baseUrl + "auth/reissue",
+            baseUrl + "auth/login"
         )
     }
 
@@ -31,16 +32,19 @@ class AuthAuthenticator: Authenticator {
             Log.d(TAG, "✅ authenticate: refresh 시작")
             val refreshToken = GrowApp.prefs.refreshToken
             val request = ReissueRequest(refreshToken = refreshToken)
-            val reissueResponse = RetrofitClient.authApi.reissue(request).data
+            try {
+                val reissueResponse = RetrofitClient.authApi.reissue(request).data
 
-            val accessToken = reissueResponse?.accessToken?: ""
-            GrowApp.prefs.accessToken = accessToken
-            Log.d(TAG, "✅ authenticate: refresh 완료 length: ${accessToken.length}")
-            response.request.newBuilder()
-                .removeHeader("authorization")
-                .addHeader("authorization", "Bearer $accessToken")
-                .build()
+                val accessToken = reissueResponse?.accessToken ?: ""
+                GrowApp.prefs.accessToken = accessToken
+                Log.d(TAG, "✅ authenticate: refresh 완료 length: ${accessToken.length}")
+                return@runBlocking response.request.newBuilder()
+                    .removeHeader("authorization")
+                    .addHeader("authorization", "Bearer $accessToken")
+                    .build()
+            } catch (e: Exception) {
+                return@runBlocking response.request
+            }
         }
-
     }
 }

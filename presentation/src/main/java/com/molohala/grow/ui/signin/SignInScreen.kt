@@ -60,7 +60,8 @@ fun SignInScreen(
             GrowCTAButton(
                 modifier = Modifier
                     .padding(bottom = 8.dp),
-                text = "도담도담 로그인"
+                text = "도담도담 로그인",
+                enabled = uiState.id.isNotEmpty() && uiState.pw.isNotEmpty()
             ) {
                 viewModel.signIn()
             }
