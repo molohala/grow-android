@@ -7,6 +7,7 @@ import com.molohala.grow.data.language.response.LanguageResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
+import retrofit2.http.Path
 
 interface LanguageApi {
 
@@ -21,4 +22,8 @@ interface LanguageApi {
     @GET("/language")
     suspend fun getLanguage(): BaseResponse<List<LanguageResponse>>
 
+    @GET("/language/{id}")
+    suspend fun getLanguageByMemberId(
+        @Path("id") id: Int
+    ): BaseResponse<List<LanguageResponse>>
 }

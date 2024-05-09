@@ -44,7 +44,7 @@ class ProfileDetailViewModel: ViewModel() {
                 _uiState.update { it.copy(profile = FetchFlow.Success(profile)) }
                 fetchGithub()
                 fetchBaekjoon()
-                fetchMyLanguage()
+                fetchMyLanguage(memberId)
             } catch (e: Exception) {
                 _uiState.update { it.copy(profile = FetchFlow.Failure()) }
             }
@@ -106,11 +106,11 @@ class ProfileDetailViewModel: ViewModel() {
         }
     }
 
-    fun fetchMyLanguage() {
+    fun fetchMyLanguage(memberId: Int) {
         launch {
             try {
                 _uiState.update { it.copy(myLanguage = FetchFlow.Fetching()) }
-                val myLanguage = RetrofitClient.languageApi.getMyLanguage().data?: return@launch
+                val myLanguage = RetrofitClient.languageApi.getLanguageByMemberId(memberId).data?: return@launch
                 _uiState.update { it.copy(myLanguage = FetchFlow.Success(myLanguage)) }
             } catch (e: Exception) {
                 _uiState.update { it.copy(myLanguage = FetchFlow.Failure()) }
