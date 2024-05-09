@@ -145,7 +145,7 @@ fun ProfileEditScreen(
                         Headline(
                             modifier = Modifier
                                 .padding(start = 4.dp),
-                            text = "언어"
+                            text = "사용 언어"
                         )
                         FlowRow(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -203,6 +203,7 @@ fun ProfileEditScreen(
             title = "프로필 정보 불러오기 실패",
             onDismissRequest = {
                 showFetchFailureDialog = false
+                navController.popBackStack()
             }
         )
     }

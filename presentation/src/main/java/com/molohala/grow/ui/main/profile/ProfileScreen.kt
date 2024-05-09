@@ -3,10 +3,11 @@ package com.molohala.grow.ui.main.profile
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,6 +31,8 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.designsystem.component.avatar.AvatarType
 import com.molohala.grow.designsystem.component.avatar.GrowAvatar
 import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
+import com.molohala.grow.designsystem.component.language.GrowLanguage
+import com.molohala.grow.designsystem.component.language.GrowLanguageShimmer
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
@@ -40,6 +43,7 @@ import com.molohala.grow.designsystem.specific.chart.GrowChartCellShimmer
 import com.molohala.grow.designsystem.specific.statcell.GrowStatCell
 import com.molohala.grow.designsystem.specific.statcell.GrowStatCellShimmer
 import com.molohala.grow.designsystem.specific.statcell.GrowStatType
+import com.molohala.grow.designsystem.specific.text.Headline
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
@@ -76,7 +80,7 @@ fun ProfileScreen(
             LazyColumn(
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(28.dp),
                 state = scrollState
             ) {
                 item {
@@ -85,13 +89,15 @@ fun ProfileScreen(
                     }
                 }
                 item {
-                    Stats(uiAppState = uiAppState)
+                    Bio(uiAppState = uiAppState) {
+                        navController.navigate(NavGroup.ProfileEdit.name)
+                    }
                 }
                 item {
-                    GithubChart(uiAppState = uiAppState)
+                    Language(uiAppState = uiAppState)
                 }
                 item {
-                    BaekjoonChart(uiAppState = uiAppState)
+                    Statics(uiAppState = uiAppState)
                 }
                 item {
                     Spacer(modifier = Modifier.height(64.dp))
@@ -110,48 +116,142 @@ private fun Info(
     uiAppState: AppState,
     onClick: () -> Unit
 ) {
-    Box {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            uiAppState.profile.let {
-                when (it) {
-                    is FetchFlow.Failure -> {}
-
-                    is FetchFlow.Fetching -> {
-                        GrowAvatarShimmer(type = AvatarType.ExtraLarge)
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        uiAppState.profile.let {
+            when (it) {
+                is FetchFlow.Failure -> {}
+                is FetchFlow.Fetching -> {
+                    GrowAvatarShimmer(type = AvatarType.ExtraLarge)
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        RowShimmer(width = 60.dp)
                         RowShimmer(width = 40.dp)
-                        RowShimmer(width = 100.dp)
                     }
+                }
 
-                    is FetchFlow.Success -> {
-                        GrowAvatar(type = AvatarType.ExtraLarge)
+                is FetchFlow.Success -> {
+                    GrowAvatar(type = AvatarType.ExtraLarge)
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        Text(
+                            text = "${it.data.job} 개발자",
+                            color = GrowTheme.colorScheme.textDarken,
+                            style = GrowTheme.typography.labelRegular
+                        )
                         Text(
                             text = it.data.name,
                             color = GrowTheme.colorScheme.textNormal,
                             style = GrowTheme.typography.bodyBold
                         )
-                        Text(
-                            text = "\"${it.data.bio}\"",
-                            color = GrowTheme.colorScheme.textAlt,
-                            style = GrowTheme.typography.labelMedium
-                        )
                     }
                 }
             }
         }
+        Spacer(modifier = Modifier.weight(1f))
         GrowIcon(
             modifier = Modifier
                 .size(32.dp)
-                .align(Alignment.TopEnd)
                 .bounceClick(onClick = onClick),
             id = R.drawable.ic_setting,
             color = GrowTheme.colorScheme.textAlt
         )
+    }
+}
+
+@Composable
+private fun Bio(
+    uiAppState: AppState,
+    onClickEdit: () -> Unit
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Headline(
+                modifier = Modifier
+                    .padding(start = 4.dp),
+                text = "소개글"
+            )
+            GrowIcon(
+                modifier = Modifier
+                    .bounceClick(onClick = {
+                        onClickEdit()
+                    }),
+                id = R.drawable.ic_write,
+                color = GrowTheme.colorScheme.textAlt
+            )
+        }
+        val profile = (uiAppState.profile as? FetchFlow.Success)?.data
+        profile?.let {
+            Text(
+                text = profile.bio,
+                style = GrowTheme.typography.bodyMedium,
+                color = GrowTheme.colorScheme.textDarken
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun Language(
+    uiAppState: AppState
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Headline(
+            modifier = Modifier
+                .padding(start = 4.dp),
+            text = "사용 언어"
+        )
+        FlowRow(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            uiAppState.myLanguage.let {
+                when (it) {
+                    is FetchFlow.Failure -> {}
+                    is FetchFlow.Fetching -> {
+                        repeat(4) {
+                            GrowLanguageShimmer()
+                        }
+                    }
+
+                    is FetchFlow.Success -> {
+                        it.data.forEach { lang ->
+                            GrowLanguage(text = lang.name)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun Statics(
+    uiAppState: AppState
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Headline(
+            modifier = Modifier
+                .padding(start = 4.dp),
+            text = "통계"
+        )
+        Stats(uiAppState = uiAppState)
+        GithubChart(uiAppState = uiAppState)
+        BaekjoonChart(uiAppState = uiAppState)
     }
 }
 
