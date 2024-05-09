@@ -1,5 +1,5 @@
 package com.molohala.grow.data.language.request
 
-data class PatchLanguageRequest(
+data class PatchMyLanguageRequest(
     val langs: List<Int>
 )

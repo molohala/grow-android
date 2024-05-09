@@ -2,7 +2,9 @@ package com.molohala.grow.designsystem.component.button
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,9 +42,8 @@ fun GrowRadioButton(
     modifier: Modifier = Modifier,
     text: String,
     isSelected: Boolean,
-    @DrawableRes leftIcon: Int? = R.drawable.ic_radio,
-    @DrawableRes rightIcon: Int? = null,
-    shape: Shape = RoundedCornerShape(8.dp),
+    @DrawableRes icon: Int = R.drawable.ic_radio,
+    shape: Shape = RoundedCornerShape(12.dp),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onClick: () -> Unit,
 ) {
@@ -50,6 +52,17 @@ fun GrowRadioButton(
         targetValue = if (buttonState == ButtonState.Idle) 1f else 0.96f,
         label = "",
     )
+
+    val primary = if (isSelected) {
+        GrowTheme.colorScheme.radioButtonPrimary
+    } else {
+        GrowTheme.colorScheme.radioButtonPrimaryDisabled
+    }
+    val secondary = if (isSelected) {
+        GrowTheme.colorScheme.radioButtonSecondary
+    } else {
+        GrowTheme.colorScheme.radioButtonSecondaryDisabled
+    }
 
     val colors = ButtonDefaults.buttonColors(
         containerColor = Color.Transparent,
@@ -61,6 +74,7 @@ fun GrowRadioButton(
     Button(
         onClick = onClick,
         modifier = modifier
+            .height(44.dp)
             .graphicsLayer {
                 scaleX = scale
                 scaleY = scale
@@ -75,7 +89,11 @@ fun GrowRadioButton(
                         ButtonState.Hold
                     }
                 }
-            },
+            }
+            .border(
+                border = BorderStroke(width = 1.5.dp, color = primary),
+                shape = shape
+            ),
         colors = colors,
         shape = shape,
         contentPadding = PaddingValues(horizontal = 14.dp, vertical = 0.dp),
@@ -94,21 +112,11 @@ fun GrowRadioButton(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val primary = if (isSelected) {
-                GrowTheme.colorScheme.radioButtonPrimary
-            } else {
-                GrowTheme.colorScheme.radioButtonSecondary
-            }
-            val secondary = if (isSelected) {
-                GrowTheme.colorScheme.radioButtonSecondary
-            } else {
-                GrowTheme.colorScheme.radioButtonSecondaryDisabled
-            }
-            leftIcon?.let {
+            if (isSelected) {
                 GrowIcon(
                     modifier = Modifier
                         .size(24.dp),
-                    id = it,
+                    id = icon,
                     color = primary
                 )
             }
@@ -117,14 +125,6 @@ fun GrowRadioButton(
                 style = GrowTheme.typography.bodyRegular,
                 color = secondary
             )
-            rightIcon?.let {
-                GrowIcon(
-                    modifier = Modifier
-                        .size(24.dp),
-                    id = it,
-                    color = primary
-                )
-            }
         }
 //            }
     }
@@ -136,8 +136,8 @@ private fun Preview() {
     GrowTheme {
         Column(
             modifier = Modifier
-                .padding(10.dp)
-                .background(GrowTheme.colorScheme.background),
+                .background(GrowTheme.colorScheme.background)
+                .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             GrowRadioButton(text = "Server", isSelected = true) {
