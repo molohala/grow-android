@@ -14,11 +14,13 @@ import kotlinx.coroutines.flow.update
 
 data class SignInState(
     val id: String = "",
-    val pw: String = ""
+    val pw: String = "",
+    val isFetching: Boolean = false
 )
 
 sealed interface SignInSideEffect {
     data class LoginSuccess(val accessToken: String, val refreshToken: String): SignInSideEffect
+    data object LoginFailure: SignInSideEffect
 }
 
 class SignInViewModel: ViewModel() {
@@ -33,6 +35,8 @@ class SignInViewModel: ViewModel() {
 
         val id = _uiState.value.id
         val pw = _uiState.value.pw
+
+        _uiState.update { it.copy(isFetching = true) }
 
         launch {
             try {
@@ -50,6 +54,9 @@ class SignInViewModel: ViewModel() {
                 _uiEffect.emit(effect)
             } catch (e: Exception) {
                 Log.d(TAG, "signIn: $e")
+                _uiEffect.emit(SignInSideEffect.LoginFailure)
+            } finally {
+                _uiState.update { it.copy(isFetching = false) }
             }
         }
     }

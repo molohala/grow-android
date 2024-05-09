@@ -82,6 +82,7 @@ fun ForumDetailScreen(
     var showRemoveCommentFailureDialog by remember { mutableStateOf(false) }
     var isMenuExpanded by remember { mutableStateOf(false) }
     var selectedCommentId by remember { mutableStateOf<Int?>(null) }
+    val profileId = (uiAppState.profile as? FetchFlow.Success)?.data?.id?: -1
 
     LaunchedEffect(Unit) {
         viewModel.fetchForum(forumId)
@@ -151,7 +152,8 @@ fun ForumDetailScreen(
                                         },
                                         onRemove = {
                                             showRemoveForumDialog = true
-                                        }
+                                        },
+                                        profileId = profileId
                                     )
                                     GrowDivider(modifier = Modifier.padding(horizontal = 12.dp))
                                     Comments(
@@ -301,6 +303,7 @@ fun ForumDetailScreen(
 
 @Composable
 private fun Forum(
+    profileId: Int,
     isMenuExpanded: Boolean,
     onChangeIsMenuExpanded: (Boolean) -> Unit,
     forum: ForumContentResponse,
@@ -334,22 +337,24 @@ private fun Forum(
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            Column {
-                GrowIcon(
-                    modifier = Modifier.bounceClick(onClick = {
-                        onChangeIsMenuExpanded(true)
-                    }),
-                    id = R.drawable.ic_detail_vertical,
-                    color = GrowTheme.colorScheme.textAlt
-                )
-                GrowMenu(
-                    expanded = isMenuExpanded,
-                    menuList = listOf(
-                        GrowMenuData("수정하기", onClick = onEdit),
-                        GrowMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
-                    ),
-                    onDismissRequest = { onChangeIsMenuExpanded(false) }
-                )
+            if (profileId == forum.writerId) {
+                Column {
+                    GrowIcon(
+                        modifier = Modifier.bounceClick(onClick = {
+                            onChangeIsMenuExpanded(true)
+                        }),
+                        id = R.drawable.ic_detail_vertical,
+                        color = GrowTheme.colorScheme.textAlt
+                    )
+                    GrowMenu(
+                        expanded = isMenuExpanded,
+                        menuList = listOf(
+                            GrowMenuData("수정하기", onClick = onEdit),
+                            GrowMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                        ),
+                        onDismissRequest = { onChangeIsMenuExpanded(false) }
+                    )
+                }
             }
         }
         Text(

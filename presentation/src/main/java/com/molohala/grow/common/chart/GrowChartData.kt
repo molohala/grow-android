@@ -52,8 +52,8 @@ val List<CommitResponse>.githubWeekChartInfo: GrowChartInfo
 val List<SolveResponse>.baekjoonWeekChartInfo: GrowChartInfo
     get() = GrowChartInfo(
         label = this.sumOf { it.solvedCount }.toString(),
-        description = "이번주에 한 커밋",
-        type = GrowChartType.Github,
+        description = "이번주에 푼 문제",
+        type = GrowChartType.Baekjoon,
         chartData = GrowChartData(
             points = this.mapIndexed { idx, it ->
                 Point(

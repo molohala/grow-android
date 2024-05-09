@@ -120,8 +120,8 @@ fun Greeting(uiAppState: AppState) {
                 is FetchFlow.Success -> {
                     Column {
                         val isDeveloper = it.data.job.isEmpty()
-                        Headline(text = "${it.data.job}개발자")
-                        Headline(text = "${it.data.name}${if (isDeveloper) "" else " "}님 환영합니다")
+                        Headline(text = "${it.data.job}${if (isDeveloper) "" else " "}개발자")
+                        Headline(text = "${it.data.name}님 환영합니다")
                     }
                 }
             }
@@ -322,7 +322,7 @@ fun WeekForum(
                                 onEdit = {
                                     onEditForum(forumId)
                                 },
-                                profileId = -1,
+                                profileId = profile.data.id,
                                 onClickLike = {
                                     onClickLike(forumId)
                                 }

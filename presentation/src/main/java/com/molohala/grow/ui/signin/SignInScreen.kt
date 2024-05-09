@@ -8,11 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.designsystem.component.button.GrowCTAButton
+import com.molohala.grow.designsystem.component.dialog.GrowDialog
 import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.ui.root.AppViewModel
@@ -25,6 +29,9 @@ fun SignInScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
+    var showLoginFailureDialog by remember {
+        mutableStateOf(false)
+    }
 
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect {
@@ -32,6 +39,10 @@ fun SignInScreen(
                 is SignInSideEffect.LoginSuccess -> {
                     appViewModel.updateAccessToken(it.accessToken)
                     appViewModel.updateRefreshToken(it.refreshToken)
+                }
+
+                SignInSideEffect.LoginFailure -> {
+                    showLoginFailureDialog = true
                 }
             }
         }
@@ -61,10 +72,20 @@ fun SignInScreen(
                 modifier = Modifier
                     .padding(bottom = 8.dp),
                 text = "도담도담 로그인",
-                enabled = uiState.id.isNotEmpty() && uiState.pw.isNotEmpty()
+                enabled = uiState.id.isNotEmpty() && uiState.pw.isNotEmpty(),
+                isLoading = uiState.isFetching
             ) {
                 viewModel.signIn()
             }
         }
+    }
+
+    if (showLoginFailureDialog) {
+        GrowDialog(
+            title = "로그인에 실패했습니다",
+            onDismissRequest = {
+                showLoginFailureDialog = false
+            }
+        )
     }
 }

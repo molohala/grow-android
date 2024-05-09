@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -105,35 +106,44 @@ fun GrowCTAButton(
 //                    animationName = type.animName,
 //                )
 //            } else {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val textColor = if (enabled) {
-                GrowTheme.colorScheme.buttonText
-            } else {
-                GrowTheme.colorScheme.buttonTextDisabled
-            }
-            leftIcon?.let {
-                GrowIcon(
-                    modifier = Modifier
-                        .size(20.dp),
-                    id = it,
-                    color = textColor
-                )
-            }
-            Text(
-                text = text,
-                style = GrowTheme.typography.bodyBold,
-                color = textColor
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(18.dp),
+                color = GrowTheme.colorScheme.buttonText,
+                strokeWidth = 2.dp
             )
-            rightIcon?.let {
-                GrowIcon(
-                    modifier = Modifier
-                        .size(20.dp),
-                    id = it,
+        } else {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                val textColor = if (enabled) {
+                    GrowTheme.colorScheme.buttonText
+                } else {
+                    GrowTheme.colorScheme.buttonTextDisabled
+                }
+                leftIcon?.let {
+                    GrowIcon(
+                        modifier = Modifier
+                            .size(20.dp),
+                        id = it,
+                        color = textColor
+                    )
+                }
+                Text(
+                    text = text,
+                    style = GrowTheme.typography.bodyBold,
                     color = textColor
                 )
+                rightIcon?.let {
+                    GrowIcon(
+                        modifier = Modifier
+                            .size(20.dp),
+                        id = it,
+                        color = textColor
+                    )
+                }
+
             }
         }
     }

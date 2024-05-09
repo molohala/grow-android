@@ -192,8 +192,9 @@ private fun Bio(
         }
         val profile = (uiAppState.profile as? FetchFlow.Success)?.data
         profile?.let {
+            val text = profile.bio.ifEmpty { "🤔" }
             Text(
-                text = profile.bio,
+                text = text,
                 style = GrowTheme.typography.bodyMedium,
                 color = GrowTheme.colorScheme.textDarken
             )
@@ -228,8 +229,16 @@ private fun Language(
                     }
 
                     is FetchFlow.Success -> {
-                        it.data.forEach { lang ->
-                            GrowLanguage(text = lang.name)
+                        if (it.data.isEmpty()) {
+                            Text(
+                                text = "🤔",
+                                style = GrowTheme.typography.bodyMedium,
+                                color = GrowTheme.colorScheme.textDarken
+                            )
+                        } else {
+                            it.data.forEach { lang ->
+                                GrowLanguage(text = lang.name)
+                            }
                         }
                     }
                 }
@@ -323,8 +332,10 @@ private fun GithubChart(
             }
 
             is FetchFlow.Success -> {
-                GrowChartCell(chartInfo = it.data) {
+                it.data?.let { chart ->
+                    GrowChartCell(chartInfo = chart) {
 
+                    }
                 }
             }
         }
@@ -343,8 +354,10 @@ private fun BaekjoonChart(
             }
 
             is FetchFlow.Success -> {
-                GrowChartCell(chartInfo = it.data) {
+                it.data?.let { chart ->
+                    GrowChartCell(chartInfo = chart) {
 
+                    }
                 }
             }
         }

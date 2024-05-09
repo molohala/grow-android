@@ -25,8 +25,8 @@ data class AppState(
     val baekjoon: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
     val myLanguage: FetchFlow<List<LanguageResponse>> = FetchFlow.Fetching(),
     val selectedTab: BottomTabItemType = BottomTabItemType.Home,
-    val githubChartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching(),
-    val baekjoonChartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching(),
+    val githubChartInfo: FetchFlow<GrowChartInfo?> = FetchFlow.Fetching(),
+    val baekjoonChartInfo: FetchFlow<GrowChartInfo?> = FetchFlow.Fetching(),
     val isDarkMode: Boolean = GrowApp.prefs.isDarkMode,
 )
 
@@ -70,11 +70,21 @@ class AppViewModel : ViewModel() {
 
     fun fetchGithub() {
         val profile = uiState.value.profile as? FetchFlow.Success ?: run {
-            _uiState.update { it.copy(github = FetchFlow.Failure()) }
+            _uiState.update {
+                it.copy(
+                    github = FetchFlow.Failure(),
+                    githubChartInfo = FetchFlow.Failure()
+                )
+            }
             return
         }
         val github = profile.data.socialAccounts.firstOrNull { it.socialType == "GITHUB" } ?: run {
-            _uiState.update { it.copy(github = FetchFlow.Success(null)) }
+            _uiState.update {
+                it.copy(
+                    github = FetchFlow.Success(null),
+                    githubChartInfo = FetchFlow.Success(null)
+                )
+            }
             return
         }
         launch {
@@ -90,19 +100,34 @@ class AppViewModel : ViewModel() {
                     )
                 }
             } catch (e: Exception) {
-                _uiState.update { it.copy(github = FetchFlow.Failure()) }
+                _uiState.update {
+                    it.copy(
+                        github = FetchFlow.Failure(),
+                        githubChartInfo = FetchFlow.Failure()
+                    )
+                }
             }
         }
     }
 
     fun fetchBaekjoon() {
         val profile = uiState.value.profile as? FetchFlow.Success ?: run {
-            _uiState.update { it.copy(baekjoon = FetchFlow.Failure()) }
+            _uiState.update {
+                it.copy(
+                    baekjoon = FetchFlow.Failure(),
+                    baekjoonChartInfo = FetchFlow.Failure()
+                )
+            }
             return
         }
         val solvedac =
             profile.data.socialAccounts.firstOrNull { it.socialType == "SOLVED_AC" } ?: run {
-                _uiState.update { it.copy(baekjoon = FetchFlow.Success(null)) }
+                _uiState.update {
+                    it.copy(
+                        baekjoon = FetchFlow.Success(null),
+                        baekjoonChartInfo = FetchFlow.Success(null)
+                    )
+                }
                 return
             }
         launch {
@@ -118,7 +143,12 @@ class AppViewModel : ViewModel() {
                     )
                 }
             } catch (e: Exception) {
-                _uiState.update { it.copy(baekjoon = FetchFlow.Failure()) }
+                _uiState.update {
+                    it.copy(
+                        baekjoon = FetchFlow.Failure(),
+                        baekjoonChartInfo = FetchFlow.Failure()
+                    )
+                }
             }
         }
     }
@@ -127,7 +157,7 @@ class AppViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(myLanguage = FetchFlow.Fetching()) }
-                val myLanguage = RetrofitClient.languageApi.getMyLanguage().data?: return@launch
+                val myLanguage = RetrofitClient.languageApi.getMyLanguage().data ?: return@launch
                 _uiState.update { it.copy(myLanguage = FetchFlow.Success(myLanguage)) }
             } catch (e: Exception) {
                 _uiState.update { it.copy(myLanguage = FetchFlow.Failure()) }
