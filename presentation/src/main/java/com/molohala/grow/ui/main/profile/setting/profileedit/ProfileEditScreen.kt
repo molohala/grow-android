@@ -31,19 +31,26 @@ import com.molohala.grow.designsystem.component.textfield.GrowTextField
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.specific.text.Headline
+import com.molohala.grow.ui.root.AppViewModel
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ProfileEditScreen(
     navController: NavController,
-    viewModel: ProfileEditViewModel = viewModel()
+    viewModel: ProfileEditViewModel = viewModel(),
+    appViewModel: AppViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val uiAppState by appViewModel.uiState.collectAsState()
     var showFetchFailureDialog by remember { mutableStateOf(false) }
     var showPatchFailureDialog by remember { mutableStateOf(false) }
     var showPatchSuccessDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
+        (uiAppState.profile as? FetchFlow.Success)?.data?.let {
+            viewModel.updateBio(it.bio)
+            viewModel.updateJob(it.job)
+        }
         viewModel.fetchLanguages()
         viewModel.fetchMyLanguages()
         viewModel.uiSideEffect.collect {
@@ -90,8 +97,8 @@ fun ProfileEditScreen(
                         GrowTextField(
                             modifier = Modifier
                                 .padding(top = 20.dp),
-                            value = "",
-                            onValueChange = {},
+                            value = uiState.bio,
+                            onValueChange = viewModel::updateBio,
                             hint = ""
                         )
                     }

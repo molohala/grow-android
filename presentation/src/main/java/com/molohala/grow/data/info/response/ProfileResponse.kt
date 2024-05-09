@@ -6,6 +6,8 @@ data class ProfileResponse(
     val id: Int,
     val email: String,
     val name: String,
+    val bio: String,
+    val job: String,
     val createdAt: LocalDateTime,
     val socialAccounts: List<SocialAccountResponse>
 ) {

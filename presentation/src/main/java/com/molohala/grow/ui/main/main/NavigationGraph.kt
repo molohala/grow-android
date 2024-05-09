@@ -53,7 +53,7 @@ fun NavigationGraph(
             SettingScreen(navController = navController, appViewModel = appViewModel)
         }
         composable(NavGroup.ProfileEdit.name) {
-            ProfileEditScreen(navController = navController)
+            ProfileEditScreen(navController = navController, appViewModel = appViewModel)
         }
         composable(NavGroup.GithubSetting.name) {
             GithubSettingScreen(navController = navController, appViewModel = appViewModel)

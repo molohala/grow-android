@@ -1,10 +1,9 @@
 package com.molohala.grow.ui.main.profile.setting.profileedit
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.global.RetrofitClient
+import com.molohala.grow.data.info.request.PatchProfileRequest
 import com.molohala.grow.data.language.request.PatchMyLanguageRequest
 import com.molohala.grow.data.language.response.LanguageResponse
 import com.molohala.grow.ui.util.launch
@@ -16,7 +15,9 @@ import kotlinx.coroutines.flow.update
 
 data class ProfileEditState(
     val languages: FetchFlow<List<LanguageResponse>> = FetchFlow.Fetching(),
-    val myLanguages: FetchFlow<List<LanguageResponse>> = FetchFlow.Fetching()
+    val myLanguages: FetchFlow<List<LanguageResponse>> = FetchFlow.Fetching(),
+    val bio: String = "",
+    val job: String = "",
 )
 
 sealed interface ProfileEditSideEffect {
@@ -71,19 +72,30 @@ class ProfileEditViewModel: ViewModel() {
     }
 
     fun completeSetting() {
-        Log.d(TAG, "completeSetting: ")
         val langs = (_uiState.value.myLanguages as? FetchFlow.Success)?.data?: return
-        val request = PatchMyLanguageRequest(
+        val patchMyLanguageRequest = PatchMyLanguageRequest(
             langs = langs.map { it.id }
         )
-        Log.d(TAG, "completeSetting: ")
+        val patchProfileRequest = PatchProfileRequest(
+            bio = _uiState.value.bio,
+            job = _uiState.value.job
+        )
         launch {
             try {
-                RetrofitClient.languageApi.patchLanguage(request)
+                RetrofitClient.languageApi.patchLanguage(patchMyLanguageRequest)
+                RetrofitClient.infoApi.patchProfile(patchProfileRequest)
                 _uiSideEffect.emit(ProfileEditSideEffect.PatchSuccess)
             } catch (e: Exception) {
                 _uiSideEffect.emit(ProfileEditSideEffect.PatchFailure)
             }
         }
+    }
+
+    fun updateBio(bio: String) {
+        _uiState.update { it.copy(bio = bio) }
+    }
+
+    fun updateJob(job: String) {
+        _uiState.update { it.copy(job = job) }
     }
 }

@@ -119,8 +119,9 @@ fun Greeting(uiAppState: AppState) {
 
                 is FetchFlow.Success -> {
                     Column {
-                        Headline(text = "iOS 개발자")
-                        Headline(text = "${it.data.name}님 환영합니다")
+                        val isDeveloper = it.data.job.isEmpty()
+                        Headline(text = "${it.data.job}개발자")
+                        Headline(text = "${it.data.name}${if (isDeveloper) "" else " "}님 환영합니다")
                     }
                 }
             }

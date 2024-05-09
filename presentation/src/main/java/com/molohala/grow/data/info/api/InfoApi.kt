@@ -2,12 +2,14 @@ package com.molohala.grow.data.info.api
 
 import com.molohala.grow.data.global.dto.response.BaseResponse
 import com.molohala.grow.data.global.dto.response.BaseVoidResponse
+import com.molohala.grow.data.info.request.PatchProfileRequest
 import com.molohala.grow.data.info.request.RegisterSocialRequest
 import com.molohala.grow.data.info.response.GithubResponse
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.data.info.response.SolvedacResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -36,6 +38,11 @@ interface InfoApi {
 
     @GET("/info/me")
     suspend fun getProfile(): BaseResponse<ProfileResponse>
+
+    @PATCH("/info/me")
+    suspend fun patchProfile(
+        @Body request: PatchProfileRequest
+    ): BaseVoidResponse
 
     @GET("/info/user/{id}")
     suspend fun getProfileById(

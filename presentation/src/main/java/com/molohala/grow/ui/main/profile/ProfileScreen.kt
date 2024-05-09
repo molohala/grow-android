@@ -136,7 +136,7 @@ private fun Info(
                             style = GrowTheme.typography.bodyBold
                         )
                         Text(
-                            text = "\"응아잇 안드로이드\"",
+                            text = "\"${it.data.bio}\"",
                             color = GrowTheme.colorScheme.textAlt,
                             style = GrowTheme.typography.labelMedium
                         )
