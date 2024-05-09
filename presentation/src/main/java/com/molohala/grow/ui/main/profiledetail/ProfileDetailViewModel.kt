@@ -9,7 +9,9 @@ import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.info.response.GithubResponse
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.data.info.response.SolvedacResponse
+import com.molohala.grow.data.language.response.LanguageResponse
 import com.molohala.grow.designsystem.specific.chart.GrowChartInfo
+import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -20,6 +22,7 @@ data class ProfileDetailState(
     val profile: FetchFlow<ProfileResponse> = FetchFlow.Fetching(),
     val github: FetchFlow<GithubResponse?> = FetchFlow.Fetching(),
     val baekjoon: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
+    val myLanguage: FetchFlow<List<LanguageResponse>> = FetchFlow.Fetching(),
     val githubChartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching(),
     val baekjoonChartInfo: FetchFlow<GrowChartInfo> = FetchFlow.Fetching(),
 )
@@ -41,6 +44,7 @@ class ProfileDetailViewModel: ViewModel() {
                 _uiState.update { it.copy(profile = FetchFlow.Success(profile)) }
                 fetchGithub()
                 fetchBaekjoon()
+                fetchMyLanguage()
             } catch (e: Exception) {
                 _uiState.update { it.copy(profile = FetchFlow.Failure()) }
             }
@@ -102,4 +106,15 @@ class ProfileDetailViewModel: ViewModel() {
         }
     }
 
+    fun fetchMyLanguage() {
+        launch {
+            try {
+                _uiState.update { it.copy(myLanguage = FetchFlow.Fetching()) }
+                val myLanguage = RetrofitClient.languageApi.getMyLanguage().data?: return@launch
+                _uiState.update { it.copy(myLanguage = FetchFlow.Success(myLanguage)) }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(myLanguage = FetchFlow.Failure()) }
+            }
+        }
+    }
 }

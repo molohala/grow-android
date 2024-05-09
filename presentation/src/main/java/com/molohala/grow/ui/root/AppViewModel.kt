@@ -123,7 +123,7 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    fun fetchMyLanguage() {
+    private fun fetchMyLanguage() {
         launch {
             try {
                 _uiState.update { it.copy(myLanguage = FetchFlow.Fetching()) }

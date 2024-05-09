@@ -182,6 +182,7 @@ private fun Bio(
             )
             GrowIcon(
                 modifier = Modifier
+                    .size(20.dp)
                     .bounceClick(onClick = {
                         onClickEdit()
                     }),
