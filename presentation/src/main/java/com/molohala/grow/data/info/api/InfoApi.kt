@@ -48,4 +48,7 @@ interface InfoApi {
     suspend fun getProfileById(
         @Path("id") id: Int
     ): BaseResponse<ProfileResponse>
+
+    @GET("/info/jobs")
+    suspend fun getJobs(): BaseResponse<List<String>>
 }

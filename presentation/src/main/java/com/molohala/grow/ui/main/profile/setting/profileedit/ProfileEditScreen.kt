@@ -53,16 +53,20 @@ fun ProfileEditScreen(
         }
         viewModel.fetchLanguages()
         viewModel.fetchMyLanguages()
+        viewModel.fetchJobs()
         viewModel.uiSideEffect.collect {
             when (it) {
                 ProfileEditSideEffect.FetchFailure -> {
                     showFetchFailureDialog = true
                 }
+
                 ProfileEditSideEffect.PatchFailure -> {
                     showPatchFailureDialog = true
                 }
+
                 ProfileEditSideEffect.PatchSuccess -> {
                     showPatchSuccessDialog = true
+                    appViewModel.fetchProfile()
                 }
             }
         }
@@ -114,7 +118,23 @@ fun ProfileEditScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-
+                            uiState.jobs.let { jobs ->
+                                when (jobs) {
+                                    is FetchFlow.Failure -> {}
+                                    is FetchFlow.Fetching -> {}
+                                    is FetchFlow.Success -> {
+                                        jobs.data.forEach { job ->
+                                            GrowRadioButton(
+                                                text = job.ifEmpty { "Developer" },
+                                                isSelected = job == uiState.selectedJob,
+                                                onClick = {
+                                                    viewModel.updateJob(job)
+                                                }
+                                            )
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

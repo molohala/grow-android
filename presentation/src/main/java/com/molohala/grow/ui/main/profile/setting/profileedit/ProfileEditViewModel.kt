@@ -17,7 +17,8 @@ data class ProfileEditState(
     val languages: FetchFlow<List<LanguageResponse>> = FetchFlow.Fetching(),
     val myLanguages: FetchFlow<List<LanguageResponse>> = FetchFlow.Fetching(),
     val bio: String = "",
-    val job: String = "",
+    val jobs: FetchFlow<List<String>> = FetchFlow.Fetching(),
+    val selectedJob: String = ""
 )
 
 sealed interface ProfileEditSideEffect {
@@ -60,6 +61,19 @@ class ProfileEditViewModel: ViewModel() {
         }
     }
 
+    fun fetchJobs() {
+        launch {
+            try {
+                _uiState.update { it.copy(jobs = FetchFlow.Fetching()) }
+                val jobs = RetrofitClient.infoApi.getJobs().data?: return@launch
+                _uiState.update { it.copy(jobs = FetchFlow.Success(jobs)) }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(jobs = FetchFlow.Failure()) }
+                _uiSideEffect.emit(ProfileEditSideEffect.FetchFailure)
+            }
+        }
+    }
+
     fun updateMyLanguages(lang: LanguageResponse) {
         val myLangs = (_uiState.value.myLanguages as? FetchFlow.Success)?.data?: return
         val newMyLanges = myLangs.toMutableList()
@@ -78,7 +92,7 @@ class ProfileEditViewModel: ViewModel() {
         )
         val patchProfileRequest = PatchProfileRequest(
             bio = _uiState.value.bio,
-            job = _uiState.value.job
+            job = _uiState.value.selectedJob
         )
         launch {
             try {
@@ -96,6 +110,6 @@ class ProfileEditViewModel: ViewModel() {
     }
 
     fun updateJob(job: String) {
-        _uiState.update { it.copy(job = job) }
+        _uiState.update { it.copy(selectedJob = job) }
     }
 }
