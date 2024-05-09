@@ -95,8 +95,6 @@ fun ProfileEditScreen(
                             text = "소개글"
                         )
                         GrowTextField(
-                            modifier = Modifier
-                                .padding(top = 20.dp),
                             value = uiState.bio,
                             onValueChange = viewModel::updateBio,
                             hint = ""

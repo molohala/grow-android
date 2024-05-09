@@ -17,6 +17,7 @@ fun Headline(
     text: String
 ) {
     Text(
+        modifier = modifier,
         text = text,
         style = GrowTheme.typography.headline1B,
         color = GrowTheme.colorScheme.textNormal
