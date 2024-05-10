@@ -6,7 +6,9 @@ import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.rank.response.RankResponse
 import com.molohala.grow.ui.util.launch
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
@@ -16,7 +18,15 @@ data class HomeState(
     val todayBaekjoonRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
 )
 
+sealed interface HomeSideEffect {
+    data object RemoveForumSuccess: HomeSideEffect
+    data object RemoveForumFailure: HomeSideEffect
+}
+
 class HomeViewModel : ViewModel() {
+
+    private val _uiEffect = MutableSharedFlow<HomeSideEffect>()
+    val uiEffect = _uiEffect.asSharedFlow()
 
     private val _uiState = MutableStateFlow(HomeState())
     val uiState = _uiState.asStateFlow()
@@ -83,6 +93,18 @@ class HomeViewModel : ViewModel() {
                 }
                 _uiState.update { it.copy(weekForums = FetchFlow.Success(forums)) }
             } catch (e: Exception) {}
+        }
+    }
+
+    fun removeForum(forumId: Int) {
+        launch {
+            try {
+                RetrofitClient.forumApi.removeForum(forumId)
+                fetchWeekCommunities()
+                _uiEffect.emit(HomeSideEffect.RemoveForumSuccess)
+            } catch (e: Exception) {
+                _uiEffect.emit(HomeSideEffect.RemoveForumFailure)
+            }
         }
     }
 }

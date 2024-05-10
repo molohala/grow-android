@@ -12,11 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
+import com.molohala.grow.designsystem.component.dialog.GrowDialog
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.applyCardView
 import com.molohala.grow.designsystem.foundation.GrowTheme
@@ -42,11 +46,26 @@ fun HomeScreen(
 
     val uiState by viewModel.uiState.collectAsState()
     val uiAppState by appViewModel.uiState.collectAsState()
+    var selectedForum by remember { mutableStateOf<Int?>(null) }
+    var showRemoveSuccessDialog by remember { mutableStateOf(false) }
+    var showRemoveFailureDialog by remember { mutableStateOf(false) }
+    var showRemoveDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.fetchTodayGithubRank()
         viewModel.fetchTodayBaekjoonRank()
         viewModel.fetchWeekCommunities()
+        viewModel.uiEffect.collect {
+            when (it) {
+                HomeSideEffect.RemoveForumFailure -> {
+                    showRemoveFailureDialog = true
+                }
+
+                HomeSideEffect.RemoveForumSuccess -> {
+                    showRemoveSuccessDialog = true
+                }
+            }
+        }
     }
 
     GrowTopAppBar(
@@ -78,7 +97,8 @@ fun HomeScreen(
                 WeekForum(
                     uiState = uiState,
                     onRemoveForum = {
-//                        viewModel
+                        selectedForum = it
+                        showRemoveDialog = true
                     },
                     onEditForum = {
                         navController.navigate("${NavGroup.EditForum.name}/${it}")
@@ -96,6 +116,43 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(64.dp))
             }
         }
+    }
+
+    if (showRemoveDialog) {
+        GrowDialog(
+            title = "정말 게시글을 삭제하시겠습니까?",
+            successText = "삭제하기",
+            cancelText = "아니요",
+            onCancelRequest = {
+                showRemoveDialog = false
+            },
+            onDismissRequest = {
+                showRemoveDialog = false
+            },
+            onSuccessRequest = {
+                showRemoveDialog = false
+                val selectedForum = selectedForum ?: return@GrowDialog
+                viewModel.removeForum(forumId = selectedForum)
+            }
+        )
+    }
+
+    if (showRemoveSuccessDialog) {
+        GrowDialog(
+            title = "게시글 삭제 성공",
+            onDismissRequest = {
+                showRemoveSuccessDialog = false
+            },
+        )
+    }
+
+    if (showRemoveFailureDialog) {
+        GrowDialog(
+            title = "게시글 삭제 실패",
+            onDismissRequest = {
+                showRemoveFailureDialog = false
+            },
+        )
     }
 }
 
@@ -127,6 +184,7 @@ fun Greeting(uiAppState: AppState) {
             }
         }
     }
+
 }
 
 @Composable
