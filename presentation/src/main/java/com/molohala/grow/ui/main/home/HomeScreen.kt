@@ -1,6 +1,7 @@
 package com.molohala.grow.ui.main.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -15,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -37,6 +44,7 @@ import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -50,6 +58,13 @@ fun HomeScreen(
     var showRemoveSuccessDialog by remember { mutableStateOf(false) }
     var showRemoveFailureDialog by remember { mutableStateOf(false) }
     var showRemoveDialog by remember { mutableStateOf(false) }
+    val scrollState = rememberLazyListState()
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = uiState.isRefresh,
+        onRefresh = {
+            viewModel.refresh()
+        }
+    )
 
     LaunchedEffect(Unit) {
         viewModel.fetchTodayGithubRank()
@@ -72,49 +87,60 @@ fun HomeScreen(
         backgroundColor = GrowTheme.colorScheme.backgroundAlt,
         text = "홈"
     ) {
-        LazyColumn(
+        Box(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxSize()
+                .pullRefresh(pullRefreshState),
+            contentAlignment = Alignment.TopCenter
         ) {
-            item {
-                Greeting(uiAppState = uiAppState)
-            }
-            item {
-                Stat(uiAppState = uiAppState)
-            }
-            item {
-                TodayGithub(uiState = uiState) {
-                    navController.navigate("${NavGroup.ProfileDetail.name}/${it}")
+            LazyColumn(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxSize(),
+                state = scrollState
+            ) {
+                item {
+                    Greeting(uiAppState = uiAppState)
                 }
-            }
-            item {
-                TodayBaekjoon(uiState = uiState) {
-                    navController.navigate("${NavGroup.ProfileDetail.name}/${it}")
+                item {
+                    Stat(uiAppState = uiAppState)
                 }
-            }
-            item {
-                WeekForum(
-                    uiState = uiState,
-                    onRemoveForum = {
-                        selectedForum = it
-                        showRemoveDialog = true
-                    },
-                    onEditForum = {
-                        navController.navigate("${NavGroup.EditForum.name}/${it}")
-                    },
-                    uiAppState = uiAppState,
-                    onClick = {
-                        navController.navigate("${NavGroup.ForumDetail.name}/${it}")
-                    },
-                    onClickLike = {
-                        viewModel.patchLike(it)
+                item {
+                    TodayGithub(uiState = uiState) {
+                        navController.navigate("${NavGroup.ProfileDetail.name}/${it}")
                     }
-                )
+                }
+                item {
+                    TodayBaekjoon(uiState = uiState) {
+                        navController.navigate("${NavGroup.ProfileDetail.name}/${it}")
+                    }
+                }
+                item {
+                    WeekForum(
+                        uiState = uiState,
+                        onRemoveForum = {
+                            selectedForum = it
+                            showRemoveDialog = true
+                        },
+                        onEditForum = {
+                            navController.navigate("${NavGroup.EditForum.name}/${it}")
+                        },
+                        uiAppState = uiAppState,
+                        onClick = {
+                            navController.navigate("${NavGroup.ForumDetail.name}/${it}")
+                        },
+                        onClickLike = {
+                            viewModel.patchLike(it)
+                        }
+                    )
+                }
+                item {
+                    Spacer(modifier = Modifier.height(64.dp))
+                }
             }
-            item {
-                Spacer(modifier = Modifier.height(64.dp))
-            }
+            PullRefreshIndicator(
+                refreshing = uiState.isRefresh,
+                state = pullRefreshState
+            )
         }
     }
 

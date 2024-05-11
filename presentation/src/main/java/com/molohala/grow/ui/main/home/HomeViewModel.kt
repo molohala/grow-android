@@ -16,6 +16,7 @@ data class HomeState(
     val weekForums: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
     val todayGithubRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
     val todayBaekjoonRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
+    val isRefresh: Boolean = false
 )
 
 sealed interface HomeSideEffect {
@@ -112,5 +113,11 @@ class HomeViewModel : ViewModel() {
                 _uiEffect.emit(HomeSideEffect.RemoveForumFailure)
             }
         }
+    }
+
+    fun refresh() {
+        fetchTodayGithubRank()
+        fetchTodayBaekjoonRank()
+        fetchWeekCommunities()
     }
 }
