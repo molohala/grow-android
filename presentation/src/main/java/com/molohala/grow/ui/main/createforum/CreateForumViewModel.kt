@@ -1,7 +1,6 @@
 package com.molohala.grow.ui.main.createforum
 
 import androidx.lifecycle.ViewModel
-import com.molohala.grow.common.flow.IdleFlow
 import com.molohala.grow.data.forum.request.PatchForumRequest
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.ui.util.launch
@@ -12,8 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class EditForumState(
-    val content: String = "",
-    val editForumFlow: IdleFlow = IdleFlow.Idle
+    val content: String = ""
 )
 
 sealed interface EditForumSideEffect {
@@ -42,13 +40,10 @@ class EditForumViewModel: ViewModel() {
     fun editForum(forumId: Int) {
         launch {
             try {
-                _uiState.update { it.copy(editForumFlow = IdleFlow.Fetching) }
                 val request = PatchForumRequest(content = _uiState.value.content, id = forumId)
                 RetrofitClient.forumApi.patchForum(request)
-                _uiState.update { it.copy(editForumFlow = IdleFlow.Success) }
                 _uiEffect.emit(EditForumSideEffect.Success)
             } catch (e: Exception) {
-                _uiState.update { it.copy(editForumFlow = IdleFlow.Failure) }
                 _uiEffect.emit(EditForumSideEffect.Failure)
             }
         }

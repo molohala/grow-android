@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.molohala.grow.common.flow.IdleFlow
 import com.molohala.grow.designsystem.component.button.ButtonType
 import com.molohala.grow.designsystem.component.button.GrowTextButton
 import com.molohala.grow.designsystem.component.textfield.GrowTextField
@@ -53,7 +52,7 @@ fun EditForumScreen(
             GrowTextButton(
                 text = "수정",
                 type = ButtonType.Small,
-                enabled = uiState.editForumFlow == IdleFlow.Idle && uiState.content.isNotEmpty(),
+                enabled = uiState.content.isNotEmpty(),
             ) {
                 viewModel.editForum(forumId)
             }
