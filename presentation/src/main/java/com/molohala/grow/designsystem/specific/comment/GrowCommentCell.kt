@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -63,11 +64,13 @@ fun GrowCommentCell(
                         color = GrowTheme.colorScheme.textAlt
                     )
                 }
-                Text(
-                    text = comment.content,
-                    style = GrowTheme.typography.bodyRegular,
-                    color = GrowTheme.colorScheme.textNormal
-                )
+                SelectionContainer {
+                    Text(
+                        text = comment.content,
+                        style = GrowTheme.typography.bodyRegular,
+                        color = GrowTheme.colorScheme.textNormal
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.weight(1f))

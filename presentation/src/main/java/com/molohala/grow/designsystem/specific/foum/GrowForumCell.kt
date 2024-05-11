@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -101,13 +102,15 @@ fun GrowForumCell(
                 }
             }
         }
-        Text(
-            text = content.content,
-            style = GrowTheme.typography.bodyRegular,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 5,
-            color = GrowTheme.colorScheme.textNormal
-        )
+        SelectionContainer {
+            Text(
+                text = content.content,
+                style = GrowTheme.typography.bodyRegular,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 5,
+                color = GrowTheme.colorScheme.textNormal
+            )
+        }
         GrowLikeButton(like = forum.forum.like, enabled = forum.forum.liked, onClick = onClickLike)
         recentComment?.let {
             GrowDivider()
@@ -120,13 +123,15 @@ fun GrowForumCell(
                     style = GrowTheme.typography.labelBold,
                     color = GrowTheme.colorScheme.textNormal
                 )
-                Text(
-                    text = it.content,
-                    style = GrowTheme.typography.labelRegular,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    color = GrowTheme.colorScheme.textNormal
-                )
+                SelectionContainer {
+                    Text(
+                        text = it.content,
+                        style = GrowTheme.typography.labelRegular,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = GrowTheme.colorScheme.textNormal
+                    )
+                }
                 Text(
                     text = it.createdAt.timeAgo,
                     style = GrowTheme.typography.labelMedium,

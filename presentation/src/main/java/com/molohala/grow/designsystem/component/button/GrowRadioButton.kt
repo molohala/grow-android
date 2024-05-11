@@ -42,7 +42,8 @@ fun GrowRadioButton(
     modifier: Modifier = Modifier,
     text: String,
     isSelected: Boolean,
-    @DrawableRes icon: Int = R.drawable.ic_radio,
+    @DrawableRes selectedIcon: Int = R.drawable.ic_radio,
+    @DrawableRes unselectedIcon: Int = R.drawable.ic_radio_unselected,
     shape: Shape = RoundedCornerShape(12.dp),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onClick: () -> Unit,
@@ -112,14 +113,12 @@ fun GrowRadioButton(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (isSelected) {
-                GrowIcon(
-                    modifier = Modifier
-                        .size(24.dp),
-                    id = icon,
-                    color = primary
-                )
-            }
+            GrowIcon(
+                modifier = Modifier
+                    .size(24.dp),
+                id = if (isSelected) selectedIcon else unselectedIcon,
+                color = primary
+            )
             Text(
                 text = text,
                 style = GrowTheme.typography.bodyRegular,

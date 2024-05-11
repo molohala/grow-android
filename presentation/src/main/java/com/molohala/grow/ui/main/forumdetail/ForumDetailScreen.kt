@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -357,11 +358,13 @@ private fun Forum(
                 }
             }
         }
-        Text(
-            text = forum.content,
-            style = GrowTheme.typography.bodyRegular,
-            color = GrowTheme.colorScheme.textNormal
-        )
+        SelectionContainer {
+            Text(
+                text = forum.content,
+                style = GrowTheme.typography.bodyRegular,
+                color = GrowTheme.colorScheme.textNormal
+            )
+        }
         GrowLikeButton(
             like = forum.like,
             enabled = forum.liked,

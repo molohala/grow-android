@@ -65,7 +65,7 @@ fun GrowRankCell(
                         2 -> R.drawable.second_medal
                         3 -> R.drawable.third_medal
                         else -> null
-                    } ?: return
+                    } ?: return@Row
                     Image(
                         modifier = Modifier
                             .size(18.dp)

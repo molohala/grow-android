@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -193,11 +194,13 @@ private fun Bio(
         val profile = (uiAppState.profile as? FetchFlow.Success)?.data
         profile?.let {
             val text = profile.bio.ifEmpty { "🤔" }
-            Text(
-                text = text,
-                style = GrowTheme.typography.bodyMedium,
-                color = GrowTheme.colorScheme.textDarken
-            )
+            SelectionContainer {
+                Text(
+                    text = text,
+                    style = GrowTheme.typography.bodyMedium,
+                    color = GrowTheme.colorScheme.textDarken
+                )
+            }
         }
     }
 }

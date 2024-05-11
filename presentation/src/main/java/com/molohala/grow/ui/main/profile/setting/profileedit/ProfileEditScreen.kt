@@ -165,7 +165,8 @@ fun ProfileEditScreen(
                                                 ?: return@let
                                         langs.data.forEach { lang ->
                                             GrowRadioButton(
-                                                text = lang.name, icon = R.drawable.ic_check,
+                                                text = lang.name, selectedIcon = R.drawable.ic_check,
+                                                unselectedIcon = R.drawable.ic_add_line,
                                                 isSelected = myLanguage.contains(lang)
                                             ) {
                                                 viewModel.updateMyLanguages(lang)
