@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -125,6 +126,8 @@ fun GrowForumCell(
                 )
                 SelectionContainer {
                     Text(
+                        modifier = Modifier
+                            .widthIn(0.dp, 180.dp),
                         text = it.content,
                         style = GrowTheme.typography.labelRegular,
                         maxLines = 1,
@@ -133,6 +136,7 @@ fun GrowForumCell(
                     )
                 }
                 Text(
+                    modifier = Modifier,
                     text = it.createdAt.timeAgo,
                     style = GrowTheme.typography.labelMedium,
                     color = GrowTheme.colorScheme.textAlt
