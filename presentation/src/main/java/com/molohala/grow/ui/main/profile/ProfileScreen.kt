@@ -139,8 +139,9 @@ private fun Info(
                     Column(
                         verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
+                        val isDesigner = it.data.job == "Designer"
                         Text(
-                            text = "${it.data.job} 개발자",
+                            text = "${it.data.job} ${if (isDesigner) "" else "개발자"}",
                             color = GrowTheme.colorScheme.textDarken,
                             style = GrowTheme.typography.labelRegular
                         )
