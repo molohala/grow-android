@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -20,6 +21,7 @@ import com.molohala.grow.common.util.getVersionInfo
 import com.molohala.grow.designsystem.component.button.GrowToggle
 import com.molohala.grow.designsystem.component.divider.GrowDivider
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
+import com.molohala.grow.designsystem.extension.bounceClick
 import com.molohala.grow.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.specific.settingcell.GrowSettingCell
 import com.molohala.grow.ui.main.main.NavGroup
@@ -34,6 +36,7 @@ fun SettingScreen(
 
     val context = LocalContext.current
     val uiAppState by appViewModel.uiState.collectAsState()
+    val uriHandler = LocalUriHandler.current
 
     GrowTopAppBar(
         text = "설정",
@@ -87,15 +90,15 @@ fun SettingScreen(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    GrowSettingCell(
-                        label = "알림 허용",
-                        leftIcon = R.drawable.ic_notification,
-                        content = {
-                            GrowToggle(checked = true) {
-
-                            }
-                        }
-                    )
+//                    GrowSettingCell(
+//                        label = "알림 허용",
+//                        leftIcon = R.drawable.ic_notification,
+//                        content = {
+//                            GrowToggle(checked = true) {
+//
+//                            }
+//                        }
+//                    )
                     GrowSettingCell(
                         label = "다크모드",
                         leftIcon = R.drawable.ic_moon,
@@ -138,12 +141,20 @@ fun SettingScreen(
                         color = GrowTheme.colorScheme.textAlt
                     )
                     Text(
+                        modifier = Modifier
+                            .bounceClick(onClick = {
+                                uriHandler.openUri("https://ssseqew.notion.site/f7614db9bb7e489ab209f891e28633cc?pvs=4")
+                            }),
                         text = "개인정보 이용 약관",
                         style = GrowTheme.typography.labelMedium,
                         color = GrowTheme.colorScheme.textAlt,
                         textDecoration = TextDecoration.Underline
                     )
                     Text(
+                        modifier = Modifier
+                            .bounceClick(onClick = {
+                                uriHandler.openUri("https://ssseqew.notion.site/10ad68a929c44d45bae4ea40535876a2?pvs=4")
+                            }),
                         text = "서비스 정책",
                         style = GrowTheme.typography.labelMedium,
                         color = GrowTheme.colorScheme.textAlt,
