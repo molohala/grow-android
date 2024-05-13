@@ -6,19 +6,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.R
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.common.util.getVersionInfo
 import com.molohala.grow.designsystem.component.button.GrowToggle
+import com.molohala.grow.designsystem.component.dialog.GrowDialog
 import com.molohala.grow.designsystem.component.divider.GrowDivider
 import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.extension.bounceClick
@@ -31,12 +37,29 @@ import com.molohala.grow.ui.root.AppViewModel
 @Composable
 fun SettingScreen(
     navController: NavController,
-    appViewModel: AppViewModel
+    appViewModel: AppViewModel,
+    viewModel: SettingViewModel = viewModel()
 ) {
 
     val context = LocalContext.current
     val uiAppState by appViewModel.uiState.collectAsState()
     val uriHandler = LocalUriHandler.current
+    var showRemoveMemberDialog by remember { mutableStateOf(false) }
+    var showRemoveMemberFailureDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect {
+            when (it) {
+                SettingSideEffect.RemoveMemberFailure -> {
+                    showRemoveMemberFailureDialog = true
+                }
+
+                SettingSideEffect.RemoveMemberSuccess -> {
+                    appViewModel.clearToken()
+                }
+            }
+        }
+    }
 
     GrowTopAppBar(
         text = "설정",
@@ -61,23 +84,25 @@ fun SettingScreen(
                             .padding(top = 16.dp),
                         leftIcon = R.drawable.ic_person,
                         label = "프로필 설정",
-                        description = profile?.data?.name?: ""
+                        description = profile?.data?.name ?: ""
                     ) {
                         navController.navigate(NavGroup.ProfileEdit.name)
                     }
-                    val github = profile?.data?.socialAccounts?.firstOrNull { it.socialType == "GITHUB" }
+                    val github =
+                        profile?.data?.socialAccounts?.firstOrNull { it.socialType == "GITHUB" }
                     GrowSettingCell(
                         leftIcon = R.drawable.ic_github,
                         label = "Github 설정",
-                        description = github?.socialId?: ""
+                        description = github?.socialId ?: ""
                     ) {
                         navController.navigate(NavGroup.GithubSetting.name)
                     }
-                    val baekjoon = profile?.data?.socialAccounts?.firstOrNull { it.socialType == "SOLVED_AC" }
+                    val baekjoon =
+                        profile?.data?.socialAccounts?.firstOrNull { it.socialType == "SOLVED_AC" }
                     GrowSettingCell(
                         leftIcon = R.drawable.ic_baekjoon,
                         label = "백준 설정",
-                        description = baekjoon?.socialId?: ""
+                        description = baekjoon?.socialId ?: ""
                     ) {
                         navController.navigate(NavGroup.BaekjoonSetting.name)
                     }
@@ -103,7 +128,10 @@ fun SettingScreen(
                         label = "다크모드",
                         leftIcon = R.drawable.ic_moon,
                         content = {
-                            GrowToggle(checked = uiAppState.isDarkMode, onCheckedChange = appViewModel::updateIsDarkMode)
+                            GrowToggle(
+                                checked = uiAppState.isDarkMode,
+                                onCheckedChange = appViewModel::updateIsDarkMode
+                            )
                         }
                     )
                 }
@@ -124,7 +152,7 @@ fun SettingScreen(
                         label = "회원탈퇴",
                         labelColor = GrowTheme.colorScheme.textWarning
                     ) {
-
+                        showRemoveMemberDialog = true
                     }
                 }
             }
@@ -162,6 +190,29 @@ fun SettingScreen(
                     )
                 }
             }
+        }
+    }
+
+    if (showRemoveMemberDialog) {
+        GrowDialog(
+            title = "",
+            onCancelRequest = {
+                showRemoveMemberDialog = false
+            },
+            onSuccessRequest = {
+                viewModel.removeMember()
+            },
+            onDismissRequest = {
+                showRemoveMemberDialog = false
+            }
+        )
+    }
+
+    if (showRemoveMemberFailureDialog) {
+        GrowDialog(
+            title = "회원 탈퇴에 실패 했습니다"
+        ) {
+            showRemoveMemberFailureDialog = false
         }
     }
 }
