@@ -1,1 +1,2 @@
-# infinity-android
+# 그로우
+> 대소고 코딩 좀 하자
