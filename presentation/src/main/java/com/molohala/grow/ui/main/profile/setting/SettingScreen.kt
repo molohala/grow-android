@@ -20,16 +20,16 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.grow.R
+import com.bestswlkh0310.designsystem.R
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.common.util.getVersionInfo
 import com.molohala.grow.designsystem.component.button.GrowToggle
-import com.molohala.grow.designsystem.component.dialog.GrowDialog
+import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
+import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
+import com.bestswlkh0310.designsystem.extension.bounceClick
+import com.bestswlkh0310.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.component.divider.GrowDivider
-import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.extension.bounceClick
-import com.molohala.grow.designsystem.foundation.GrowTheme
-import com.molohala.grow.designsystem.specific.settingcell.GrowSettingCell
+import com.molohala.grow.specific.settingcell.GrowSettingCell
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -63,7 +63,7 @@ fun SettingScreen(
 
     GrowTopAppBar(
         text = "설정",
-        backgroundColor = GrowTheme.colorScheme.backgroundAlt,
+        backgroundColor = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.backgroundAlt,
         onClickBackButton = {
             navController.popBackStack()
         }
@@ -165,8 +165,8 @@ fun SettingScreen(
                 ) {
                     Text(
                         text = "버전 ${getVersionInfo(context) ?: "-"}",
-                        style = GrowTheme.typography.labelMedium,
-                        color = GrowTheme.colorScheme.textAlt
+                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelMedium,
+                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt
                     )
                     Text(
                         modifier = Modifier
@@ -174,8 +174,8 @@ fun SettingScreen(
                                 uriHandler.openUri("https://ssseqew.notion.site/f7614db9bb7e489ab209f891e28633cc?pvs=4")
                             }),
                         text = "개인정보 이용 약관",
-                        style = GrowTheme.typography.labelMedium,
-                        color = GrowTheme.colorScheme.textAlt,
+                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelMedium,
+                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt,
                         textDecoration = TextDecoration.Underline
                     )
                     Text(
@@ -184,8 +184,8 @@ fun SettingScreen(
                                 uriHandler.openUri("https://ssseqew.notion.site/10ad68a929c44d45bae4ea40535876a2?pvs=4")
                             }),
                         text = "서비스 정책",
-                        style = GrowTheme.typography.labelMedium,
-                        color = GrowTheme.colorScheme.textAlt,
+                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelMedium,
+                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt,
                         textDecoration = TextDecoration.Underline
                     )
                 }

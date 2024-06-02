@@ -10,7 +10,7 @@ import com.molohala.grow.data.info.response.GithubResponse
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.data.info.response.SolvedacResponse
 import com.molohala.grow.data.language.response.LanguageResponse
-import com.molohala.grow.designsystem.specific.chart.GrowChartInfo
+import com.molohala.grow.specific.chart.GrowChartInfo
 import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

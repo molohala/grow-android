@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.designsystem.foundation.GrowTheme
+import com.bestswlkh0310.designsystem.foundation.GrowTheme
 
 @Composable
 fun ErrorScreen(
@@ -24,8 +24,8 @@ fun ErrorScreen(
         Spacer(modifier = Modifier.weight(1f))
         Text(
             text = "Error...",
-            style = GrowTheme.typography.headline1B,
-            color = GrowTheme.colorScheme.textNormal
+            style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.headline1B,
+            color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
         )
         Text(
             modifier = Modifier
@@ -33,8 +33,8 @@ fun ErrorScreen(
                     // action
                 }),
             text = "그로우 개발 스토리 보러가기",
-            style = GrowTheme.typography.bodyRegular.copy(textDecoration = TextDecoration.Underline),
-            color = GrowTheme.colorScheme.textDarken
+            style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.bodyRegular.copy(textDecoration = TextDecoration.Underline),
+            color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textDarken
         )
         Spacer(modifier = Modifier.weight(1f))
     }

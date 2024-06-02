@@ -13,7 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.molohala.grow.application.GrowApp
 import com.molohala.grow.application.PreferenceManager
-import com.molohala.grow.designsystem.foundation.GrowTheme
+import com.bestswlkh0310.designsystem.foundation.GrowTheme
 import com.molohala.grow.ui.main.main.NavigationGraph
 
 class AppActivity : ComponentActivity() {
@@ -27,7 +27,7 @@ class AppActivity : ComponentActivity() {
             val navController = rememberNavController()
             val uiState by appViewModel.uiState.collectAsState()
 
-            GrowTheme(
+            com.bestswlkh0310.designsystem.foundation.GrowTheme(
                 darkTheme = uiState.isDarkMode
             ) {
                 Surface(

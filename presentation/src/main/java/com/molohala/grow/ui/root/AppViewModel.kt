@@ -2,16 +2,16 @@ package com.molohala.grow.ui.root
 
 import androidx.lifecycle.ViewModel
 import com.molohala.grow.application.GrowApp
-import com.molohala.grow.common.chart.baekjoonWeekChartInfo
-import com.molohala.grow.common.chart.githubWeekChartInfo
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.info.response.GithubResponse
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.data.info.response.SolvedacResponse
 import com.molohala.grow.data.language.response.LanguageResponse
-import com.molohala.grow.designsystem.component.bottomtabbar.BottomTabItemType
-import com.molohala.grow.designsystem.specific.chart.GrowChartInfo
+import com.bestswlkh0310.designsystem.component.bottomtabbar.BottomTabItemType
+import com.molohala.grow.common.chart.baekjoonWeekChartInfo
+import com.molohala.grow.common.chart.githubWeekChartInfo
+import com.molohala.grow.specific.chart.GrowChartInfo
 import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

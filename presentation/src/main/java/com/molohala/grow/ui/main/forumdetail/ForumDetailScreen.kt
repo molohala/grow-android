@@ -34,25 +34,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.grow.R
+import com.bestswlkh0310.designsystem.R
 import com.molohala.grow.common.flow.FetchFlow
-import com.molohala.grow.common.util.timeAgo
+import com.bestswlkh0310.designsystem.foundation.util.timeAgo
 import com.molohala.grow.data.forum.response.ForumContentResponse
-import com.molohala.grow.designsystem.component.avatar.AvatarType
-import com.molohala.grow.designsystem.component.avatar.GrowAvatar
-import com.molohala.grow.designsystem.component.button.GrowLikeButton
-import com.molohala.grow.designsystem.component.dialog.GrowDialog
+import com.bestswlkh0310.designsystem.component.avatar.AvatarType
+import com.bestswlkh0310.designsystem.component.avatar.GrowAvatar
+import com.bestswlkh0310.designsystem.component.button.GrowLikeButton
+import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
+import com.bestswlkh0310.designsystem.component.textfield.GrowTextField
+import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
+import com.bestswlkh0310.designsystem.extension.bounceClick
+import com.bestswlkh0310.designsystem.extension.`if`
+import com.bestswlkh0310.designsystem.foundation.GrowTheme
 import com.molohala.grow.designsystem.component.divider.GrowDivider
 import com.molohala.grow.designsystem.component.menu.GrowMenu
 import com.molohala.grow.designsystem.component.menu.GrowMenuData
 import com.molohala.grow.designsystem.component.menu.MenuType
-import com.molohala.grow.designsystem.component.textfield.GrowTextField
-import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.extension.bounceClick
-import com.molohala.grow.designsystem.extension.`if`
-import com.molohala.grow.designsystem.foundation.GrowTheme
-import com.molohala.grow.designsystem.foundation.iconography.GrowIcon
-import com.molohala.grow.designsystem.specific.comment.GrowCommentCell
+import com.molohala.grow.specific.comment.GrowCommentCell
 import com.molohala.grow.designsystem.specific.comment.GrowCommentCellShimmer
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
@@ -203,7 +202,7 @@ fun ForumDetailScreen(
                     modifier = Modifier
                         .align(Alignment.Bottom)
                 ) {
-                    GrowIcon(
+                    com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon(
                         modifier = Modifier
                             .size(32.dp)
                             .`if`(isIconEnable) {
@@ -340,7 +339,7 @@ private fun Forum(
             Spacer(modifier = Modifier.weight(1f))
             if (profileId == forum.writerId) {
                 Column {
-                    GrowIcon(
+                    com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon(
                         modifier = Modifier.bounceClick(onClick = {
                             onChangeIsMenuExpanded(true)
                         }),

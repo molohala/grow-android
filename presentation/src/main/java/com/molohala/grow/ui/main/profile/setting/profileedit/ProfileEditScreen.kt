@@ -23,14 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.grow.R
+import com.bestswlkh0310.designsystem.component.button.GrowCTAButton
+import com.bestswlkh0310.designsystem.component.button.GrowRadioButton
+import com.bestswlkh0310.designsystem.R
 import com.molohala.grow.common.flow.FetchFlow
-import com.molohala.grow.designsystem.component.button.GrowCTAButton
-import com.molohala.grow.designsystem.component.button.GrowRadioButton
-import com.molohala.grow.designsystem.component.dialog.GrowDialog
-import com.molohala.grow.designsystem.component.textfield.GrowTextField
-import com.molohala.grow.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.foundation.GrowTheme
+import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
+import com.bestswlkh0310.designsystem.component.textfield.GrowTextField
+import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.designsystem.specific.text.Headline
 import com.molohala.grow.ui.root.AppViewModel
 
@@ -78,7 +77,7 @@ fun ProfileEditScreen(
         onClickBackButton = {
             navController.popBackStack()
         },
-        backgroundColor = GrowTheme.colorScheme.backgroundAlt
+        backgroundColor = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.backgroundAlt
     ) {
         Box(
             modifier = Modifier
