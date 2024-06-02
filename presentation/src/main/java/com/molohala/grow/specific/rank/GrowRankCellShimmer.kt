@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.specific.rank
+package com.molohala.grow.specific.rank
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,8 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.component.avatar.AvatarType
-import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
+import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatarShimmer
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 
 @Composable
 fun GrowRankCellShimmer(
@@ -26,21 +29,21 @@ fun GrowRankCellShimmer(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            GrowAvatarShimmer(type = AvatarType.Large)
-            com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer(width = 100.dp)
+            MyAvatarShimmer(type = AvatarType.Large)
+            RowShimmer(width = 100.dp)
         }
         Spacer(modifier = Modifier.weight(1f))
-        com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer(width = 40.dp)
+        RowShimmer(width = 40.dp)
     }
 }
 
-@com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+@MyPreviews
 @Composable
 private fun Preview() {
-    com.bestswlkh0310.designsystem.foundation.GrowTheme {
+    MyTheme {
         Box(
             modifier = Modifier
-                .background(com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.background)
+                .background(MyTheme.colorScheme.background)
                 .padding(10.dp),
         ) {
             GrowRankCellShimmer()

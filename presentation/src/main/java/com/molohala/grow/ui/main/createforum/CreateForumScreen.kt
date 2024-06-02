@@ -14,10 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.bestswlkh0310.designsystem.component.button.ButtonType
-import com.bestswlkh0310.designsystem.component.button.GrowTextButton
-import com.bestswlkh0310.designsystem.component.textfield.GrowTextField
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
+import com.bestswlkh0310.mydesignsystem.component.button.ButtonType
+import com.bestswlkh0310.mydesignsystem.component.button.MyTextButton
+import com.bestswlkh0310.mydesignsystem.component.textfield.MyTextField
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
 import com.molohala.grow.ui.main.editforum.CreateForumSideEffect
 import com.molohala.grow.ui.main.editforum.CreateForumViewModel
 
@@ -43,10 +43,10 @@ fun CreateForumScreen(
         }
     }
 
-    GrowTopAppBar(
+    MyTopAppBar(
         text = "글쓰기",
         trailingContent = {
-            GrowTextButton(
+            MyTextButton(
                 text = "완료",
                 type = ButtonType.Small,
                 enabled = uiState.content.isNotEmpty(),
@@ -58,7 +58,7 @@ fun CreateForumScreen(
             navController.popBackStack()
         }
     ) {
-        GrowTextField(
+        MyTextField(
             modifier = Modifier
                 .defaultMinSize(minHeight = 300.dp)
                 .padding(12.dp),

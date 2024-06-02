@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.specific.rank
+package com.molohala.grow.specific.rank
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,10 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.R
-import com.bestswlkh0310.designsystem.component.avatar.AvatarType
-import com.bestswlkh0310.designsystem.component.avatar.GrowAvatar
-import com.bestswlkh0310.designsystem.extension.bounceClick
+import com.bestswlkh0310.mydesignsystem.R
+import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatar
+import com.bestswlkh0310.mydesignsystem.extension.bounceClick
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 
 @Composable
 fun GrowRankCell(
@@ -42,10 +44,10 @@ fun GrowRankCell(
         ) {
             Text(
                 text = rank.toString(),
-                style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.bodyRegular,
-                color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+                style = MyTheme.typography.bodyRegular,
+                color = MyTheme.colorScheme.textNormal
             )
-            GrowAvatar(type = AvatarType.Large)
+            MyAvatar(type = AvatarType.Large)
             Column(
                 verticalArrangement = Arrangement.spacedBy(0.dp)
             ) {
@@ -55,8 +57,8 @@ fun GrowRankCell(
                 ) {
                     Text(
                         text = name,
-                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.bodyMedium,
-                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+                        style = MyTheme.typography.bodyMedium,
+                        color = MyTheme.colorScheme.textNormal
                     )
                     val medal = when (rank) {
                         1 -> R.drawable.first_medal
@@ -74,27 +76,27 @@ fun GrowRankCell(
                 }
                 Text(
                     text = socialId,
-                    style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.bodyMedium,
-                    color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt
+                    style = MyTheme.typography.bodyMedium,
+                    color = MyTheme.colorScheme.textAlt
                 )
             }
         }
         Spacer(modifier = Modifier.weight(1f))
         Text(
             text = label,
-            style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.bodyBold,
-            color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+            style = MyTheme.typography.bodyBold,
+            color = MyTheme.colorScheme.textNormal
         )
     }
 }
 
 @Composable
-@com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+@MyPreviews
 private fun Preview() {
-    com.bestswlkh0310.designsystem.foundation.GrowTheme {
+    MyTheme {
         Column(
             modifier = Modifier
-                .background(com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.background)
+                .background(MyTheme.colorScheme.background)
                 .padding(10.dp)
         ) {
             GrowRankCell(name = "박주영", socialId = "jombidev", rank = 1, label = "10 문제") {

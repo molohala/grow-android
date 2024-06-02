@@ -23,14 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.bestswlkh0310.designsystem.component.button.GrowCTAButton
-import com.bestswlkh0310.designsystem.component.button.GrowRadioButton
-import com.bestswlkh0310.designsystem.R
+import com.bestswlkh0310.mydesignsystem.component.button.MyCTAButton
+import com.bestswlkh0310.mydesignsystem.component.button.MyRadioButton
+import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
+import com.bestswlkh0310.mydesignsystem.R
+import com.bestswlkh0310.mydesignsystem.component.textfield.MyTextField
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
 import com.molohala.grow.common.flow.FetchFlow
-import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
-import com.bestswlkh0310.designsystem.component.textfield.GrowTextField
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.specific.text.Headline
+import com.molohala.grow.specific.text.Headline
 import com.molohala.grow.ui.root.AppViewModel
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -72,12 +73,12 @@ fun ProfileEditScreen(
         }
     }
 
-    GrowTopAppBar(
+    MyTopAppBar(
         text = "프로필 설정",
         onClickBackButton = {
             navController.popBackStack()
         },
-        backgroundColor = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.backgroundAlt
+        backgroundColor = MyTheme.colorScheme.backgroundAlt
     ) {
         Box(
             modifier = Modifier
@@ -98,7 +99,7 @@ fun ProfileEditScreen(
                                 .padding(start = 4.dp),
                             text = "소개글"
                         )
-                        GrowTextField(
+                        MyTextField(
                             modifier = Modifier
                                 .heightIn(52.dp, 100.dp),
                             value = uiState.bio,
@@ -127,7 +128,7 @@ fun ProfileEditScreen(
                                     is FetchFlow.Fetching -> {}
                                     is FetchFlow.Success -> {
                                         jobs.data.forEach { job ->
-                                            GrowRadioButton(
+                                            MyRadioButton(
                                                 text = job.ifEmpty { "Developer" },
                                                 isSelected = job == uiState.selectedJob,
                                                 onClick = {
@@ -163,7 +164,7 @@ fun ProfileEditScreen(
                                             (uiState.myLanguages as? FetchFlow.Success)?.data
                                                 ?: return@let
                                         langs.data.forEach { lang ->
-                                            GrowRadioButton(
+                                            MyRadioButton(
                                                 text = lang.name, selectedIcon = R.drawable.ic_check,
                                                 unselectedIcon = R.drawable.ic_add_line,
                                                 isSelected = myLanguage.contains(lang)
@@ -181,7 +182,7 @@ fun ProfileEditScreen(
                     Spacer(modifier = Modifier.height(92.dp))
                 }
             }
-            GrowCTAButton(
+            MyCTAButton(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 8.dp),
@@ -194,7 +195,7 @@ fun ProfileEditScreen(
     }
 
     if (showPatchSuccessDialog) {
-        GrowDialog(
+        MyDialog(
             title = "프로필 정보 수정 성공",
             onDismissRequest = {
                 showPatchSuccessDialog = false
@@ -203,7 +204,7 @@ fun ProfileEditScreen(
     }
 
     if (showFetchFailureDialog) {
-        GrowDialog(
+        MyDialog(
             title = "프로필 정보 불러오기 실패",
             onDismissRequest = {
                 showFetchFailureDialog = false
@@ -213,7 +214,7 @@ fun ProfileEditScreen(
     }
 
     if (showPatchFailureDialog) {
-        GrowDialog(
+        MyDialog(
             title = "프로필 정보 수정 실패",
             onDismissRequest = {
                 showPatchFailureDialog = false

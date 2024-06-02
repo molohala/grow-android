@@ -27,22 +27,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.bestswlkh0310.designsystem.R
 import com.molohala.grow.common.flow.FetchFlow
-import com.bestswlkh0310.designsystem.component.avatar.AvatarType
-import com.bestswlkh0310.designsystem.component.avatar.GrowAvatar
-import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
-import com.molohala.grow.designsystem.component.language.GrowLanguage
-import com.bestswlkh0310.designsystem.component.language.GrowLanguageShimmer
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
-import com.bestswlkh0310.designsystem.extension.bounceClick
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer
-import com.molohala.grow.designsystem.specific.chart.GrowChartCell
+import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatar
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatarShimmer
+import com.bestswlkh0310.mydesignsystem.extension.bounceClick
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
+import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
+import com.bestswlkh0310.mydesignsystem.R
+import com.bestswlkh0310.mydesignsystem.component.language.MyLanguage
+import com.bestswlkh0310.mydesignsystem.component.language.MyLanguageShimmer
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
+import com.molohala.grow.specific.chart.GrowChartCell
 import com.molohala.grow.specific.statcell.GrowStatCell
 import com.molohala.grow.specific.statcell.GrowStatCellShimmer
 import com.molohala.grow.specific.statcell.GrowStatType
-import com.molohala.grow.designsystem.specific.text.Headline
+import com.molohala.grow.specific.text.Headline
 import com.molohala.grow.specific.chart.GrowChartCellShimmer
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
@@ -67,9 +68,9 @@ fun ProfileScreen(
         }
     )
 
-    GrowTopAppBar(
+    MyTopAppBar(
         text = "프로필",
-        backgroundColor = GrowTheme.colorScheme.backgroundAlt,
+        backgroundColor = MyTheme.colorScheme.backgroundAlt,
     ) {
         Box(
             modifier = Modifier
@@ -124,7 +125,7 @@ private fun Info(
             when (it) {
                 is FetchFlow.Failure -> {}
                 is FetchFlow.Fetching -> {
-                    GrowAvatarShimmer(type = AvatarType.ExtraLarge)
+                    MyAvatarShimmer(type = AvatarType.ExtraLarge)
                     Column(
                         verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
@@ -134,32 +135,32 @@ private fun Info(
                 }
 
                 is FetchFlow.Success -> {
-                    GrowAvatar(type = AvatarType.ExtraLarge)
+                    MyAvatar(type = AvatarType.ExtraLarge)
                     Column(
                         verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
                         val isDesigner = it.data.job == "Designer"
                         Text(
                             text = "${it.data.job} ${if (isDesigner) "" else "개발자"}",
-                            color = GrowTheme.colorScheme.textDarken,
-                            style = GrowTheme.typography.labelRegular
+                            color = MyTheme.colorScheme.textDarken,
+                            style = MyTheme.typography.labelRegular
                         )
                         Text(
                             text = it.data.name,
-                            color = GrowTheme.colorScheme.textNormal,
-                            style = GrowTheme.typography.bodyBold
+                            color = MyTheme.colorScheme.textNormal,
+                            style = MyTheme.typography.bodyBold
                         )
                     }
                 }
             }
         }
         Spacer(modifier = Modifier.weight(1f))
-        com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon(
+        MyIcon(
             modifier = Modifier
                 .size(32.dp)
                 .bounceClick(onClick = onClick),
             id = R.drawable.ic_setting,
-            color = GrowTheme.colorScheme.textAlt
+            color = MyTheme.colorScheme.textAlt
         )
     }
 }
@@ -181,14 +182,14 @@ private fun Bio(
                     .padding(start = 4.dp),
                 text = "소개글"
             )
-            com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon(
+            MyIcon(
                 modifier = Modifier
                     .size(20.dp)
                     .bounceClick(onClick = {
                         onClickEdit()
                     }),
                 id = R.drawable.ic_write,
-                color = GrowTheme.colorScheme.textAlt
+                color = MyTheme.colorScheme.textAlt
             )
         }
         val profile = (uiAppState.profile as? FetchFlow.Success)?.data
@@ -197,8 +198,8 @@ private fun Bio(
             SelectionContainer {
                 Text(
                     text = text,
-                    style = GrowTheme.typography.bodyMedium,
-                    color = GrowTheme.colorScheme.textDarken
+                    style = MyTheme.typography.bodyMedium,
+                    color = MyTheme.colorScheme.textDarken
                 )
             }
         }
@@ -227,7 +228,7 @@ private fun Language(
                     is FetchFlow.Failure -> {}
                     is FetchFlow.Fetching -> {
                         repeat(4) {
-                            GrowLanguageShimmer()
+                            MyLanguageShimmer()
                         }
                     }
 
@@ -235,12 +236,12 @@ private fun Language(
                         if (it.data.isEmpty()) {
                             Text(
                                 text = "🤔",
-                                style = GrowTheme.typography.bodyMedium,
-                                color = GrowTheme.colorScheme.textDarken
+                                style = MyTheme.typography.bodyMedium,
+                                color = MyTheme.colorScheme.textDarken
                             )
                         } else {
                             it.data.forEach { lang ->
-                                GrowLanguage(text = lang.name)
+                                MyLanguage(text = lang.name)
                             }
                         }
                     }

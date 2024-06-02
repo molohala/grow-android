@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
 import com.molohala.grow.designsystem.specific.motivation.motivations
 
 @Composable
@@ -27,7 +27,7 @@ fun GrowMotivationCell(
             .fillMaxWidth()
             .padding(16.dp),
         text = motivation,
-        style = GrowTheme.typography.headline2R.copy(textAlign = TextAlign.Center),
-        color = GrowTheme.colorScheme.textNormal
+        style = MyTheme.typography.headline2R.copy(textAlign = TextAlign.Center),
+        color = MyTheme.colorScheme.textNormal
     )
 }

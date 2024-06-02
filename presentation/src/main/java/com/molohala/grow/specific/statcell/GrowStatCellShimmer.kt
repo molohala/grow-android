@@ -10,10 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.extension.applyCardView
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer
-import com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+import com.bestswlkh0310.mydesignsystem.extension.applyCardView
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 
 @Composable
 fun GrowStatCellShimmer(
@@ -36,10 +36,10 @@ fun GrowStatCellShimmer(
     }
 }
 
-@GrowPreviews
+@MyPreviews
 @Composable
 private fun StatPreview() {
-    GrowTheme {
+    MyTheme {
         Box(
             modifier = Modifier.padding(10.dp)
         ) {

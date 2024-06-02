@@ -27,21 +27,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatar
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatarShimmer
+import com.bestswlkh0310.mydesignsystem.component.language.MyLanguage
+import com.bestswlkh0310.mydesignsystem.component.language.MyLanguageShimmer
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
 import com.molohala.grow.common.flow.FetchFlow
-import com.bestswlkh0310.designsystem.component.avatar.AvatarType
-import com.bestswlkh0310.designsystem.component.avatar.GrowAvatar
-import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
-import com.molohala.grow.designsystem.component.language.GrowLanguage
-import com.bestswlkh0310.designsystem.component.language.GrowLanguageShimmer
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer
-import com.molohala.grow.designsystem.specific.chart.GrowChartCell
+import com.molohala.grow.specific.chart.GrowChartCell
+import com.molohala.grow.specific.chart.GrowChartCellShimmer
 import com.molohala.grow.specific.statcell.GrowStatCell
 import com.molohala.grow.specific.statcell.GrowStatCellShimmer
 import com.molohala.grow.specific.statcell.GrowStatType
-import com.molohala.grow.designsystem.specific.text.Headline
-import com.molohala.grow.specific.chart.GrowChartCellShimmer
+import com.molohala.grow.specific.text.Headline
 import com.molohala.grow.ui.main.main.NavGroup
 
 
@@ -69,12 +69,12 @@ fun ProfileDetailScreen(
 
     val profile = (uiState.profile as? FetchFlow.Success)?.data
     val name = profile?.name ?: ""
-    GrowTopAppBar(
+    MyTopAppBar(
         text = "${name}님의 프로필",
         onClickBackButton = {
             navController.popBackStack()
         },
-        backgroundColor = GrowTheme.colorScheme.backgroundAlt,
+        backgroundColor = MyTheme.colorScheme.backgroundAlt,
     ) {
         Box(
             modifier = Modifier
@@ -129,7 +129,7 @@ private fun Info(
             when (it) {
                 is FetchFlow.Failure -> {}
                 is FetchFlow.Fetching -> {
-                    GrowAvatarShimmer(type = AvatarType.ExtraLarge)
+                    MyAvatarShimmer(type = AvatarType.ExtraLarge)
                     Column(
                         verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
@@ -139,20 +139,20 @@ private fun Info(
                 }
 
                 is FetchFlow.Success -> {
-                    GrowAvatar(type = AvatarType.ExtraLarge)
+                    MyAvatar(type = AvatarType.ExtraLarge)
                     Column(
                         verticalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
                         val isDesigner = it.data.job == "Designer"
                         Text(
                             text = "${it.data.job} ${if (isDesigner) "" else "개발자"}",
-                            color = GrowTheme.colorScheme.textDarken,
-                            style = GrowTheme.typography.labelRegular
+                            color = MyTheme.colorScheme.textDarken,
+                            style = MyTheme.typography.labelRegular
                         )
                         Text(
                             text = it.data.name,
-                            color = GrowTheme.colorScheme.textNormal,
-                            style = GrowTheme.typography.bodyBold
+                            color = MyTheme.colorScheme.textNormal,
+                            style = MyTheme.typography.bodyBold
                         )
                     }
                 }
@@ -185,8 +185,8 @@ private fun Bio(
             SelectionContainer {
                 Text(
                     text = profile.bio,
-                    style = GrowTheme.typography.bodyMedium,
-                    color = GrowTheme.colorScheme.textDarken
+                    style = MyTheme.typography.bodyMedium,
+                    color = MyTheme.colorScheme.textDarken
                 )
             }
         }
@@ -215,13 +215,13 @@ private fun Language(
                     is FetchFlow.Failure -> {}
                     is FetchFlow.Fetching -> {
                         repeat(4) {
-                            GrowLanguageShimmer()
+                            MyLanguageShimmer()
                         }
                     }
 
                     is FetchFlow.Success -> {
                         it.data.forEach { lang ->
-                            GrowLanguage(text = lang.name)
+                            MyLanguage(text = lang.name)
                         }
                     }
                 }

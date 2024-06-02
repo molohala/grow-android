@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.bestswlkh0310.designsystem.component.button.GrowCTAButton
-import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
-import com.bestswlkh0310.designsystem.component.textfield.GrowTextField
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
+import com.bestswlkh0310.mydesignsystem.component.button.MyCTAButton
+import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
+import com.bestswlkh0310.mydesignsystem.component.textfield.MyTextField
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -47,7 +47,7 @@ fun SignInScreen(
             }
         }
     }
-    GrowTopAppBar(
+    MyTopAppBar(
         text = "로그인"
     ) {
         Column(
@@ -56,19 +56,19 @@ fun SignInScreen(
                 .padding(top = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            GrowTextField(
+            MyTextField(
                 value = uiState.id,
                 onValueChange = viewModel::updateId,
                 hint = "아이디를 입력해 주세요"
             )
-            GrowTextField(
+            MyTextField(
                 value = uiState.pw,
                 onValueChange = viewModel::updatePw,
                 hint = "비밀번호를 입력해 주세요",
                 secured = true
             )
             Spacer(modifier = Modifier.weight(1f))
-            GrowCTAButton(
+            MyCTAButton(
                 modifier = Modifier
                     .padding(bottom = 8.dp),
                 text = "도담도담 로그인",
@@ -81,7 +81,7 @@ fun SignInScreen(
     }
 
     if (showLoginFailureDialog) {
-        GrowDialog(
+        MyDialog(
             title = "로그인에 실패했습니다",
             onDismissRequest = {
                 showLoginFailureDialog = false

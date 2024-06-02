@@ -14,21 +14,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.extension.applyCardView
-import com.bestswlkh0310.designsystem.extension.bounceClick
-import com.bestswlkh0310.designsystem.R
-import com.molohala.grow.designsystem.component.button.GrowToggle
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon
-import com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+import com.bestswlkh0310.mydesignsystem.extension.applyCardView
+import com.bestswlkh0310.mydesignsystem.extension.bounceClick
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
+import com.bestswlkh0310.mydesignsystem.R
+import com.bestswlkh0310.mydesignsystem.component.button.MyToggle
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 
 @Composable
 fun GrowSettingCell(
     modifier: Modifier = Modifier,
     label: String,
-    labelColor: Color = GrowTheme.colorScheme.textNormal,
+    labelColor: Color = MyTheme.colorScheme.textNormal,
     leftIcon: Int? = null,
-    leftIconColor: Color = GrowTheme.colorScheme.textAlt,
+    leftIconColor: Color = MyTheme.colorScheme.textAlt,
     description: String? = null,
     content: @Composable () -> Unit = {},
     onClick: (() -> Unit)? = null
@@ -46,7 +46,7 @@ fun GrowSettingCell(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             leftIcon?.let {
-                GrowIcon(
+                MyIcon(
                     modifier = Modifier
                         .size(24.dp),
                     id = it,
@@ -55,7 +55,7 @@ fun GrowSettingCell(
             }
             Text(
                 text = label,
-                style = GrowTheme.typography.bodyBold,
+                style = MyTheme.typography.bodyBold,
                 color = labelColor
             )
         }
@@ -68,14 +68,14 @@ fun GrowSettingCell(
             ) {
                 Text(
                     text = it,
-                    style = GrowTheme.typography.labelMedium,
-                    color = GrowTheme.colorScheme.textAlt
+                    style = MyTheme.typography.labelMedium,
+                    color = MyTheme.colorScheme.textAlt
                 )
-                GrowIcon(
+                MyIcon(
                     modifier = Modifier
                         .size(24.dp),
                     id = R.drawable.ic_expand_right,
-                    color = GrowTheme.colorScheme.textAlt
+                    color = MyTheme.colorScheme.textAlt
                 )
             }
         }
@@ -83,13 +83,13 @@ fun GrowSettingCell(
     }
 }
 
-@GrowPreviews
+@MyPreviews
 @Composable
 private fun Preview() {
-    GrowTheme {
+    MyTheme {
         Column(
             modifier = Modifier
-                .background(GrowTheme.colorScheme.background)
+                .background(MyTheme.colorScheme.background)
                 .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
@@ -102,7 +102,7 @@ private fun Preview() {
                 label = "알림 켜기",
                 leftIcon = R.drawable.ic_notification,
                 content = {
-                    GrowToggle(checked = true) {}
+                    MyToggle(checked = true) {}
                 }
             ) {}
         }

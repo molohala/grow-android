@@ -1,7 +1,7 @@
 package com.molohala.grow.specific.chart
 
 import androidx.annotation.DrawableRes
-import com.bestswlkh0310.designsystem.R
+import com.bestswlkh0310.mydesignsystem.R
 
 sealed class GrowChartType(
     @DrawableRes val icon: Int

@@ -20,15 +20,15 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.bestswlkh0310.designsystem.R
+import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
+import com.bestswlkh0310.mydesignsystem.extension.bounceClick
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.R
+import com.bestswlkh0310.mydesignsystem.component.button.MyToggle
+import com.bestswlkh0310.mydesignsystem.component.divider.MyDivider
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.common.util.getVersionInfo
-import com.molohala.grow.designsystem.component.button.GrowToggle
-import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
-import com.bestswlkh0310.designsystem.extension.bounceClick
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.molohala.grow.designsystem.component.divider.GrowDivider
 import com.molohala.grow.specific.settingcell.GrowSettingCell
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
@@ -61,9 +61,9 @@ fun SettingScreen(
         }
     }
 
-    GrowTopAppBar(
+    MyTopAppBar(
         text = "설정",
-        backgroundColor = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.backgroundAlt,
+        backgroundColor = MyTheme.colorScheme.backgroundAlt,
         onClickBackButton = {
             navController.popBackStack()
         }
@@ -109,7 +109,7 @@ fun SettingScreen(
                 }
             }
             item {
-                GrowDivider()
+                MyDivider()
             }
             item {
                 Column(
@@ -128,7 +128,7 @@ fun SettingScreen(
                         label = "다크모드",
                         leftIcon = R.drawable.ic_moon,
                         content = {
-                            GrowToggle(
+                            MyToggle(
                                 checked = uiAppState.isDarkMode,
                                 onCheckedChange = appViewModel::updateIsDarkMode
                             )
@@ -137,7 +137,7 @@ fun SettingScreen(
                 }
             }
             item {
-                GrowDivider()
+                MyDivider()
             }
             item {
                 Column(
@@ -150,7 +150,7 @@ fun SettingScreen(
                     }
                     GrowSettingCell(
                         label = "회원탈퇴",
-                        labelColor = GrowTheme.colorScheme.textWarning
+                        labelColor = MyTheme.colorScheme.textWarning
                     ) {
                         showRemoveMemberDialog = true
                     }
@@ -165,8 +165,8 @@ fun SettingScreen(
                 ) {
                     Text(
                         text = "버전 ${getVersionInfo(context) ?: "-"}",
-                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelMedium,
-                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt
+                        style = MyTheme.typography.labelMedium,
+                        color = MyTheme.colorScheme.textAlt
                     )
                     Text(
                         modifier = Modifier
@@ -174,8 +174,8 @@ fun SettingScreen(
                                 uriHandler.openUri("https://ssseqew.notion.site/f7614db9bb7e489ab209f891e28633cc?pvs=4")
                             }),
                         text = "개인정보 이용 약관",
-                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelMedium,
-                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt,
+                        style = MyTheme.typography.labelMedium,
+                        color = MyTheme.colorScheme.textAlt,
                         textDecoration = TextDecoration.Underline
                     )
                     Text(
@@ -184,8 +184,8 @@ fun SettingScreen(
                                 uriHandler.openUri("https://ssseqew.notion.site/10ad68a929c44d45bae4ea40535876a2?pvs=4")
                             }),
                         text = "서비스 정책",
-                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelMedium,
-                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt,
+                        style = MyTheme.typography.labelMedium,
+                        color = MyTheme.colorScheme.textAlt,
                         textDecoration = TextDecoration.Underline
                     )
                 }
@@ -194,7 +194,7 @@ fun SettingScreen(
     }
 
     if (showRemoveMemberDialog) {
-        GrowDialog(
+        MyDialog(
             title = "",
             onCancelRequest = {
                 showRemoveMemberDialog = false
@@ -209,7 +209,7 @@ fun SettingScreen(
     }
 
     if (showRemoveMemberFailureDialog) {
-        GrowDialog(
+        MyDialog(
             title = "회원 탈퇴에 실패 했습니다"
         ) {
             showRemoveMemberFailureDialog = false

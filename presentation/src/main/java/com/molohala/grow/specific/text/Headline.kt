@@ -1,5 +1,6 @@
-package com.molohala.grow.designsystem.specific.text
+package com.molohala.grow.specific.text
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,8 +9,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 
 @Composable
 fun Headline(
@@ -19,18 +20,18 @@ fun Headline(
     Text(
         modifier = modifier,
         text = text,
-        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.headline1B,
-        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+        style = MyTheme.typography.headline1B,
+        color = MyTheme.colorScheme.textNormal
     )
 }
 
-@com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+@MyPreviews
 @Composable
 private fun Preview() {
-    com.bestswlkh0310.designsystem.foundation.GrowTheme {
+    MyTheme {
         Column(
             modifier = Modifier
-                .background(com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.background)
+                .background(MyTheme.colorScheme.background)
                 .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {

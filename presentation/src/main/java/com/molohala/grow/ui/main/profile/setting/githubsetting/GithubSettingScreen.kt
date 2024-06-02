@@ -17,13 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.bestswlkh0310.designsystem.component.button.GrowCTAButton
-import com.bestswlkh0310.designsystem.R
 import com.molohala.grow.common.flow.FetchFlow
-import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
-import com.bestswlkh0310.designsystem.component.textfield.GrowTextField
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
-import com.molohala.grow.designsystem.specific.text.Headline
+import com.bestswlkh0310.mydesignsystem.component.button.MyCTAButton
+import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
+import com.bestswlkh0310.mydesignsystem.component.textfield.MyTextField
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.R
+import com.molohala.grow.specific.text.Headline
 import com.molohala.grow.ui.root.AppViewModel
 
 @Composable
@@ -55,12 +56,12 @@ fun GithubSettingScreen(
         }
     }
 
-    GrowTopAppBar(
+    MyTopAppBar(
         text = "Github 설정",
         onClickBackButton = {
             navController.popBackStack()
         },
-        backgroundColor = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.backgroundAlt
+        backgroundColor = MyTheme.colorScheme.backgroundAlt
     ) {
         Column(
             modifier = Modifier
@@ -76,13 +77,13 @@ fun GithubSettingScreen(
                 )
                 Spacer(modifier = Modifier.weight(1f))
             }
-            GrowTextField(
+            MyTextField(
                 value = uiState.githubId,
                 onValueChange = viewModel::updateGithubId,
                 hint = "",
             )
             Spacer(modifier = Modifier.weight(1f))
-            GrowCTAButton(
+            MyCTAButton(
                 modifier = Modifier
                     .padding(bottom = 8.dp),
                 text = "완료",
@@ -95,7 +96,7 @@ fun GithubSettingScreen(
     }
 
     if (showPatchGithubSettingSuccessDialog) {
-        GrowDialog(
+        MyDialog(
             title = "Github 정보 수정 성공",
             onDismissRequest = {
                 showPatchGithubSettingSuccessDialog = false
@@ -105,7 +106,7 @@ fun GithubSettingScreen(
     }
 
     if (showPatchGithubSettingFailureDialog) {
-        GrowDialog(
+        MyDialog(
             title = "Github 정보 수정 실패",
             content = "아이디를 다시 확인해 주세요",
             onDismissRequest = {

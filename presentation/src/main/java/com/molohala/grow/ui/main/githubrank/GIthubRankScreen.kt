@@ -27,14 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.bestswlkh0310.designsystem.component.button.ButtonType
-import com.bestswlkh0310.designsystem.component.button.GrowButton
-import com.bestswlkh0310.designsystem.component.button.GrowTabButton
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
 import com.molohala.grow.common.flow.FetchFlow
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.molohala.grow.designsystem.specific.rank.GrowRankCell
-import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
+import com.bestswlkh0310.mydesignsystem.component.button.ButtonType
+import com.bestswlkh0310.mydesignsystem.component.button.MyButton
+import com.bestswlkh0310.mydesignsystem.component.button.MyTabButton
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.molohala.grow.specific.rank.GrowRankCell
+import com.molohala.grow.specific.rank.GrowRankCellShimmer
 import com.molohala.grow.ui.error.ErrorScreen
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppViewModel
@@ -58,7 +58,7 @@ fun GithubRankScreen(
         viewModel.fetchGithubRank()
     }
 
-    GrowTopAppBar(
+    MyTopAppBar(
         text = "Github 랭킹"
     ) {
         Box(
@@ -147,10 +147,10 @@ private fun RecommendingSettingGithub(
         Text(
             modifier = Modifier,
             text = "아직 Github ID를 설정하지 않았어요",
-            color = GrowTheme.colorScheme.textNormal,
-            style = GrowTheme.typography.bodyMedium
+            color = MyTheme.colorScheme.textNormal,
+            style = MyTheme.typography.bodyMedium
         )
-        GrowButton(
+        MyButton(
             text = "설정하기",
             type = ButtonType.Small
         ) {
@@ -170,7 +170,7 @@ private fun Indicator(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         GithubRankTab.entries.forEach {
-            GrowTabButton(
+            MyTabButton(
                 modifier = Modifier,
                 text = it.label,
                 selected = it == selectedTab,

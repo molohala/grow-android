@@ -34,25 +34,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.bestswlkh0310.designsystem.R
 import com.molohala.grow.common.flow.FetchFlow
-import com.bestswlkh0310.designsystem.foundation.util.timeAgo
 import com.molohala.grow.data.forum.response.ForumContentResponse
-import com.bestswlkh0310.designsystem.component.avatar.AvatarType
-import com.bestswlkh0310.designsystem.component.avatar.GrowAvatar
-import com.bestswlkh0310.designsystem.component.button.GrowLikeButton
-import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
-import com.bestswlkh0310.designsystem.component.textfield.GrowTextField
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
-import com.bestswlkh0310.designsystem.extension.bounceClick
-import com.bestswlkh0310.designsystem.extension.`if`
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.molohala.grow.designsystem.component.divider.GrowDivider
-import com.molohala.grow.designsystem.component.menu.GrowMenu
-import com.molohala.grow.designsystem.component.menu.GrowMenuData
-import com.molohala.grow.designsystem.component.menu.MenuType
+import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
+import com.bestswlkh0310.mydesignsystem.component.divider.MyDivider
+import com.bestswlkh0310.mydesignsystem.component.menu.MenuType
+import com.bestswlkh0310.mydesignsystem.component.textfield.MyTextField
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
+import com.bestswlkh0310.mydesignsystem.extension.bounceClick
+import com.bestswlkh0310.mydesignsystem.extension.`if`
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
+import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
+import com.bestswlkh0310.mydesignsystem.R
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatar
+import com.bestswlkh0310.mydesignsystem.component.button.MyLikeButton
+import com.bestswlkh0310.mydesignsystem.component.menu.MyMenu
+import com.bestswlkh0310.mydesignsystem.component.menu.MyMenuData
 import com.molohala.grow.specific.comment.GrowCommentCell
-import com.molohala.grow.designsystem.specific.comment.GrowCommentCellShimmer
+import com.molohala.grow.specific.comment.GrowCommentCellShimmer
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
@@ -110,7 +111,7 @@ fun ForumDetailScreen(
         }
     }
 
-    GrowTopAppBar(
+    MyTopAppBar(
         text = "",
         onClickBackButton = {
             navController.popBackStack()
@@ -155,7 +156,7 @@ fun ForumDetailScreen(
                                         },
                                         profileId = profileId
                                     )
-                                    GrowDivider(modifier = Modifier.padding(horizontal = 12.dp))
+                                    MyDivider(modifier = Modifier.padding(horizontal = 12.dp))
                                     Comments(
                                         uiState = uiState,
                                         uiAppState = uiAppState,
@@ -173,9 +174,9 @@ fun ForumDetailScreen(
             }
             val isIconEnable = uiState.currentComment.isNotEmpty()
             val iconColor = if (isIconEnable) {
-                GrowTheme.colorScheme.textFieldPrimary
+                MyTheme.colorScheme.textFieldPrimary
             } else {
-                GrowTheme.colorScheme.textFieldTextDisabled
+                MyTheme.colorScheme.textFieldTextDisabled
             }
             Row(
                 modifier = Modifier
@@ -186,10 +187,10 @@ fun ForumDetailScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 val shape = RoundedCornerShape(24.dp)
-                GrowTextField(
+                MyTextField(
                     modifier = Modifier
                         .clip(shape)
-                        .background(GrowTheme.colorScheme.background)
+                        .background(MyTheme.colorScheme.background)
                         .weight(1f)
                         .heightIn(0.dp, 200.dp),
                     value = uiState.currentComment,
@@ -202,7 +203,7 @@ fun ForumDetailScreen(
                     modifier = Modifier
                         .align(Alignment.Bottom)
                 ) {
-                    com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon(
+                    MyIcon(
                         modifier = Modifier
                             .size(32.dp)
                             .`if`(isIconEnable) {
@@ -227,7 +228,7 @@ fun ForumDetailScreen(
     }
 
     if (showRemoveForumDialog) {
-        GrowDialog(
+        MyDialog(
             title = "정말 게시글을 삭제하시겠습니까?",
             successText = "삭제하기",
             cancelText = "아니요",
@@ -245,7 +246,7 @@ fun ForumDetailScreen(
     }
 
     if (showRemoveForumSuccessDialog) {
-        GrowDialog(
+        MyDialog(
             title = "게시글 삭제 성공",
             onDismissRequest = {
                 navController.popBackStack()
@@ -255,7 +256,7 @@ fun ForumDetailScreen(
     }
 
     if (showRemoveForumFailureDialog) {
-        GrowDialog(
+        MyDialog(
             title = "게시글 삭제 실패",
             onDismissRequest = {
                 showRemoveForumFailureDialog = false
@@ -264,7 +265,7 @@ fun ForumDetailScreen(
     }
 
     if (showRemoveCommentDialog) {
-        GrowDialog(
+        MyDialog(
             title = "정말 댓글을 삭제하시겠습니까?",
             successText = "삭제하기",
             cancelText = "아니요",
@@ -276,14 +277,14 @@ fun ForumDetailScreen(
             },
             onSuccessRequest = {
                 showRemoveCommentDialog = false
-                val selectedCommentId = selectedCommentId ?: return@GrowDialog
+                val selectedCommentId = selectedCommentId ?: return@MyDialog
                 viewModel.removeComment(forumId = forumId, commentId = selectedCommentId)
             }
         )
     }
 
     if (showRemoveCommentSuccessDialog) {
-        GrowDialog(
+        MyDialog(
             title = "댓글 삭제 성공",
             onDismissRequest = {
                 showRemoveCommentSuccessDialog = false
@@ -292,7 +293,7 @@ fun ForumDetailScreen(
     }
 
     if (showRemoveCommentFailureDialog) {
-        GrowDialog(
+        MyDialog(
             title = "댓글 삭제 실패",
             onDismissRequest = {
                 showRemoveCommentFailureDialog = false
@@ -321,36 +322,36 @@ private fun Forum(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            GrowAvatar(type = AvatarType.Medium)
+            MyAvatar(type = AvatarType.Medium)
             Column(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
                     text = forum.writerName,
-                    style = GrowTheme.typography.bodyBold,
-                    color = GrowTheme.colorScheme.textNormal
+                    style = MyTheme.typography.bodyBold,
+                    color = MyTheme.colorScheme.textNormal
                 )
                 Text(
                     text = forum.createdAt.timeAgo,
                     style = MaterialTheme.typography.labelMedium,
-                    color = GrowTheme.colorScheme.textAlt
+                    color = MyTheme.colorScheme.textAlt
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
             if (profileId == forum.writerId) {
                 Column {
-                    com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon(
+                    MyIcon(
                         modifier = Modifier.bounceClick(onClick = {
                             onChangeIsMenuExpanded(true)
                         }),
                         id = R.drawable.ic_detail_vertical,
-                        color = GrowTheme.colorScheme.textAlt
+                        color = MyTheme.colorScheme.textAlt
                     )
-                    GrowMenu(
+                    MyMenu(
                         expanded = isMenuExpanded,
                         menuList = listOf(
-                            GrowMenuData("수정하기", onClick = onEdit),
-                            GrowMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                            MyMenuData("수정하기", onClick = onEdit),
+                            MyMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
                         ),
                         onDismissRequest = { onChangeIsMenuExpanded(false) }
                     )
@@ -360,11 +361,11 @@ private fun Forum(
         SelectionContainer {
             Text(
                 text = forum.content,
-                style = GrowTheme.typography.bodyRegular,
-                color = GrowTheme.colorScheme.textNormal
+                style = MyTheme.typography.bodyRegular,
+                color = MyTheme.colorScheme.textNormal
             )
         }
-        GrowLikeButton(
+        MyLikeButton(
             like = forum.like,
             enabled = forum.liked,
             onClick = onClickLike

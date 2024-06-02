@@ -11,10 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.component.avatar.AvatarType
-import com.bestswlkh0310.designsystem.extension.applyCardView
-import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
-
+import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatarShimmer
+import com.bestswlkh0310.mydesignsystem.extension.applyCardView
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
 
 @Composable
 fun GrowForumCellShimmer(
@@ -23,7 +24,7 @@ fun GrowForumCellShimmer(
     Column(
         modifier = modifier
             .applyCardView()
-            .background(com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.background)
+            .background(MyTheme.colorScheme.background)
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -31,15 +32,15 @@ fun GrowForumCellShimmer(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            GrowAvatarShimmer(type = AvatarType.Medium)
-            com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer(width = 50.dp)
+            MyAvatarShimmer(type = AvatarType.Medium)
+            RowShimmer(width = 50.dp)
             Spacer(modifier = Modifier.weight(1f))
         }
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer(width = 100.dp)
-            com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer(width = 240.dp)
+            RowShimmer(width = 100.dp)
+            RowShimmer(width = 240.dp)
         }
     }
 }

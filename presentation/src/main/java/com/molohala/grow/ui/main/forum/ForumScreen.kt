@@ -27,14 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.bestswlkh0310.designsystem.component.button.ButtonType
-import com.bestswlkh0310.designsystem.component.button.GrowButton
-import com.bestswlkh0310.designsystem.R
+import com.bestswlkh0310.mydesignsystem.component.button.ButtonType
+import com.bestswlkh0310.mydesignsystem.component.button.MyButton
+import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.R
 import com.molohala.grow.common.constant.Constant
 import com.molohala.grow.common.flow.FetchFlow
-import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
 import com.molohala.grow.specific.foum.GrowForumCell
 import com.molohala.grow.specific.foum.GrowForumCellShimmer
 import com.molohala.grow.ui.error.ErrorScreen
@@ -77,8 +77,8 @@ fun ForumScreen(
         }
     }
 
-    GrowTopAppBar(
-        backgroundColor = GrowTheme.colorScheme.backgroundAlt,
+    MyTopAppBar(
+        backgroundColor = MyTheme.colorScheme.backgroundAlt,
         text = "포럼"
     ) {
         Box(
@@ -162,7 +162,7 @@ fun ForumScreen(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
             ) {
-                GrowButton(
+                MyButton(
                     modifier = Modifier
                         .padding(end = 16.dp),
                     text = "글쓰기",
@@ -178,7 +178,7 @@ fun ForumScreen(
     }
 
     if (showRemoveDialog) {
-        GrowDialog(
+        MyDialog(
             title = "정말 게시글을 삭제하시겠습니까?",
             successText = "삭제하기",
             cancelText = "아니요",
@@ -190,14 +190,14 @@ fun ForumScreen(
             },
             onSuccessRequest = {
                 showRemoveDialog = false
-                val selectedForum = selectedForum ?: return@GrowDialog
+                val selectedForum = selectedForum ?: return@MyDialog
                 viewModel.removeForum(forumId = selectedForum)
             }
         )
     }
 
     if (showRemoveSuccessDialog) {
-        GrowDialog(
+        MyDialog(
             title = "게시글 삭제 성공",
             onDismissRequest = {
                 showRemoveSuccessDialog = false
@@ -206,7 +206,7 @@ fun ForumScreen(
     }
 
     if (showRemoveFailureDialog) {
-        GrowDialog(
+        MyDialog(
             title = "게시글 삭제 실패",
             onDismissRequest = {
                 showRemoveFailureDialog = false

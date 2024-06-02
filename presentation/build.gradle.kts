@@ -51,7 +51,9 @@ android {
 
 dependencies {
 
-    implementation(project(":designsystem"))
+    val myVersion = "1.0.4"
+    implementation("com.github.bestswlkh0310:my-android-designsystem:$myVersion")
+
     implementation("org.json:json:20240303")
     implementation("co.yml:ycharts:2.1.0")
 

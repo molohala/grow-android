@@ -9,8 +9,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.bestswlkh0310.designsystem.component.bottomtabbar.BottomTabItemType
-import com.bestswlkh0310.designsystem.component.bottomtabbar.GrowBottomTabBar
+import com.bestswlkh0310.mydesignsystem.component.bottomtabbar.BottomTabItemType
+import com.bestswlkh0310.mydesignsystem.component.bottomtabbar.MyBottomTabBar
 import com.molohala.grow.ui.main.baekjoonrank.BaekjoonRankScreen
 import com.molohala.grow.ui.main.forum.ForumScreen
 import com.molohala.grow.ui.main.githubrank.GithubRankScreen
@@ -58,7 +58,7 @@ fun MainScreen(
         }
         Column {
             Spacer(modifier = Modifier.weight(1f))
-            GrowBottomTabBar(
+            MyBottomTabBar(
                 modifier = Modifier,
                 selected = uiAppState.selectedTab
             ) {

@@ -20,18 +20,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.R
 import com.molohala.grow.data.forum.response.ForumResponse
-import com.bestswlkh0310.designsystem.component.avatar.AvatarType
-import com.bestswlkh0310.designsystem.component.avatar.GrowAvatar
-import com.bestswlkh0310.designsystem.component.button.GrowLikeButton
-import com.bestswlkh0310.designsystem.extension.applyCardView
-import com.bestswlkh0310.designsystem.extension.bounceClick
-import com.bestswlkh0310.designsystem.foundation.util.timeAgo
-import com.molohala.grow.designsystem.component.divider.GrowDivider
-import com.molohala.grow.designsystem.component.menu.GrowMenu
-import com.molohala.grow.designsystem.component.menu.GrowMenuData
-import com.molohala.grow.designsystem.component.menu.MenuType
+import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatar
+import com.bestswlkh0310.mydesignsystem.component.menu.MenuType
+import com.bestswlkh0310.mydesignsystem.component.menu.MyMenu
+import com.bestswlkh0310.mydesignsystem.extension.applyCardView
+import com.bestswlkh0310.mydesignsystem.extension.bounceClick
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
+import com.bestswlkh0310.mydesignsystem.R
+import com.bestswlkh0310.mydesignsystem.component.button.MyLikeButton
+import com.bestswlkh0310.mydesignsystem.component.divider.MyDivider
+import com.bestswlkh0310.mydesignsystem.component.menu.MyMenuData
+import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 
 @Composable
 fun GrowForumCell(
@@ -63,37 +66,37 @@ fun GrowForumCell(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            GrowAvatar(type = AvatarType.Medium)
+            MyAvatar(type = AvatarType.Medium)
             Column(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
                     text = content.writerName,
-                    style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.bodyBold,
-                    color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+                    style = MyTheme.typography.bodyBold,
+                    color = MyTheme.colorScheme.textNormal
                 )
                 Text(
                     text = content.createdAt.timeAgo,
                     style = MaterialTheme.typography.labelMedium,
-                    color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt
+                    color = MyTheme.colorScheme.textAlt
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
             if (profileId == forum.forum.writerId) {
                 Column {
-                    com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon(
+                    MyIcon(
                         modifier = Modifier
                             .bounceClick(onClick = {
                                 isMenuExpanded = true
                             }),
                         id = R.drawable.ic_detail_vertical,
-                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt
+                        color = MyTheme.colorScheme.textAlt
                     )
-                    GrowMenu(
+                    MyMenu(
                         expanded = isMenuExpanded,
                         menuList = listOf(
-                            GrowMenuData("수정하기", onClick = onEdit),
-                            GrowMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                            MyMenuData("수정하기", onClick = onEdit),
+                            MyMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
                         ),
                         onDismissRequest = { isMenuExpanded = false }
                     )
@@ -103,40 +106,40 @@ fun GrowForumCell(
         SelectionContainer {
             Text(
                 text = content.content,
-                style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.bodyRegular,
+                style = MyTheme.typography.bodyRegular,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 5,
-                color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+                color = MyTheme.colorScheme.textNormal
             )
         }
-        GrowLikeButton(like = forum.forum.like, enabled = forum.forum.liked, onClick = onClickLike)
+        MyLikeButton(like = forum.forum.like, enabled = forum.forum.liked, onClick = onClickLike)
         recentComment?.let {
-            GrowDivider()
+            MyDivider()
             Row(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = it.name,
-                    style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelBold,
-                    color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+                    style = MyTheme.typography.labelBold,
+                    color = MyTheme.colorScheme.textNormal
                 )
                 SelectionContainer {
                     Text(
                         modifier = Modifier
                             .widthIn(0.dp, 180.dp),
                         text = it.content,
-                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelRegular,
+                        style = MyTheme.typography.labelRegular,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+                        color = MyTheme.colorScheme.textNormal
                     )
                 }
                 Text(
                     modifier = Modifier,
                     text = it.createdAt.timeAgo,
-                    style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelMedium,
-                    color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt
+                    style = MyTheme.typography.labelMedium,
+                    color = MyTheme.colorScheme.textAlt
                 )
                 Spacer(modifier = Modifier.weight(1f))
             }
@@ -145,12 +148,12 @@ fun GrowForumCell(
 }
 
 @Composable
-@com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+@MyPreviews
 private fun Preview() {
-    com.bestswlkh0310.designsystem.foundation.GrowTheme {
+    MyTheme {
         Column(
             modifier = Modifier
-                .background(com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.backgroundAlt)
+                .background(MyTheme.colorScheme.backgroundAlt)
                 .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {

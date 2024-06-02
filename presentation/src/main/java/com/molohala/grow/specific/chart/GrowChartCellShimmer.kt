@@ -9,11 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.extension.applyCardView
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer
-import com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
-import com.molohala.grow.designsystem.specific.chart.GrowChartCell
+import com.bestswlkh0310.mydesignsystem.extension.applyCardView
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 
 @Composable
 fun GrowChartCellShimmer(
@@ -43,10 +42,10 @@ fun GrowChartCellShimmer(
     }
 }
 
-@GrowPreviews
+@MyPreviews
 @Composable
 private fun Preview() {
-    GrowTheme {
+    MyTheme {
         GrowChartCell(
             chartInfo = GrowChartInfo(
                 label = "77",

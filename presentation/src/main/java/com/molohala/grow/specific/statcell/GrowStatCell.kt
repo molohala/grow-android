@@ -13,11 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.extension.applyCardView
-import com.bestswlkh0310.designsystem.extension.bounceClick
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon
-import com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+import com.bestswlkh0310.mydesignsystem.extension.applyCardView
+import com.bestswlkh0310.mydesignsystem.extension.bounceClick
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 
 @Composable
 fun GrowStatCell(
@@ -29,8 +29,8 @@ fun GrowStatCell(
 ) {
     val uriHandler = LocalUriHandler.current
     val iconColor = when (type) {
-        is GrowStatType.Baekjoon -> GrowTheme.colorScheme.baekjoon
-        is GrowStatType.Github -> GrowTheme.colorScheme.github
+        is GrowStatType.Baekjoon -> MyTheme.colorScheme.baekjoon
+        is GrowStatType.Github -> MyTheme.colorScheme.github
     }
 
     Column(
@@ -58,11 +58,11 @@ fun GrowStatCell(
             }
             Text(
                 text = number?.toString() ?: "??",
-                style = GrowTheme.typography.title1B,
-                color = GrowTheme.colorScheme.textNormal
+                style = MyTheme.typography.title1B,
+                color = MyTheme.colorScheme.textNormal
             )
             Spacer(modifier = Modifier.weight(1f))
-            GrowIcon(
+            MyIcon(
                 modifier = Modifier
                     .size(32.dp),
                 id = type.icon,
@@ -71,19 +71,19 @@ fun GrowStatCell(
         }
         Text(
             text = label,
-            style = GrowTheme.typography.labelMedium,
-            color = GrowTheme.colorScheme.textDarken
+            style = MyTheme.typography.labelMedium,
+            color = MyTheme.colorScheme.textDarken
         )
     }
 }
 
 @Composable
-@GrowPreviews
+@MyPreviews
 private fun Preview() {
-    GrowTheme {
+    MyTheme {
         Row(
             modifier = Modifier
-                .background(GrowTheme.colorScheme.backgroundAlt)
+                .background(MyTheme.colorScheme.backgroundAlt)
                 .padding(10.dp)
         ) {
             GrowStatCell(label = "오늘 한 커밋 개수", type = GrowStatType.Baekjoon(solved = 10)) {

@@ -27,19 +27,19 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
-import com.bestswlkh0310.designsystem.component.dialog.GrowDialog
-import com.bestswlkh0310.designsystem.component.topappbar.GrowTopAppBar
-import com.bestswlkh0310.designsystem.extension.applyCardView
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer
+import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
+import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
+import com.bestswlkh0310.mydesignsystem.extension.applyCardView
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
 import com.molohala.grow.specific.foum.GrowForumCell
 import com.molohala.grow.specific.foum.GrowForumCellShimmer
-import com.molohala.grow.designsystem.specific.rank.GrowRankCell
-import com.molohala.grow.designsystem.specific.rank.GrowRankCellShimmer
+import com.molohala.grow.specific.rank.GrowRankCell
+import com.molohala.grow.specific.rank.GrowRankCellShimmer
 import com.molohala.grow.specific.statcell.GrowStatCell
 import com.molohala.grow.specific.statcell.GrowStatCellShimmer
 import com.molohala.grow.specific.statcell.GrowStatType
-import com.molohala.grow.designsystem.specific.text.Headline
+import com.molohala.grow.specific.text.Headline
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
@@ -83,8 +83,8 @@ fun HomeScreen(
         }
     }
 
-    GrowTopAppBar(
-        backgroundColor = GrowTheme.colorScheme.backgroundAlt,
+    MyTopAppBar(
+        backgroundColor = MyTheme.colorScheme.backgroundAlt,
         text = "홈"
     ) {
         Box(
@@ -145,7 +145,7 @@ fun HomeScreen(
     }
 
     if (showRemoveDialog) {
-        GrowDialog(
+        MyDialog(
             title = "정말 게시글을 삭제하시겠습니까?",
             successText = "삭제하기",
             cancelText = "아니요",
@@ -157,14 +157,14 @@ fun HomeScreen(
             },
             onSuccessRequest = {
                 showRemoveDialog = false
-                val selectedForum = selectedForum ?: return@GrowDialog
+                val selectedForum = selectedForum ?: return@MyDialog
                 viewModel.removeForum(forumId = selectedForum)
             }
         )
     }
 
     if (showRemoveSuccessDialog) {
-        GrowDialog(
+        MyDialog(
             title = "게시글 삭제 성공",
             onDismissRequest = {
                 showRemoveSuccessDialog = false
@@ -173,7 +173,7 @@ fun HomeScreen(
     }
 
     if (showRemoveFailureDialog) {
-        GrowDialog(
+        MyDialog(
             title = "게시글 삭제 실패",
             onDismissRequest = {
                 showRemoveFailureDialog = false

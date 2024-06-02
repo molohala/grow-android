@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.specific.chart
+package com.molohala.grow.specific.chart
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,14 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.extension.applyCardView
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
-import com.molohala.grow.specific.chart.GrowChart
-import com.molohala.grow.specific.chart.GrowChartData
+import com.bestswlkh0310.mydesignsystem.extension.applyCardView
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
+import com.molohala.My.specific.chart.MyChart
 import com.molohala.grow.specific.motivation.GrowMotivationCell
-import com.molohala.grow.specific.chart.GrowChartInfo
-import com.molohala.grow.specific.chart.GrowChartType
 
 @Composable
 fun GrowChartCell(
@@ -41,31 +39,31 @@ fun GrowChartCell(
             ) {
                 Text(
                     text = chartInfo.label,
-                    style = GrowTheme.typography.title1B,
-                    color = GrowTheme.colorScheme.textNormal
+                    style = MyTheme.typography.title1B,
+                    color = MyTheme.colorScheme.textNormal
                 )
                 Text(
                     text = chartInfo.description,
-                    style = GrowTheme.typography.labelMedium,
-                    color = GrowTheme.colorScheme.textDarken
+                    style = MyTheme.typography.labelMedium,
+                    color = MyTheme.colorScheme.textDarken
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
             val color = when (chartInfo.type) {
-                GrowChartType.Baekjoon -> GrowTheme.colorScheme.baekjoon
-                GrowChartType.Github -> GrowTheme.colorScheme.github
+                GrowChartType.Baekjoon -> MyTheme.colorScheme.baekjoon
+                GrowChartType.Github -> MyTheme.colorScheme.github
             }
-            com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon(
+            MyIcon(
                 id = chartInfo.type.icon,
                 color = color
             )
         }
         if (chartInfo.chartData.getSum() > 0) {
-            GrowChart(
+            MyChart(
                 modifier = Modifier
                     .height(200.dp),
                 chartData = chartInfo.chartData,
-                background = GrowTheme.colorScheme.background
+                background = MyTheme.colorScheme.background
             )
         } else {
             GrowMotivationCell()
@@ -73,10 +71,10 @@ fun GrowChartCell(
     }
 }
 
-@GrowPreviews
+@MyPreviews
 @Composable
 private fun Preview() {
-    GrowTheme {
+    MyTheme {
         GrowChartCell(
             chartInfo = GrowChartInfo(
                 label = "77",

@@ -8,7 +8,7 @@ import com.molohala.grow.data.info.response.GithubResponse
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.data.info.response.SolvedacResponse
 import com.molohala.grow.data.language.response.LanguageResponse
-import com.bestswlkh0310.designsystem.component.bottomtabbar.BottomTabItemType
+import com.bestswlkh0310.mydesignsystem.component.bottomtabbar.BottomTabItemType
 import com.molohala.grow.common.chart.baekjoonWeekChartInfo
 import com.molohala.grow.common.chart.githubWeekChartInfo
 import com.molohala.grow.specific.chart.GrowChartInfo

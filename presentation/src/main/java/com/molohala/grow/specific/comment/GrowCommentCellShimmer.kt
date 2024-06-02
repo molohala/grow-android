@@ -1,4 +1,4 @@
-package com.molohala.grow.designsystem.specific.comment
+package com.molohala.grow.specific.comment
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,8 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.component.avatar.AvatarType
-import com.molohala.grow.designsystem.component.avatar.GrowAvatarShimmer
+import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatarShimmer
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 
 @Composable
 fun GrowCommentCellShimmer() {
@@ -20,23 +23,23 @@ fun GrowCommentCellShimmer() {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.Top
     ) {
-        GrowAvatarShimmer(type = AvatarType.Large)
+        MyAvatarShimmer(type = AvatarType.Large)
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer(width = 30.dp)
-            com.bestswlkh0310.designsystem.foundation.shimmer.RowShimmer(width = 100.dp)
+            RowShimmer(width = 30.dp)
+            RowShimmer(width = 100.dp)
         }
     }
 }
 
 @Composable
-@com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+@MyPreviews
 fun Preview() {
-    com.bestswlkh0310.designsystem.foundation.GrowTheme {
+    MyTheme {
         Column(
             modifier = Modifier
-                .background(com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.background)
+                .background(MyTheme.colorScheme.background)
         ) {
             GrowCommentCellShimmer()
         }

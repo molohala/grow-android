@@ -18,14 +18,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.molohala.grow.data.comment.response.CommentResponse
-import com.bestswlkh0310.designsystem.component.avatar.AvatarType
-import com.bestswlkh0310.designsystem.component.avatar.GrowAvatar
-import com.bestswlkh0310.designsystem.extension.bounceClick
-import com.bestswlkh0310.designsystem.foundation.util.timeAgo
-import com.bestswlkh0310.designsystem.R
-import com.molohala.grow.designsystem.component.menu.GrowMenu
-import com.molohala.grow.designsystem.component.menu.GrowMenuData
-import com.molohala.grow.designsystem.component.menu.MenuType
+import com.bestswlkh0310.mydesignsystem.R
+import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatar
+import com.bestswlkh0310.mydesignsystem.component.menu.MenuType
+import com.bestswlkh0310.mydesignsystem.component.menu.MyMenu
+import com.bestswlkh0310.mydesignsystem.component.menu.MyMenuData
+import com.bestswlkh0310.mydesignsystem.extension.bounceClick
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
+import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
 
 @Composable
 fun GrowCommentCell(
@@ -44,7 +47,7 @@ fun GrowCommentCell(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.Top
         ) {
-            GrowAvatar(type = AvatarType.Large)
+            MyAvatar(type = AvatarType.Large)
             Column {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -52,20 +55,20 @@ fun GrowCommentCell(
                 ) {
                     Text(
                         text = comment.name,
-                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.bodyBold,
-                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+                        style = MyTheme.typography.bodyBold,
+                        color = MyTheme.colorScheme.textNormal
                     )
                     Text(
                         text = comment.createdAt.timeAgo,
-                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.labelMedium,
-                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt
+                        style = MyTheme.typography.labelMedium,
+                        color = MyTheme.colorScheme.textAlt
                     )
                 }
                 SelectionContainer {
                     Text(
                         text = comment.content,
-                        style = com.bestswlkh0310.designsystem.foundation.GrowTheme.typography.bodyRegular,
-                        color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textNormal
+                        style = MyTheme.typography.bodyRegular,
+                        color = MyTheme.colorScheme.textNormal
                     )
                 }
             }
@@ -73,19 +76,19 @@ fun GrowCommentCell(
         Spacer(modifier = Modifier.weight(1f))
         if (profileId == comment.memberId) {
             Column {
-                com.bestswlkh0310.designsystem.foundation.iconography.GrowIcon(
+                MyIcon(
                     modifier = Modifier
                         .size(24.dp)
                         .bounceClick(onClick = {
                             isMenuExpanded = true
                         }),
                     id = R.drawable.ic_detail_vertical,
-                    color = com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.textAlt
+                    color = MyTheme.colorScheme.textAlt
                 )
-                GrowMenu(
+                MyMenu(
                     expanded = isMenuExpanded,
                     menuList = listOf(
-                        GrowMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                        MyMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
                     ),
                     onDismissRequest = { isMenuExpanded = false }
                 )
@@ -95,12 +98,12 @@ fun GrowCommentCell(
 }
 
 @Composable
-@com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
+@MyPreviews
 private fun CommentCellPreview() {
-    com.bestswlkh0310.designsystem.foundation.GrowTheme {
+    MyTheme {
         Column(
             modifier = Modifier
-                .background(com.bestswlkh0310.designsystem.foundation.GrowTheme.colorScheme.background),
+                .background(MyTheme.colorScheme.background),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             GrowCommentCell(

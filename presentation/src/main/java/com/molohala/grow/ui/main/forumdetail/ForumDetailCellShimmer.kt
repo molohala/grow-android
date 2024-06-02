@@ -17,8 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bestswlkh0310.designsystem.foundation.shimmer.shimmerEffect
-import com.molohala.grow.designsystem.specific.comment.GrowCommentCellShimmer
+import com.bestswlkh0310.mydesignsystem.foundation.shimmer.shimmerEffect
+import com.molohala.grow.specific.comment.GrowCommentCellShimmer
 
 @Composable
 fun ForumDetailCellShimmer() {
@@ -35,16 +35,16 @@ fun ForumDetailCellShimmer() {
                 modifier = Modifier
                     .width(100.dp)
                     .height(20.dp)
-                    .background(com.bestswlkh0310.designsystem.foundation.shimmer.shimmerEffect(), RoundedCornerShape(4.dp))
+                    .background(shimmerEffect(), RoundedCornerShape(4.dp))
             )
             Box(
                 modifier = Modifier
                     .width(140.dp)
                     .height(20.dp)
-                    .background(com.bestswlkh0310.designsystem.foundation.shimmer.shimmerEffect(), RoundedCornerShape(4.dp))
+                    .background(shimmerEffect(), RoundedCornerShape(4.dp))
             )
         }
-        Divider(modifier = Modifier.background(com.bestswlkh0310.designsystem.foundation.shimmer.shimmerEffect()))
+        Divider(modifier = Modifier.background(shimmerEffect()))
         Comments()
     }
 }
@@ -58,12 +58,12 @@ private fun Profile() {
         Box(
             modifier = Modifier
                 .size(36.dp)
-                .background(com.bestswlkh0310.designsystem.foundation.shimmer.shimmerEffect(), CircleShape)
+                .background(shimmerEffect(), CircleShape)
         )
         Box(modifier = Modifier
             .width(40.dp)
             .height(20.dp)
-            .background(com.bestswlkh0310.designsystem.foundation.shimmer.shimmerEffect(), RoundedCornerShape(4.dp)))
+            .background(shimmerEffect(), RoundedCornerShape(4.dp)))
     }
 }
 

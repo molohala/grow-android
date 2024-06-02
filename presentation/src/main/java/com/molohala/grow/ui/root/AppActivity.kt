@@ -9,11 +9,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.color.MyPallete
 import com.molohala.grow.application.GrowApp
 import com.molohala.grow.application.PreferenceManager
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
 import com.molohala.grow.ui.main.main.NavigationGraph
 
 class AppActivity : ComponentActivity() {
@@ -27,7 +29,7 @@ class AppActivity : ComponentActivity() {
             val navController = rememberNavController()
             val uiState by appViewModel.uiState.collectAsState()
 
-            com.bestswlkh0310.designsystem.foundation.GrowTheme(
+            MyTheme(
                 darkTheme = uiState.isDarkMode
             ) {
                 Surface(
@@ -41,5 +43,9 @@ class AppActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun initColor() {
+        MyPallete.Primary00 = Color(0xFFFFFFFF)
     }
 }

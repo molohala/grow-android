@@ -2,8 +2,8 @@ package com.molohala.grow.specific.chart
 
 import androidx.compose.ui.graphics.Color
 import co.yml.charts.common.model.Point
-import com.bestswlkh0310.designsystem.foundation.util.datesForWeek
-import com.bestswlkh0310.designsystem.foundation.util.monthPerDay
+import com.bestswlkh0310.mydesignsystem.foundation.util.datesForWeek
+import com.bestswlkh0310.mydesignsystem.foundation.util.monthPerDay
 import kotlin.random.Random.Default.nextInt
 
 data class GrowChartData(

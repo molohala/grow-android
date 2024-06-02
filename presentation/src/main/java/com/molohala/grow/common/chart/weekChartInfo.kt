@@ -2,7 +2,7 @@ package com.molohala.grow.common.chart
 
 import androidx.compose.ui.graphics.Color
 import co.yml.charts.common.model.Point
-import com.bestswlkh0310.designsystem.foundation.util.monthPerDay
+import com.bestswlkh0310.mydesignsystem.foundation.util.monthPerDay
 import com.molohala.grow.specific.chart.GrowChartData
 import com.molohala.grow.data.info.response.CommitResponse
 import com.molohala.grow.data.info.response.SolveResponse

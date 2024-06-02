@@ -1,4 +1,4 @@
-package com.molohala.grow.specific.chart
+package com.molohala.My.specific.chart
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,15 +24,16 @@ import co.yml.charts.ui.linechart.model.LinePlotData
 import co.yml.charts.ui.linechart.model.LineStyle
 import co.yml.charts.ui.linechart.model.LineType
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
-import com.bestswlkh0310.designsystem.foundation.GrowTheme
-import com.bestswlkh0310.designsystem.foundation.util.GrowPreviews
-import com.bestswlkh0310.designsystem.foundation.util.pxToDp
+import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
+import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
+import com.bestswlkh0310.mydesignsystem.foundation.util.pxToDp
+import com.molohala.grow.specific.chart.GrowChartData
 
 @Composable
-fun GrowChart(
+fun MyChart(
     modifier: Modifier = Modifier,
-    background: Color = GrowTheme.colorScheme.backgroundAlt,
-    labelColor: Color = GrowTheme.colorScheme.textNormal,
+    background: Color = MyTheme.colorScheme.backgroundAlt,
+    labelColor: Color = MyTheme.colorScheme.textNormal,
     chartData: GrowChartData
 ) {
 
@@ -69,7 +70,7 @@ fun GrowChart(
             (i * max).toString()
         }
         .labelAndAxisLinePadding(8.dp)
-        .axisLineColor(GrowTheme.colorScheme.textAlt)
+        .axisLineColor(MyTheme.colorScheme.textAlt)
         .axisConfig(
             config = AxisConfig(
                 isAxisLineRequired = false
@@ -107,7 +108,7 @@ fun GrowChart(
         xAxisData = xAxisData,
         yAxisData = yAxisData,
         gridLines = GridLines(
-            color = GrowTheme.colorScheme.chartAxis,
+            color = MyTheme.colorScheme.chartAxis,
             enableVerticalLines = false
         ),
         backgroundColor = background
@@ -124,14 +125,14 @@ fun GrowChart(
 }
 
 @Composable
-@GrowPreviews
+@MyPreviews
 fun ChartPreview() {
-    GrowTheme {
-        GrowChart(
+    MyTheme {
+        MyChart(
             modifier = Modifier
                 .height(200.dp),
             chartData = GrowChartData.dummy,
-            background = GrowTheme.colorScheme.backgroundAlt
+            background = MyTheme.colorScheme.backgroundAlt
         )
     }
 }
