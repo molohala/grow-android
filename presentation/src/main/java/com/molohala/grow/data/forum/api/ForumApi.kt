@@ -6,6 +6,7 @@ import com.molohala.grow.data.forum.response.ForumContentResponse
 import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.dto.response.BaseResponse
 import com.molohala.grow.data.global.dto.response.BaseVoidResponse
+import com.molohala.grow.data.report.request.ReportRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -45,4 +46,10 @@ interface ForumApi {
     suspend fun getBestForums(
         @Query("count") count: Int = 3
     ): BaseResponse<List<ForumResponse>>
+
+    @POST("/community/{id}/report")
+    suspend fun reportCommunity(
+        @Path("id") id: Int,
+        @Body req: ReportRequest
+    ): BaseVoidResponse
 }

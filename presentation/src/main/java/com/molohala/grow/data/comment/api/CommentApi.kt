@@ -3,6 +3,7 @@ package com.molohala.grow.data.comment.api
 import com.molohala.grow.data.comment.response.CommentResponse
 import com.molohala.grow.data.global.dto.response.BaseResponse
 import com.molohala.grow.data.global.dto.response.BaseVoidResponse
+import com.molohala.grow.data.report.request.ReportRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -30,5 +31,11 @@ interface CommentApi {
     @DELETE("/comment/{id}")
     suspend fun removeComment(
         @Path("id") id: Int
+    ): BaseVoidResponse
+
+    @POST("/comment/{id}/report")
+    suspend fun reportComment(
+        @Path("id") id: Int,
+        @Body req: ReportRequest
     ): BaseVoidResponse
 }
