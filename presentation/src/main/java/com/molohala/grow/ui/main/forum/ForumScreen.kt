@@ -1,5 +1,6 @@
 package com.molohala.grow.ui.main.forum
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -33,6 +35,7 @@ import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
 import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
 import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
 import com.bestswlkh0310.mydesignsystem.R
+import com.bestswlkh0310.mydesignsystem.component.textfield.MyTextField
 import com.molohala.grow.common.constant.Constant
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.specific.foum.GrowForumCell
@@ -48,6 +51,7 @@ fun ForumScreen(
     appViewModel: AppViewModel,
     viewModel: ForumViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
     val uiAppState by appViewModel.uiState.collectAsState()
     val scrollState = rememberLazyListState()
@@ -60,6 +64,7 @@ fun ForumScreen(
     var showRemoveDialog by remember { mutableStateOf(false) }
     var showRemoveSuccessDialog by remember { mutableStateOf(false) }
     var showRemoveFailureDialog by remember { mutableStateOf(false) }
+    var showReportDialog by remember { mutableStateOf(false) }
     var selectedForum by remember { mutableStateOf<Int?>(null) }
 
     LaunchedEffect(Unit) {
@@ -72,6 +77,10 @@ fun ForumScreen(
 
                 ForumSideEffect.RemoveForumSuccess -> {
                     showRemoveSuccessDialog = true
+                }
+
+                ForumSideEffect.ReportForumSuccess -> {
+                    Toast.makeText(context, "신고 접수 완료", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -86,8 +95,8 @@ fun ForumScreen(
                 .pullRefresh(pullRefreshState),
             contentAlignment = Alignment.TopCenter
         ) {
-            uiState.forums.let {
-                when (it) {
+            uiState.forums.let { state ->
+                when (state) {
                     is FetchFlow.Failure -> {
                         ErrorScreen(
                             modifier = Modifier
@@ -119,16 +128,16 @@ fun ForumScreen(
                             item {
                                 Spacer(modifier = Modifier.height(4.dp))
                             }
-                            itemsIndexed(it.data) { idx, forum ->
+                            itemsIndexed(state.data) { idx, forum ->
                                 val profile =
                                     uiAppState.profile as? FetchFlow.Success ?: return@itemsIndexed
                                 GrowForumCell(
                                     forum = forum,
                                     onAppear = {
-                                        it.data.firstOrNull { it.forum.forumId == forum.forum.forumId }
+                                        state.data.firstOrNull { it.forum.forumId == forum.forum.forumId }
                                             ?: return@GrowForumCell
                                         val interval = Constant.pageInterval
-                                        if (idx % interval == (interval - 1) && idx / interval == (it.data.size - 1) / interval) {
+                                        if (idx % interval == (interval - 1) && idx / interval == (state.data.size - 1) / interval) {
                                             viewModel.fetchNextCommunities()
                                         }
                                     },
@@ -142,6 +151,10 @@ fun ForumScreen(
                                     profileId = profile.data.id,
                                     onClickLike = {
                                         viewModel.patchLike(forum.forum.forumId)
+                                    },
+                                    onReport = {
+                                        viewModel.updateReportForum(forum)
+                                        showReportDialog = true
                                     }
                                 ) {
                                     navController.navigate("${NavGroup.ForumDetail.name}/${forum.forum.forumId}")
@@ -212,5 +225,30 @@ fun ForumScreen(
                 showRemoveFailureDialog = false
             },
         )
+    }
+
+    if (showReportDialog) {
+        MyDialog(
+            title = "신고 내용을 적어 주세요",
+            onSuccessRequest = {
+                if (uiState.reportCommentReason.isEmpty()) {
+                    Toast.makeText(context, "신고 내용을 적어 주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    showReportDialog = false
+                    viewModel.reportForum()
+                }
+            },
+            onCancelRequest = {
+                showReportDialog = false
+            },
+            onDismissRequest = {
+                showReportDialog = false
+            }
+        ) {
+            MyTextField(
+                value = uiState.reportCommentReason,
+                onValueChange = viewModel::updateReportCommentReason
+            )
+        }
     }
 }

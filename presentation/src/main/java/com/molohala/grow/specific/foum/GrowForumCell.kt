@@ -45,6 +45,7 @@ fun GrowForumCell(
     onClickLike: () -> Unit,
     onRemove: () -> Unit,
     onEdit: () -> Unit,
+    onReport: () -> Unit,
     onClick: () -> Unit
 ) {
     val content = forum.forum
@@ -82,25 +83,27 @@ fun GrowForumCell(
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            if (profileId == forum.forum.writerId) {
-                Column {
-                    MyIcon(
-                        modifier = Modifier
-                            .bounceClick(onClick = {
-                                isMenuExpanded = true
-                            }),
-                        id = R.drawable.ic_detail_vertical,
-                        color = MyTheme.colorScheme.textAlt
-                    )
-                    MyMenu(
-                        expanded = isMenuExpanded,
-                        menuList = listOf(
-                            MyMenuData("수정하기", onClick = onEdit),
-                            MyMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
-                        ),
-                        onDismissRequest = { isMenuExpanded = false }
-                    )
-                }
+            val me = profileId == forum.forum.writerId
+            Column {
+                MyIcon(
+                    modifier = Modifier
+                        .bounceClick(onClick = {
+                            isMenuExpanded = true
+                        }),
+                    id = R.drawable.ic_detail_vertical,
+                    color = MyTheme.colorScheme.textAlt
+                )
+                MyMenu(
+                    expanded = isMenuExpanded,
+                    menuList = if (me) listOf(
+                        MyMenuData("수정하기", onClick = onEdit),
+                        MyMenuData("신고하기", type = MenuType.Destructive, onClick = onReport),
+                        MyMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                    ) else listOf(
+                        MyMenuData("신고하기", type = MenuType.Destructive, onClick = onReport)
+                    ),
+                    onDismissRequest = { isMenuExpanded = false }
+                )
             }
         }
         SelectionContainer {
@@ -164,6 +167,7 @@ private fun Preview() {
 
                 },
                 onClickLike = {},
+                onReport = {},
                 profileId = 1
             ) {
 
@@ -173,6 +177,7 @@ private fun Preview() {
                 onRemove = {},
                 onEdit = {},
                 onClickLike = {},
+                onReport = {},
                 profileId = 1
             ) {
 

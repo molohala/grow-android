@@ -1,5 +1,6 @@
 package com.molohala.grow.ui.main.forumdetail
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,15 +32,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.molohala.grow.common.flow.FetchFlow
-import com.molohala.grow.data.forum.response.ForumContentResponse
 import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
+import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatar
+import com.bestswlkh0310.mydesignsystem.component.button.MyLikeButton
 import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
 import com.bestswlkh0310.mydesignsystem.component.divider.MyDivider
 import com.bestswlkh0310.mydesignsystem.component.menu.MenuType
+import com.bestswlkh0310.mydesignsystem.component.menu.MyMenu
+import com.bestswlkh0310.mydesignsystem.component.menu.MyMenuData
 import com.bestswlkh0310.mydesignsystem.component.textfield.MyTextField
 import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
 import com.bestswlkh0310.mydesignsystem.extension.bounceClick
@@ -47,16 +51,15 @@ import com.bestswlkh0310.mydesignsystem.extension.`if`
 import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
 import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
 import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
-import com.bestswlkh0310.mydesignsystem.R
-import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatar
-import com.bestswlkh0310.mydesignsystem.component.button.MyLikeButton
-import com.bestswlkh0310.mydesignsystem.component.menu.MyMenu
-import com.bestswlkh0310.mydesignsystem.component.menu.MyMenuData
+import com.molohala.grow.common.flow.FetchFlow
+import com.molohala.grow.data.comment.response.CommentResponse
+import com.molohala.grow.data.forum.response.ForumContentResponse
 import com.molohala.grow.specific.comment.GrowCommentCell
 import com.molohala.grow.specific.comment.GrowCommentCellShimmer
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
+import com.bestswlkh0310.mydesignsystem.R as DR
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -67,9 +70,9 @@ fun ForumDetailScreen(
     forumId: Int
 ) {
 
+    val context = LocalContext.current
     val uiAppState by appViewModel.uiState.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
-    val scrollState = rememberLazyListState()
     val pullRefreshState = rememberPullRefreshState(
         refreshing = uiState.isRefresh, onRefresh = {
             viewModel.refresh(forumId)
@@ -81,9 +84,11 @@ fun ForumDetailScreen(
     var showRemoveCommentDialog by remember { mutableStateOf(false) }
     var showRemoveCommentSuccessDialog by remember { mutableStateOf(false) }
     var showRemoveCommentFailureDialog by remember { mutableStateOf(false) }
+    var showCommentReportDialog by remember { mutableStateOf(false) }
+    var showForumReportDialog by remember { mutableStateOf(false) }
     var isMenuExpanded by remember { mutableStateOf(false) }
     var selectedCommentId by remember { mutableStateOf<Int?>(null) }
-    val profileId = (uiAppState.profile as? FetchFlow.Success)?.data?.id?: -1
+    val profileId = (uiAppState.profile as? FetchFlow.Success)?.data?.id ?: -1
 
     LaunchedEffect(Unit) {
         viewModel.fetchForum(forumId)
@@ -106,6 +111,10 @@ fun ForumDetailScreen(
 
                 ForumDetailSideEffect.RemoveForumSuccess -> {
                     showRemoveForumSuccessDialog = true
+                }
+
+                ForumDetailSideEffect.ReportSuccess -> {
+                    Toast.makeText(context, "신고 접수 완료", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -154,12 +163,19 @@ fun ForumDetailScreen(
                                         onRemove = {
                                             showRemoveForumDialog = true
                                         },
+                                        onReport = {
+                                            showForumReportDialog = true
+                                        },
                                         profileId = profileId
                                     )
                                     MyDivider(modifier = Modifier.padding(horizontal = 12.dp))
                                     Comments(
                                         uiState = uiState,
                                         uiAppState = uiAppState,
+                                        onReport = { comment ->
+                                            viewModel.updateReportComment(comment)
+                                            showCommentReportDialog = true
+                                        },
                                         onRemove = {
                                             selectedCommentId = it
                                             showRemoveCommentDialog = true
@@ -211,7 +227,7 @@ fun ForumDetailScreen(
                                     viewModel.createComment(forumId)
                                 })
                             },
-                        id = R.drawable.ic_send,
+                        id = DR.drawable.ic_send,
                         color = iconColor
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -260,7 +276,7 @@ fun ForumDetailScreen(
             title = "게시글 삭제 실패",
             onDismissRequest = {
                 showRemoveForumFailureDialog = false
-            },
+            }
         )
     }
 
@@ -300,6 +316,56 @@ fun ForumDetailScreen(
             },
         )
     }
+
+    if (showCommentReportDialog) {
+        MyDialog(
+            title = "신고 내용을 적어 주세요",
+            onSuccessRequest = {
+                if (uiState.reportReason.isEmpty()) {
+                    Toast.makeText(context, "신고 내용을 적어 주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    showCommentReportDialog = false
+                    viewModel.reportComment()
+                }
+            },
+            onCancelRequest = {
+                showCommentReportDialog = false
+            },
+            onDismissRequest = {
+                showCommentReportDialog = false
+            }
+        ) {
+            MyTextField(
+                value = uiState.reportReason,
+                onValueChange = viewModel::updateReportReason
+            )
+        }
+    }
+
+    if (showForumReportDialog) {
+        MyDialog(
+            title = "신고 내용을 적어 주세요",
+            onSuccessRequest = {
+                if (uiState.reportReason.isEmpty()) {
+                    Toast.makeText(context, "신고 내용을 적어 주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    showForumReportDialog = false
+                    viewModel.reportForum()
+                }
+            },
+            onCancelRequest = {
+                showForumReportDialog = false
+            },
+            onDismissRequest = {
+                showForumReportDialog = false
+            }
+        ) {
+            MyTextField(
+                value = uiState.reportReason,
+                onValueChange = viewModel::updateReportReason
+            )
+        }
+    }
 }
 
 @Composable
@@ -310,7 +376,8 @@ private fun Forum(
     forum: ForumContentResponse,
     onClickLike: () -> Unit,
     onEdit: () -> Unit,
-    onRemove: () -> Unit
+    onRemove: () -> Unit,
+    onReport: () -> Unit
 ) {
 
     Column(
@@ -338,24 +405,26 @@ private fun Forum(
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
-            if (profileId == forum.writerId) {
-                Column {
-                    MyIcon(
-                        modifier = Modifier.bounceClick(onClick = {
-                            onChangeIsMenuExpanded(true)
-                        }),
-                        id = R.drawable.ic_detail_vertical,
-                        color = MyTheme.colorScheme.textAlt
-                    )
-                    MyMenu(
-                        expanded = isMenuExpanded,
-                        menuList = listOf(
-                            MyMenuData("수정하기", onClick = onEdit),
-                            MyMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
-                        ),
-                        onDismissRequest = { onChangeIsMenuExpanded(false) }
-                    )
-                }
+            val me = profileId == forum.writerId
+            Column {
+                MyIcon(
+                    modifier = Modifier.bounceClick(onClick = {
+                        onChangeIsMenuExpanded(true)
+                    }),
+                    id = DR.drawable.ic_detail_vertical,
+                    color = MyTheme.colorScheme.textAlt
+                )
+                MyMenu(
+                    expanded = isMenuExpanded,
+                    menuList = if (me) listOf(
+                        MyMenuData("수정하기", onClick = onEdit),
+                        MyMenuData("신고하기", type = MenuType.Destructive, onClick = onReport),
+                        MyMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                    ) else listOf(
+                        MyMenuData("신고하기", type = MenuType.Destructive, onClick = onReport)
+                    ),
+                    onDismissRequest = { onChangeIsMenuExpanded(false) }
+                )
             }
         }
         SelectionContainer {
@@ -377,6 +446,7 @@ private fun Forum(
 private fun Comments(
     uiState: ForumDetailState,
     uiAppState: AppState,
+    onReport: (CommentResponse) -> Unit,
     onRemove: (Int) -> Unit
 ) {
     uiState.comments.let {
@@ -397,6 +467,9 @@ private fun Comments(
                         GrowCommentCell(
                             comment = comment,
                             profileId = profile.id,
+                            onReport = {
+                                onReport(comment)
+                            },
                             onRemove = {
                                 onRemove(comment.commentId)
                             }

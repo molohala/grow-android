@@ -5,6 +5,7 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.rank.response.RankResponse
+import com.molohala.grow.data.report.request.ReportRequest
 import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,12 +17,15 @@ data class HomeState(
     val weekForums: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
     val todayGithubRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
     val todayBaekjoonRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
-    val isRefresh: Boolean = false
+    val isRefresh: Boolean = false,
+    val reportCommentReason: String = "",
+    val selectedReportForum: ForumResponse? = null
 )
 
 sealed interface HomeSideEffect {
-    data object RemoveForumSuccess: HomeSideEffect
-    data object RemoveForumFailure: HomeSideEffect
+    data object RemoveForumSuccess : HomeSideEffect
+    data object RemoveForumFailure : HomeSideEffect
+    data object ReportForumSuccess : HomeSideEffect
 }
 
 class HomeViewModel : ViewModel() {
@@ -36,7 +40,7 @@ class HomeViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(todayGithubRanks = FetchFlow.Fetching()) }
-                var ranks = RetrofitClient.rankApi.getTodayGithubRank().data?: return@launch
+                var ranks = RetrofitClient.rankApi.getTodayGithubRank().data ?: return@launch
                 if (ranks.size > 3) {
                     ranks = ranks.slice(0..<3)
                 }
@@ -55,7 +59,7 @@ class HomeViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Fetching()) }
-                var ranks = RetrofitClient.rankApi.getTodaySolvedacRank().data?: return@launch
+                var ranks = RetrofitClient.rankApi.getTodaySolvedacRank().data ?: return@launch
                 if (ranks.size > 3) {
                     ranks = ranks.slice(0..<3)
                 }
@@ -74,7 +78,7 @@ class HomeViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(weekForums = FetchFlow.Fetching()) }
-                val communities = RetrofitClient.forumApi.getBestForums().data?: return@launch
+                val communities = RetrofitClient.forumApi.getBestForums().data ?: return@launch
                 _uiState.update {
                     it.copy(
                         weekForums = FetchFlow.Success(communities)
@@ -87,7 +91,8 @@ class HomeViewModel : ViewModel() {
     }
 
     fun patchLike(forumId: Int) {
-        val forums = ((_uiState.value.weekForums as? FetchFlow.Success)?.data?: return).toMutableList()
+        val forums =
+            ((_uiState.value.weekForums as? FetchFlow.Success)?.data ?: return).toMutableList()
         launch {
             try {
                 RetrofitClient.likeApi.patchLike(forumId)
@@ -95,11 +100,17 @@ class HomeViewModel : ViewModel() {
                     if (i.forum.forumId == forumId) {
                         val forum = forums[idx]
                         val added = if (forum.forum.liked) -1 else 1
-                        forums[idx] = forum.copy(forum = forum.forum.copy(like = forum.forum.like + added, liked = !forum.forum.liked))
+                        forums[idx] = forum.copy(
+                            forum = forum.forum.copy(
+                                like = forum.forum.like + added,
+                                liked = !forum.forum.liked
+                            )
+                        )
                     }
                 }
                 _uiState.update { it.copy(weekForums = FetchFlow.Success(forums)) }
-            } catch (e: Exception) {}
+            } catch (_: Exception) {
+            }
         }
     }
 
@@ -113,6 +124,35 @@ class HomeViewModel : ViewModel() {
                 _uiEffect.emit(HomeSideEffect.RemoveForumFailure)
             }
         }
+    }
+
+    fun reportForum() {
+
+        val forum = _uiState.value.selectedReportForum ?: return
+        val reason = _uiState.value.reportCommentReason
+
+        launch {
+            try {
+                val request = ReportRequest(
+                    reason = reason
+                )
+                RetrofitClient.commentApi.reportComment(
+                    id = forum.forum.forumId,
+                    req = request
+                )
+                _uiState.update { it.copy(reportCommentReason = "") }
+                _uiEffect.emit(HomeSideEffect.ReportForumSuccess)
+            } catch (_: Exception) {
+            }
+        }
+    }
+
+    fun updateReportForum(forum: ForumResponse) {
+        _uiState.update { it.copy(selectedReportForum = forum) }
+    }
+
+    fun updateReportForumReason(reason: String) {
+        _uiState.update { it.copy(reportCommentReason = reason) }
     }
 
     fun refresh() {

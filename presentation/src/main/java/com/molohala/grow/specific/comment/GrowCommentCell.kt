@@ -1,5 +1,6 @@
 package com.molohala.grow.specific.comment
 
+import android.view.Menu
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
 fun GrowCommentCell(
     comment: CommentResponse,
     profileId: Int,
+    onReport: () -> Unit,
     onRemove: () -> Unit
 ) {
     var isMenuExpanded by remember { mutableStateOf(false) }
@@ -74,25 +76,27 @@ fun GrowCommentCell(
             }
         }
         Spacer(modifier = Modifier.weight(1f))
-        if (profileId == comment.memberId) {
-            Column {
-                MyIcon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .bounceClick(onClick = {
-                            isMenuExpanded = true
-                        }),
-                    id = R.drawable.ic_detail_vertical,
-                    color = MyTheme.colorScheme.textAlt
-                )
-                MyMenu(
-                    expanded = isMenuExpanded,
-                    menuList = listOf(
-                        MyMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
-                    ),
-                    onDismissRequest = { isMenuExpanded = false }
-                )
-            }
+        val me = profileId == comment.memberId
+        Column {
+            MyIcon(
+                modifier = Modifier
+                    .size(24.dp)
+                    .bounceClick(onClick = {
+                        isMenuExpanded = true
+                    }),
+                id = R.drawable.ic_detail_vertical,
+                color = MyTheme.colorScheme.textAlt
+            )
+            MyMenu(
+                expanded = isMenuExpanded,
+                menuList = if (me) listOf(
+                    MyMenuData("신고하기", type = MenuType.Destructive, onClick = onReport),
+                    MyMenuData("삭제하기", type = MenuType.Destructive, onClick = onRemove)
+                ) else listOf(
+                    MyMenuData("신고하기", type = MenuType.Destructive, onClick = onReport)
+                ),
+                onDismissRequest = { isMenuExpanded = false }
+            )
         }
     }
 }
@@ -108,7 +112,8 @@ private fun CommentCellPreview() {
         ) {
             GrowCommentCell(
                 comment = CommentResponse.dummy(),
-                profileId = 1
+                profileId = 1,
+                onReport = {}
             ) {}
         }
     }

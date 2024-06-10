@@ -1,5 +1,6 @@
 package com.molohala.grow.ui.main.home
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,15 +24,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.molohala.grow.common.flow.FetchFlow
 import com.bestswlkh0310.mydesignsystem.component.dialog.MyDialog
+import com.bestswlkh0310.mydesignsystem.component.textfield.MyTextField
 import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
 import com.bestswlkh0310.mydesignsystem.extension.applyCardView
 import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
 import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
+import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.specific.foum.GrowForumCell
 import com.molohala.grow.specific.foum.GrowForumCellShimmer
 import com.molohala.grow.specific.rank.GrowRankCell
@@ -52,12 +56,14 @@ fun HomeScreen(
     appViewModel: AppViewModel
 ) {
 
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
     val uiAppState by appViewModel.uiState.collectAsState()
     var selectedForum by remember { mutableStateOf<Int?>(null) }
     var showRemoveSuccessDialog by remember { mutableStateOf(false) }
     var showRemoveFailureDialog by remember { mutableStateOf(false) }
     var showRemoveDialog by remember { mutableStateOf(false) }
+    var showReportDialog by remember { mutableStateOf(false) }
     val scrollState = rememberLazyListState()
     val pullRefreshState = rememberPullRefreshState(
         refreshing = uiState.isRefresh,
@@ -78,6 +84,10 @@ fun HomeScreen(
 
                 HomeSideEffect.RemoveForumSuccess -> {
                     showRemoveSuccessDialog = true
+                }
+
+                HomeSideEffect.ReportForumSuccess -> {
+                    Toast.makeText(context, "신고 접수 완료", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -130,6 +140,10 @@ fun HomeScreen(
                         },
                         onClickLike = {
                             viewModel.patchLike(it)
+                        },
+                        onReport = { forum ->
+                            showReportDialog = true
+                            viewModel.updateReportForum(forum)
                         }
                     )
                 }
@@ -179,6 +193,31 @@ fun HomeScreen(
                 showRemoveFailureDialog = false
             },
         )
+    }
+
+    if (showReportDialog) {
+        MyDialog(
+            title = "신고 내용을 적어 주세요",
+            onSuccessRequest = {
+                if (uiState.reportCommentReason.isEmpty()) {
+                    Toast.makeText(context, "신고 내용을 적어 주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    showReportDialog = false
+                    viewModel.reportForum()
+                }
+            },
+            onCancelRequest = {
+                showReportDialog = false
+            },
+            onDismissRequest = {
+                showReportDialog = false
+            }
+        ) {
+            MyTextField(
+                value = uiState.reportCommentReason,
+                onValueChange = viewModel::updateReportForumReason
+            )
+        }
     }
 }
 
@@ -372,7 +411,8 @@ fun WeekForum(
     onRemoveForum: (forumId: Int) -> Unit,
     onEditForum: (forumId: Int) -> Unit,
     onClickLike: (forumId: Int) -> Unit,
-    onClick: (forumId: Int) -> Unit
+    onClick: (forumId: Int) -> Unit,
+    onReport: (ForumResponse) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -408,6 +448,9 @@ fun WeekForum(
                                     onEditForum(forumId)
                                 },
                                 profileId = profile.data.id,
+                                onReport = {
+                                    onReport(forum)
+                                },
                                 onClickLike = {
                                     onClickLike(forumId)
                                 }

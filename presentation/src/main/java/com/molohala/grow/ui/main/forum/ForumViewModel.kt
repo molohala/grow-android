@@ -7,6 +7,7 @@ import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.RetrofitClient
+import com.molohala.grow.data.report.request.ReportRequest
 import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,12 +19,15 @@ data class ForumState(
     val page: Int = 1,
     val forums: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
     val editForumFlow: FetchFlow<Boolean> = FetchFlow.Fetching(),
+    val selectedReportForum: ForumResponse? = null,
+    val reportCommentReason: String = "",
     val isRefresh: Boolean = false
 )
 
 sealed interface ForumSideEffect {
-    data object RemoveForumSuccess: ForumSideEffect
-    data object RemoveForumFailure: ForumSideEffect
+    data object RemoveForumSuccess : ForumSideEffect
+    data object RemoveForumFailure : ForumSideEffect
+    data object ReportForumSuccess : ForumSideEffect
 }
 
 class ForumViewModel : ViewModel() {
@@ -42,7 +46,7 @@ class ForumViewModel : ViewModel() {
                 val communities = RetrofitClient.forumApi.getForums(
                     page = nextPage,
                     size = Constant.pageInterval
-                ).data?: return@launch
+                ).data ?: return@launch
                 if (communities.isNotEmpty()) {
                     _uiState.update {
                         it.copy(
@@ -63,7 +67,7 @@ class ForumViewModel : ViewModel() {
     }
 
     fun fetchNextCommunities() {
-        val forums = _uiState.value.forums as? FetchFlow.Success?: run {
+        val forums = _uiState.value.forums as? FetchFlow.Success ?: run {
             _uiState.update { it.copy(forums = FetchFlow.Failure()) }
             return
         }
@@ -73,7 +77,7 @@ class ForumViewModel : ViewModel() {
                 val newForums = RetrofitClient.forumApi.getForums(
                     page = nextPage,
                     size = Constant.pageInterval
-                ).data?: return@launch
+                ).data ?: return@launch
                 val oldForums = forums.data.toMutableList()
                 oldForums.addAll(newForums)
                 _uiState.update {
@@ -94,7 +98,7 @@ class ForumViewModel : ViewModel() {
     }
 
     fun patchLike(forumId: Int) {
-        val forums = ((_uiState.value.forums as? FetchFlow.Success)?.data?: return).toMutableList()
+        val forums = ((_uiState.value.forums as? FetchFlow.Success)?.data ?: return).toMutableList()
         launch {
             try {
                 RetrofitClient.likeApi.patchLike(forumId)
@@ -102,7 +106,12 @@ class ForumViewModel : ViewModel() {
                     if (i.forum.forumId == forumId) {
                         val forum = forums[idx]
                         val added = if (forum.forum.liked) -1 else 1
-                        forums[idx] = forum.copy(forum = forum.forum.copy(like = forum.forum.like + added, liked = !forum.forum.liked))
+                        forums[idx] = forum.copy(
+                            forum = forum.forum.copy(
+                                like = forum.forum.like + added,
+                                liked = !forum.forum.liked
+                            )
+                        )
                     }
                 }
                 _uiState.update { it.copy(forums = FetchFlow.Success(forums)) }
@@ -122,6 +131,35 @@ class ForumViewModel : ViewModel() {
                 _uiEffect.emit(ForumSideEffect.RemoveForumFailure)
             }
         }
+    }
+
+    fun reportForum() {
+
+        val forum = _uiState.value.selectedReportForum ?: return
+        val reason = _uiState.value.reportCommentReason
+
+        launch {
+            try {
+                val request = ReportRequest(
+                    reason = reason
+                )
+                RetrofitClient.commentApi.reportComment(
+                    id = forum.forum.forumId,
+                    req = request
+                )
+                _uiState.update { it.copy(reportCommentReason = "") }
+                _uiEffect.emit(ForumSideEffect.ReportForumSuccess)
+            } catch (_: Exception) {
+            }
+        }
+    }
+
+    fun updateReportForum(forum: ForumResponse) {
+        _uiState.update { it.copy(selectedReportForum = forum) }
+    }
+
+    fun updateReportCommentReason(reason: String) {
+        _uiState.update { it.copy(reportCommentReason = reason) }
     }
 
     fun refresh() {
