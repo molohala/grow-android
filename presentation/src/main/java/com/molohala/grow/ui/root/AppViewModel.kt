@@ -1,6 +1,7 @@
 package com.molohala.grow.ui.root
 
 import androidx.lifecycle.ViewModel
+import com.bestswlkh0310.mydesignsystem.component.bottomtabbar.BottomTabItem
 import com.molohala.grow.application.GrowApp
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.global.RetrofitClient
@@ -8,10 +9,10 @@ import com.molohala.grow.data.info.response.GithubResponse
 import com.molohala.grow.data.info.response.ProfileResponse
 import com.molohala.grow.data.info.response.SolvedacResponse
 import com.molohala.grow.data.language.response.LanguageResponse
-import com.bestswlkh0310.mydesignsystem.component.bottomtabbar.BottomTabItemType
 import com.molohala.grow.common.chart.baekjoonWeekChartInfo
 import com.molohala.grow.common.chart.githubWeekChartInfo
 import com.molohala.grow.specific.chart.GrowChartInfo
+import com.molohala.grow.ui.main.main.Home
 import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +25,7 @@ data class AppState(
     val github: FetchFlow<GithubResponse?> = FetchFlow.Fetching(),
     val baekjoon: FetchFlow<SolvedacResponse?> = FetchFlow.Fetching(),
     val myLanguage: FetchFlow<List<LanguageResponse>> = FetchFlow.Fetching(),
-    val selectedTab: BottomTabItemType = BottomTabItemType.Home,
+    val selectedTab: BottomTabItem = Home,
     val githubChartInfo: FetchFlow<GrowChartInfo?> = FetchFlow.Fetching(),
     val baekjoonChartInfo: FetchFlow<GrowChartInfo?> = FetchFlow.Fetching(),
     val isDarkMode: Boolean = GrowApp.prefs.isDarkMode,
@@ -170,7 +171,7 @@ class AppViewModel : ViewModel() {
         _uiState.update { it.copy(isDarkMode = isDarkMode) }
     }
 
-    fun clickTab(tab: BottomTabItemType) {
+    fun clickTab(tab: BottomTabItem) {
         _uiState.update { it.copy(selectedTab = tab) }
     }
 }

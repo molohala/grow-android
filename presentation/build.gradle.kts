@@ -51,7 +51,7 @@ android {
 
 dependencies {
 
-    val myVersion = "1.0.4"
+    val myVersion = "1.1.0"
     implementation("com.github.bestswlkh0310:my-android-designsystem:$myVersion")
 
     implementation("org.json:json:20240303")

@@ -9,14 +9,22 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.bestswlkh0310.mydesignsystem.component.bottomtabbar.BottomTabItemType
+import com.bestswlkh0310.mydesignsystem.component.bottomtabbar.BottomTabItem
 import com.bestswlkh0310.mydesignsystem.component.bottomtabbar.MyBottomTabBar
+import com.molohala.grow.R
 import com.molohala.grow.ui.main.baekjoonrank.BaekjoonRankScreen
 import com.molohala.grow.ui.main.forum.ForumScreen
 import com.molohala.grow.ui.main.githubrank.GithubRankScreen
 import com.molohala.grow.ui.main.home.HomeScreen
 import com.molohala.grow.ui.main.profile.ProfileScreen
 import com.molohala.grow.ui.root.AppViewModel
+import com.bestswlkh0310.mydesignsystem.R as DR
+
+data object Home: BottomTabItem(resId = DR.drawable.ic_home, text = "홈")
+data object Forum: BottomTabItem(resId = DR.drawable.ic_chat, text = "포럼")
+data object Github: BottomTabItem(resId = DR.drawable.ic_github, text = "Github")
+data object Baekjoon: BottomTabItem(resId = DR.drawable.ic_baekjoon, text = "백준")
+data object Profile: BottomTabItem(resId = DR.drawable.ic_person, text = "프로필")
 
 @Composable
 fun MainScreen(
@@ -31,27 +39,27 @@ fun MainScreen(
 
     Box {
         when (uiAppState.selectedTab) {
-            is BottomTabItemType.Home -> HomeScreen(
+            Home -> HomeScreen(
                 navController = navController,
                 appViewModel = appViewModel
             )
 
-            is BottomTabItemType.Forum -> ForumScreen(
+            Forum -> ForumScreen(
                 navController = navController,
                 appViewModel = appViewModel
             )
 
-            is BottomTabItemType.Github -> GithubRankScreen(
+            Github -> GithubRankScreen(
                 navController = navController,
                 appViewModel = appViewModel
             )
 
-            is BottomTabItemType.Baekjoon -> BaekjoonRankScreen(
+            Baekjoon -> BaekjoonRankScreen(
                 navController = navController,
                 appViewModel = appViewModel
             )
 
-            is BottomTabItemType.Profile -> ProfileScreen(
+            Profile -> ProfileScreen(
                 navController = navController,
                 appViewModel = appViewModel
             )
@@ -60,7 +68,8 @@ fun MainScreen(
             Spacer(modifier = Modifier.weight(1f))
             MyBottomTabBar(
                 modifier = Modifier,
-                selected = uiAppState.selectedTab
+                selected = uiAppState.selectedTab,
+                bottomTabList = listOf(Home, Forum, Github, Baekjoon, Profile)
             ) {
                 appViewModel.clickTab(it)
             }
