@@ -13,7 +13,7 @@ import okhttp3.Response
 import okhttp3.Route
 import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 
-class AuthAuthenticator: Authenticator {
+class AuthAuthenticator : Authenticator {
 
     companion object {
         val noTokenPath = arrayListOf(
@@ -27,8 +27,17 @@ class AuthAuthenticator: Authenticator {
         if (response.code != HTTP_UNAUTHORIZED || noTokenPath.contains(url)) {
             return null
         }
+
+        val refreshLimit = response.headers["refreshLimit"]?.toInt() ?: 1
+
+        if (refreshLimit > 3) {
+            return null
+        }
+
         return runBlocking {
-            Log.d(TAG, "✅ authenticate: ${response.request.url.toUrl()}")
+            Log.d(TAG, "✅ authenticate: $refreshLimit")
+            Log.d(TAG, "✅ authenticate: ${response.code}")
+            Log.d(TAG, "✅ authenticate: $url")
             Log.d(TAG, "✅ authenticate: refresh 시작")
             val refreshToken = GrowApp.prefs.refreshToken
             val request = ReissueRequest(refreshToken = refreshToken)
@@ -40,6 +49,7 @@ class AuthAuthenticator: Authenticator {
                 Log.d(TAG, "✅ authenticate: refresh 완료 length: ${accessToken.length}")
                 return@runBlocking response.request.newBuilder()
                     .removeHeader("authorization")
+                    .addHeader("refreshLimit", "${refreshLimit + 1}")
                     .addHeader("authorization", "Bearer $accessToken")
                     .build()
             } catch (e: Exception) {
