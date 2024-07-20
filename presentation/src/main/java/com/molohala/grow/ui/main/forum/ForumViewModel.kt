@@ -7,6 +7,7 @@ import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.RetrofitClient
+import com.molohala.grow.data.opengraph.OpenGraph
 import com.molohala.grow.data.report.request.ReportRequest
 import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -165,5 +166,18 @@ class ForumViewModel : ViewModel() {
     fun refresh() {
         fetchCommunities()
         _uiState.update { it.copy(isRefresh = false) }
+    }
+
+    fun updateForumOpenGraph(openGraph: OpenGraph, forumId: Int) {
+        val forums = _uiState.value.forums as? FetchFlow.Success ?: return
+        val mutableForums = forums.data.toMutableList()
+        mutableForums
+            .forEachIndexed { index, forum ->
+                if (forum.forum.forumId == forumId) {
+                    val newForum = forum.copy(forum = forum.forum.copy(openGraph = openGraph))
+                    mutableForums[index] = newForum
+                }
+            }
+        _uiState.update { it.copy(forums = FetchFlow.Success(mutableForums)) }
     }
 }

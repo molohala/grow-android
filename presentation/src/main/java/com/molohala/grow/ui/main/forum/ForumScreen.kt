@@ -156,6 +156,9 @@ fun ForumScreen(
                                     onReport = {
                                         viewModel.updateReportForum(forum)
                                         showReportDialog = true
+                                    },
+                                    onChangeOpenGraph = {
+                                        viewModel.updateForumOpenGraph(it, forum.forum.forumId)
                                     }
                                 ) {
                                     navController.navigate("${NavGroup.ForumDetail.name}/${forum.forum.forumId}")

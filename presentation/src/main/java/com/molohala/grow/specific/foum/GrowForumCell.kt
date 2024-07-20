@@ -37,7 +37,10 @@ import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
 import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
 import com.molohala.grow.data.forum.response.ForumResponse
+import com.molohala.grow.data.opengraph.OpenGraph
+import com.molohala.grow.specific.linkpreview.LinkPreview
 import com.molohala.grow.specific.text.LinkifyText
+import com.molohala.grow.specific.text.extractLinks
 
 @Composable
 fun GrowForumCell(
@@ -49,11 +52,13 @@ fun GrowForumCell(
     onRemove: () -> Unit,
     onEdit: () -> Unit,
     onReport: () -> Unit,
+    onChangeOpenGraph: (OpenGraph) -> Unit,
     onClick: () -> Unit
 ) {
     val content = forum.forum
     val recentComment = forum.recentComment
     var isMenuExpanded by remember { mutableStateOf(false) }
+    val links = forum.forum.content.extractLinks()
 
     LaunchedEffect(Unit) {
         onAppear()
@@ -61,7 +66,7 @@ fun GrowForumCell(
 
     Column(
         modifier = modifier
-            .bounceClick(onClick = onClick)
+            .clickable(onClick = onClick)
             .applyCardView()
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -118,6 +123,13 @@ fun GrowForumCell(
                 onClick = onClick
             )
         }
+        if (links.isNotEmpty()) {
+            LinkPreview(
+                url = links[0],
+                openGraph = forum.forum.openGraph,
+                onChange = onChangeOpenGraph
+            )
+        }
         MyLikeButton(like = forum.forum.like, enabled = forum.forum.liked, onClick = onClickLike)
         recentComment?.let {
             MyDivider()
@@ -171,7 +183,8 @@ private fun Preview() {
                 },
                 onClickLike = {},
                 onReport = {},
-                profileId = 1
+                profileId = 1,
+                onChangeOpenGraph = {}
             ) {
 
             }
@@ -181,7 +194,8 @@ private fun Preview() {
                 onEdit = {},
                 onClickLike = {},
                 onReport = {},
-                profileId = 1
+                profileId = 1,
+                onChangeOpenGraph = {}
             ) {
 
             }

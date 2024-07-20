@@ -2,6 +2,7 @@ package com.molohala.grow.data.forum.response
 
 import com.google.gson.annotations.SerializedName
 import com.molohala.grow.data.comment.response.CommentResponse
+import com.molohala.grow.data.opengraph.OpenGraph
 import java.time.LocalDateTime
 
 data class ForumResponse(
@@ -28,7 +29,8 @@ data class ForumContentResponse(
     val like: Int,
     val writerName: String,
     val writerId: Int,
-    val liked: Boolean
+    val liked: Boolean,
+    val openGraph: OpenGraph? = OpenGraph()
 ) {
     companion object {
         fun dummy(

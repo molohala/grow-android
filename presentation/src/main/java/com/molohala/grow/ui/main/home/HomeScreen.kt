@@ -453,7 +453,8 @@ fun WeekForum(
                                 },
                                 onClickLike = {
                                     onClickLike(forumId)
-                                }
+                                },
+                                onChangeOpenGraph = {}
                             ) {
                                 onClick(forum.forum.forumId)
                             }
