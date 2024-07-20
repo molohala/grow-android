@@ -54,9 +54,12 @@ import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.comment.response.CommentResponse
 import com.molohala.grow.data.forum.response.ForumContentResponse
+import com.molohala.grow.data.opengraph.OpenGraph
 import com.molohala.grow.specific.comment.GrowCommentCell
 import com.molohala.grow.specific.comment.GrowCommentCellShimmer
+import com.molohala.grow.specific.linkpreview.LinkPreview
 import com.molohala.grow.specific.text.LinkifyText
+import com.molohala.grow.specific.text.extractLinks
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
@@ -167,7 +170,10 @@ fun ForumDetailScreen(
                                         onReport = {
                                             showForumReportDialog = true
                                         },
-                                        profileId = profileId
+                                        profileId = profileId,
+                                        onChangeOpenGraph = { openGraph ->
+                                            viewModel.updateOpenGraph(openGraph)
+                                        }
                                     )
                                     MyDivider(modifier = Modifier.padding(horizontal = 12.dp))
                                     Comments(
@@ -378,9 +384,10 @@ private fun Forum(
     onClickLike: () -> Unit,
     onEdit: () -> Unit,
     onRemove: () -> Unit,
-    onReport: () -> Unit
+    onReport: () -> Unit,
+    onChangeOpenGraph: (OpenGraph) -> Unit
 ) {
-
+    val links = forum.content.extractLinks()
     Column(
         modifier = Modifier
             .padding(12.dp),
@@ -434,6 +441,9 @@ private fun Forum(
                 style = MyTheme.typography.bodyRegular,
                 color = MyTheme.colorScheme.textNormal
             )
+        }
+        if (links.isNotEmpty()) {
+            LinkPreview(url = links[0], openGraph = forum.openGraph, onChange = onChangeOpenGraph)
         }
         MyLikeButton(
             like = forum.like,

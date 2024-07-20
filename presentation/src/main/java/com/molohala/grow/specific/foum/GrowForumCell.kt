@@ -2,6 +2,7 @@ package com.molohala.grow.specific.foum
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -66,7 +67,11 @@ fun GrowForumCell(
 
     Column(
         modifier = modifier
-            .clickable(onClick = onClick)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
+            )
             .applyCardView()
             .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)

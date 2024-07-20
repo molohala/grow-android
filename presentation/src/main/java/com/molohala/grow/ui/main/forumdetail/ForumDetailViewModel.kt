@@ -1,11 +1,14 @@
 package com.molohala.grow.ui.main.forumdetail
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.comment.request.CreateCommentRequest
 import com.molohala.grow.data.comment.response.CommentResponse
 import com.molohala.grow.data.forum.response.ForumContentResponse
 import com.molohala.grow.data.global.RetrofitClient
+import com.molohala.grow.data.opengraph.OpenGraph
 import com.molohala.grow.data.report.request.ReportRequest
 import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -92,6 +95,7 @@ class ForumDetailViewModel : ViewModel() {
                 val newForum = forum.copy(like = forum.like + added, liked = !forum.liked)
                 _uiState.update { it.copy(forum = FetchFlow.Success(newForum)) }
             } catch (e: Exception) {
+                Log.d(TAG, "patchLike: ${e.printStackTrace()}")
             }
         }
     }
@@ -157,7 +161,8 @@ class ForumDetailViewModel : ViewModel() {
                 )
                 _uiState.update { it.copy(reportReason = "") }
                 _uiEffect.emit(ForumDetailSideEffect.ReportSuccess)
-            } catch (_: Exception) {}
+            } catch (_: Exception) {
+            }
         }
     }
 
@@ -176,5 +181,14 @@ class ForumDetailViewModel : ViewModel() {
     fun refresh(forumId: Int) {
         _uiState.update { it.copy(isRefresh = false) }
         fetchForum(forumId)
+    }
+
+    fun updateOpenGraph(openGraph: OpenGraph) {
+        val forum = _uiState.value.forum as? FetchFlow.Success ?: return
+        _uiState.update {
+            it.copy(
+                forum = FetchFlow.Success(forum.data.copy(openGraph = openGraph))
+            )
+        }
     }
 }
