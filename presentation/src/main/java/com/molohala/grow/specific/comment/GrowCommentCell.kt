@@ -30,6 +30,7 @@ import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
 import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
 import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
 import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
+import com.molohala.grow.specific.text.LinkifyText
 
 @Composable
 fun GrowCommentCell(
@@ -67,7 +68,7 @@ fun GrowCommentCell(
                     )
                 }
                 SelectionContainer {
-                    Text(
+                    LinkifyText(
                         text = comment.content,
                         style = MyTheme.typography.bodyRegular,
                         color = MyTheme.colorScheme.textNormal

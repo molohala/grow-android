@@ -1,6 +1,7 @@
 package com.molohala.grow.specific.foum
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,23 +19,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.molohala.grow.data.forum.response.ForumResponse
+import com.bestswlkh0310.mydesignsystem.R
 import com.bestswlkh0310.mydesignsystem.component.avatar.AvatarType
 import com.bestswlkh0310.mydesignsystem.component.avatar.MyAvatar
+import com.bestswlkh0310.mydesignsystem.component.button.MyLikeButton
+import com.bestswlkh0310.mydesignsystem.component.divider.MyDivider
 import com.bestswlkh0310.mydesignsystem.component.menu.MenuType
 import com.bestswlkh0310.mydesignsystem.component.menu.MyMenu
+import com.bestswlkh0310.mydesignsystem.component.menu.MyMenuData
 import com.bestswlkh0310.mydesignsystem.extension.applyCardView
 import com.bestswlkh0310.mydesignsystem.extension.bounceClick
 import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
-import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
-import com.bestswlkh0310.mydesignsystem.R
-import com.bestswlkh0310.mydesignsystem.component.button.MyLikeButton
-import com.bestswlkh0310.mydesignsystem.component.divider.MyDivider
-import com.bestswlkh0310.mydesignsystem.component.menu.MyMenuData
 import com.bestswlkh0310.mydesignsystem.foundation.iconography.MyIcon
 import com.bestswlkh0310.mydesignsystem.foundation.util.MyPreviews
+import com.bestswlkh0310.mydesignsystem.foundation.util.timeAgo
+import com.molohala.grow.data.forum.response.ForumResponse
+import com.molohala.grow.specific.text.LinkifyText
 
 @Composable
 fun GrowForumCell(
@@ -107,12 +110,12 @@ fun GrowForumCell(
             }
         }
         SelectionContainer {
-            Text(
+            LinkifyText(
                 text = content.content,
-                style = MyTheme.typography.bodyRegular,
+                style = MyTheme.typography.bodyRegular.copy(color = MyTheme.colorScheme.textNormal),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 5,
-                color = MyTheme.colorScheme.textNormal
+                onClick = onClick
             )
         }
         MyLikeButton(like = forum.forum.like, enabled = forum.forum.liked, onClick = onClickLike)
@@ -128,7 +131,7 @@ fun GrowForumCell(
                     color = MyTheme.colorScheme.textNormal
                 )
                 SelectionContainer {
-                    Text(
+                    LinkifyText(
                         modifier = Modifier
                             .widthIn(0.dp, 180.dp),
                         text = it.content,

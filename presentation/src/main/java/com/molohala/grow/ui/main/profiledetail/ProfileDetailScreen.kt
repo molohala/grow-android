@@ -42,6 +42,7 @@ import com.molohala.grow.specific.statcell.GrowStatCell
 import com.molohala.grow.specific.statcell.GrowStatCellShimmer
 import com.molohala.grow.specific.statcell.GrowStatType
 import com.molohala.grow.specific.text.Headline
+import com.molohala.grow.specific.text.LinkifyText
 import com.molohala.grow.ui.main.main.NavGroup
 
 
@@ -183,7 +184,7 @@ private fun Bio(
         val profile = (uiState.profile as? FetchFlow.Success)?.data
         profile?.let {
             SelectionContainer {
-                Text(
+                LinkifyText(
                     text = profile.bio,
                     style = MyTheme.typography.bodyMedium,
                     color = MyTheme.colorScheme.textDarken

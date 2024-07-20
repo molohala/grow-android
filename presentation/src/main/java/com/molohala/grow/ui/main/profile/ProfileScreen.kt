@@ -45,6 +45,7 @@ import com.molohala.grow.specific.statcell.GrowStatCellShimmer
 import com.molohala.grow.specific.statcell.GrowStatType
 import com.molohala.grow.specific.text.Headline
 import com.molohala.grow.specific.chart.GrowChartCellShimmer
+import com.molohala.grow.specific.text.LinkifyText
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
@@ -196,7 +197,7 @@ private fun Bio(
         profile?.let {
             val text = profile.bio.ifEmpty { "🤔" }
             SelectionContainer {
-                Text(
+                LinkifyText(
                     text = text,
                     style = MyTheme.typography.bodyMedium,
                     color = MyTheme.colorScheme.textDarken

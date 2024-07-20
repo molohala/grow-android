@@ -56,6 +56,7 @@ import com.molohala.grow.data.comment.response.CommentResponse
 import com.molohala.grow.data.forum.response.ForumContentResponse
 import com.molohala.grow.specific.comment.GrowCommentCell
 import com.molohala.grow.specific.comment.GrowCommentCellShimmer
+import com.molohala.grow.specific.text.LinkifyText
 import com.molohala.grow.ui.main.main.NavGroup
 import com.molohala.grow.ui.root.AppState
 import com.molohala.grow.ui.root.AppViewModel
@@ -428,7 +429,7 @@ private fun Forum(
             }
         }
         SelectionContainer {
-            Text(
+            LinkifyText(
                 text = forum.content,
                 style = MyTheme.typography.bodyRegular,
                 color = MyTheme.colorScheme.textNormal
