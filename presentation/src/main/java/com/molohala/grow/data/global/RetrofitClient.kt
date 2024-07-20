@@ -22,11 +22,16 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 object RetrofitClient {
     // json to data class
@@ -70,6 +75,21 @@ object RetrofitClient {
         .addInterceptor(logInterceptor)
         .addInterceptor(TokenInterceptor())
         .authenticator(AuthAuthenticator())
+        .apply {
+            val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+                override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+                override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+                override fun getAcceptedIssuers(): Array<X509Certificate> { return arrayOf() }
+            })
+
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, SecureRandom())
+
+            val sslSocketFactory = sslContext.socketFactory
+
+            sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+            hostnameVerifier { _, _ -> true }
+        }
         .build()
 
     private val dodamRetrofit: Retrofit = Retrofit.Builder()
