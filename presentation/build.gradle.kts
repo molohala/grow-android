@@ -75,6 +75,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-messaging-ktx:24.0.0")
 
+    // permission
+    implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
+
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 

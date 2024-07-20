@@ -1,6 +1,9 @@
 package com.molohala.grow.ui.root
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,8 +17,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
 import com.bestswlkh0310.mydesignsystem.foundation.color.MyPallete
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 import com.molohala.grow.application.GrowApp
 import com.molohala.grow.application.PreferenceManager
+import com.molohala.grow.common.constant.TAG
 import com.molohala.grow.ui.main.main.NavigationGraph
 
 class AppActivity : ComponentActivity() {
@@ -24,6 +30,7 @@ class AppActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         GrowApp.prefs = PreferenceManager(applicationContext)
+        checkPermission()
         setContent {
             val appViewModel: AppViewModel = viewModel()
             val navController = rememberNavController()
@@ -45,7 +52,19 @@ class AppActivity : ComponentActivity() {
         }
     }
 
-    private fun initColor() {
-        MyPallete.Primary00 = Color(0xFFFFFFFF)
+    private fun checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            TedPermission.create()
+                .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
+                .setPermissionListener(object : PermissionListener {
+                    override fun onPermissionGranted() {
+                        Log.d(TAG, "onPermissionGranted: ")
+                    }
+                    override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                        Log.d(TAG, "onPermissionDenied: ")
+                    }
+                })
+                .check()
+        }
     }
 }
