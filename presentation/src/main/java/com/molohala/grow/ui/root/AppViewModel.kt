@@ -1,5 +1,6 @@
 package com.molohala.grow.ui.root
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.bestswlkh0310.mydesignsystem.component.bottomtabbar.BottomTabItem
 import com.molohala.grow.application.GrowApp
@@ -14,9 +15,13 @@ import com.molohala.grow.common.chart.githubWeekChartInfo
 import com.molohala.grow.specific.chart.GrowChartInfo
 import com.molohala.grow.ui.main.main.Home
 import com.molohala.grow.ui.util.launch
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import retrofit2.HttpException
+import java.net.ProtocolException
 
 data class AppState(
     val accessToken: String = GrowApp.prefs.accessToken,
@@ -48,10 +53,7 @@ class AppViewModel : ViewModel() {
 
     fun clearToken() {
         GrowApp.prefs.clearToken()
-        with(GrowApp.prefs) {
-            updateAccessToken(accessToken)
-            updateRefreshToken(refreshToken)
-        }
+        _uiState.update { it.copy(accessToken = "", refreshToken = "") }
     }
 
     fun fetchProfile() {
@@ -63,6 +65,11 @@ class AppViewModel : ViewModel() {
                 fetchGithub()
                 fetchBaekjoon()
                 fetchMyLanguage()
+            } catch (e: HttpException) {
+                if (e.code() == 401) {
+                    clearToken()
+                }
+                _uiState.update { it.copy(profile = FetchFlow.Failure()) }
             } catch (e: Exception) {
                 _uiState.update { it.copy(profile = FetchFlow.Failure()) }
             }

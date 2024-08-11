@@ -20,6 +20,7 @@ class AuthAuthenticator : Authenticator {
             baseUrl + "auth/reissue",
             baseUrl + "auth/login"
         )
+        val refreshCountKey = "refresh-count"
     }
 
     override fun authenticate(route: Route?, response: Response): Request? {
@@ -28,14 +29,14 @@ class AuthAuthenticator : Authenticator {
             return null
         }
 
-        val refreshLimit = response.headers["refreshLimit"]?.toInt() ?: 1
+        val refreshCount = response.headers[refreshCountKey]?.toInt() ?: 999
 
-        if (refreshLimit > 3) {
+        if (refreshCount > 3) {
             return null
         }
 
         return runBlocking {
-            Log.d(TAG, "✅ authenticate: $refreshLimit")
+            Log.d(TAG, "✅ authenticate: $refreshCount")
             Log.d(TAG, "✅ authenticate: ${response.code}")
             Log.d(TAG, "✅ authenticate: $url")
             Log.d(TAG, "✅ authenticate: refresh 시작")
@@ -49,11 +50,13 @@ class AuthAuthenticator : Authenticator {
                 Log.d(TAG, "✅ authenticate: refresh 완료 length: ${accessToken.length}")
                 return@runBlocking response.request.newBuilder()
                     .removeHeader("authorization")
-                    .addHeader("refreshLimit", "${refreshLimit + 1}")
+                    .addHeader(refreshCountKey, "${refreshCount + 1}")
                     .addHeader("authorization", "Bearer $accessToken")
                     .build()
             } catch (e: Exception) {
-                return@runBlocking response.request
+                return@runBlocking response.request.newBuilder()
+                    .addHeader(refreshCountKey, "${refreshCount + 1}")
+                    .build()
             }
         }
     }

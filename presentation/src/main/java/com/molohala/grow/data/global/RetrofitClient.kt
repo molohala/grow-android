@@ -14,6 +14,7 @@ import com.molohala.grow.data.global.interceptor.TokenInterceptor
 import com.molohala.grow.data.info.api.InfoApi
 import com.molohala.grow.data.language.api.LanguageApi
 import com.molohala.grow.data.like.api.LikeApi
+import com.molohala.grow.data.notification.NotificationApi
 import com.molohala.grow.data.rank.api.RankApi
 import com.molohala.grow.data.util.Json.isJsonArray
 import com.molohala.grow.data.util.Json.isJsonObject
@@ -112,4 +113,5 @@ object RetrofitClient {
     val infoApi: InfoApi by lazy { growRetrofit.create(InfoApi::class.java) }
     val likeApi: LikeApi by lazy { growRetrofit.create(LikeApi::class.java) }
     val languageApi: LanguageApi by lazy { growRetrofit.create(LanguageApi::class.java) }
+    val notificationApi: NotificationApi by lazy { growRetrofit.create(NotificationApi::class.java) }
 }
