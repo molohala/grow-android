@@ -341,7 +341,7 @@ fun TodayGithub(
                     }
 
                     is FetchFlow.Success -> {
-                        it.data.forEach { rank ->
+                        it.data.ranks.forEach { rank ->
                             GrowRankCell(
                                 name = rank.memberName,
                                 socialId = rank.socialId,
@@ -386,7 +386,7 @@ fun TodayBaekjoon(
                     }
 
                     is FetchFlow.Success -> {
-                        it.data.forEach { rank ->
+                        it.data.ranks.forEach { rank ->
                             GrowRankCell(
                                 name = rank.memberName,
                                 socialId = rank.socialId,

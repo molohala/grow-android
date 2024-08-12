@@ -5,6 +5,7 @@ import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.rank.response.RankResponse
+import com.molohala.grow.data.rank.response.UpdateRankResponse
 import com.molohala.grow.data.report.request.ReportRequest
 import com.molohala.grow.ui.util.launch
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,8 +16,8 @@ import kotlinx.coroutines.flow.update
 
 data class HomeState(
     val weekForums: FetchFlow<List<ForumResponse>> = FetchFlow.Fetching(),
-    val todayGithubRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
-    val todayBaekjoonRanks: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
+    val todayGithubRanks: FetchFlow<UpdateRankResponse> = FetchFlow.Fetching(),
+    val todayBaekjoonRanks: FetchFlow<UpdateRankResponse> = FetchFlow.Fetching(),
     val isRefresh: Boolean = false,
     val reportCommentReason: String = "",
     val selectedReportForum: ForumResponse? = null
@@ -40,9 +41,9 @@ class HomeViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(todayGithubRanks = FetchFlow.Fetching()) }
-                var ranks = RetrofitClient.rankApi.getTodayGithubRank().data ?: return@launch
-                if (ranks.size > 3) {
-                    ranks = ranks.slice(0..<3)
+                val ranks = RetrofitClient.rankApi.getTodayGithubRank().data ?: return@launch
+                if (ranks.ranks.size > 3) {
+                    ranks.ranks.slice(0..<3)
                 }
                 _uiState.update {
                     it.copy(
@@ -59,9 +60,9 @@ class HomeViewModel : ViewModel() {
         launch {
             try {
                 _uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Fetching()) }
-                var ranks = RetrofitClient.rankApi.getTodaySolvedacRank().data ?: return@launch
-                if (ranks.size > 3) {
-                    ranks = ranks.slice(0..<3)
+                val ranks = RetrofitClient.rankApi.getTodaySolvedacRank().data ?: return@launch
+                if (ranks.ranks.size > 3) {
+                    ranks.ranks.slice(0..<3)
                 }
                 _uiState.update {
                     it.copy(

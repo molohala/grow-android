@@ -106,7 +106,7 @@ fun GithubRankScreen(
                                     verticalArrangement = Arrangement.spacedBy(12.dp),
                                     state = scrollState
                                 ) {
-                                    items(it.data) { rank ->
+                                    items(it.data.ranks) { rank ->
                                         GrowRankCell(
                                             name = rank.memberName,
                                             socialId = rank.socialId,

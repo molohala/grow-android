@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.molohala.grow.common.flow.FetchFlow
 import com.molohala.grow.data.global.RetrofitClient
 import com.molohala.grow.data.rank.response.RankResponse
+import com.molohala.grow.data.rank.response.UpdateRankResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -18,7 +19,7 @@ enum class GithubRankTab(
 }
 
 data class GithubRankState(
-    val githubRanksFetchFlow: FetchFlow<List<RankResponse>> = FetchFlow.Fetching(),
+    val githubRanksFetchFlow: FetchFlow<UpdateRankResponse> = FetchFlow.Fetching(),
     val selectedTab: GithubRankTab = GithubRankTab.WEEK,
     val isRefresh: Boolean = false
 )
