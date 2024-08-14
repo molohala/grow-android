@@ -33,6 +33,7 @@ import com.bestswlkh0310.mydesignsystem.component.button.MyTabButton
 import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
 import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
 import com.molohala.grow.common.flow.FetchFlow
+import com.molohala.grow.common.util.updatedAt
 import com.molohala.grow.specific.rank.GrowRankCell
 import com.molohala.grow.specific.rank.GrowRankCellShimmer
 import com.molohala.grow.ui.error.ErrorScreen
@@ -75,6 +76,7 @@ fun BaekjoonRankScreen(
                     })
                 } else {
                     Indicator(
+                        uiState = uiState,
                         selectedTab = uiState.selectedTab,
                         onClickTab = {
                             viewModel.clickTab(selectedTab = it)
@@ -162,12 +164,15 @@ private fun RecommendingSettingBaekjoon(
 
 @Composable
 private fun Indicator(
-    selectedTab: BaekjoonRankTab, onClickTab: (BaekjoonRankTab) -> Unit
+    uiState: BaekjoonRankState,
+    selectedTab: BaekjoonRankTab,
+    onClickTab: (BaekjoonRankTab) -> Unit
 ) {
     Row(
         modifier = Modifier
-            .padding(start = 12.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+            .padding(horizontal = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         BaekjoonRankTab.entries.forEach {
             MyTabButton(
@@ -180,5 +185,13 @@ private fun Indicator(
             }
         }
         Spacer(modifier = Modifier.weight(1f))
+        val data = uiState.githubRanksFetchFlow as? FetchFlow.Success
+        data?.data?.updatedAt?.updatedAt()?.let {
+            Text(
+                text = it,
+                style = MyTheme.typography.labelRegular,
+                color = MyTheme.colorScheme.textAlt
+            )
+        }
     }
 }

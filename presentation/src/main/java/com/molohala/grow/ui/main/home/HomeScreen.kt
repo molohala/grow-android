@@ -15,6 +15,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,6 +36,7 @@ import com.bestswlkh0310.mydesignsystem.component.topappbar.MyTopAppBar
 import com.bestswlkh0310.mydesignsystem.extension.applyCardView
 import com.bestswlkh0310.mydesignsystem.foundation.MyTheme
 import com.bestswlkh0310.mydesignsystem.foundation.shimmer.RowShimmer
+import com.molohala.grow.common.util.updatedAt
 import com.molohala.grow.data.forum.response.ForumResponse
 import com.molohala.grow.specific.foum.GrowForumCell
 import com.molohala.grow.specific.foum.GrowForumCellShimmer
@@ -322,7 +324,16 @@ fun TodayGithub(
         modifier = Modifier
             .padding(vertical = 8.dp)
     ) {
-        Headline(text = "오늘의 Github Top 3")
+        Headline(text = "오늘의 Github Top 3") {
+            val data = uiState.todayGithubRanks as? FetchFlow.Success
+            data?.data?.updatedAt?.updatedAt()?.let {
+                Text(
+                    text = it,
+                    style = MyTheme.typography.labelRegular,
+                    color = MyTheme.colorScheme.textAlt
+                )
+            }
+        }
         Column(
             modifier = Modifier
                 .padding(vertical = 12.dp)
@@ -367,7 +378,16 @@ fun TodayBaekjoon(
         modifier = Modifier
             .padding(vertical = 8.dp)
     ) {
-        Headline(text = "오늘의 백준 Top 3")
+        Headline(text = "오늘의 백준 Top 3") {
+            val data = uiState.todayBaekjoonRanks as? FetchFlow.Success
+            data?.data?.updatedAt?.updatedAt()?.let {
+                Text(
+                    text = it,
+                    style = MyTheme.typography.labelRegular,
+                    color = MyTheme.colorScheme.textAlt
+                )
+            }
+        }
         Column(
             modifier = Modifier
                 .padding(vertical = 12.dp)

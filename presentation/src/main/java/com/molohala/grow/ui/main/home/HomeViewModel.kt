@@ -43,7 +43,7 @@ class HomeViewModel : ViewModel() {
                 _uiState.update { it.copy(todayGithubRanks = FetchFlow.Fetching()) }
                 val ranks = RetrofitClient.rankApi.getTodayGithubRank().data ?: return@launch
                 if (ranks.ranks.size > 3) {
-                    ranks.ranks.slice(0..<3)
+                    ranks.ranks = ranks.ranks.slice(0..<3)
                 }
                 _uiState.update {
                     it.copy(
@@ -62,7 +62,7 @@ class HomeViewModel : ViewModel() {
                 _uiState.update { it.copy(todayBaekjoonRanks = FetchFlow.Fetching()) }
                 val ranks = RetrofitClient.rankApi.getTodaySolvedacRank().data ?: return@launch
                 if (ranks.ranks.size > 3) {
-                    ranks.ranks.slice(0..<3)
+                    ranks.ranks = ranks.ranks.slice(0..<3)
                 }
                 _uiState.update {
                     it.copy(
